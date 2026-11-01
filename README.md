@@ -1,8 +1,6 @@
 # maimai NEEDY GIRL OVERDOSE（私有协作仓库）
 
-> **这是私有仓库，只给受邀的组员用，请不要公开、不要转发。**
-> 仓库里有从 SEGA 游戏贴图改出来的素材（改色、像素化、拼合）和改动数据，
-> 也有 NEEDY GIRL OVERDOSE 的同人美术。见 [NOTICE.md](NOTICE.md)。
+> 这是一个为 maimai DX 打造 NEEDY GIRL OVERDOSE 风格界面美化的项目。
 > **游戏本体一个文件都没有**：安装器读你自己机器上的游戏文件，把我们的改动写进去。
 
 把 maimai DX 1.70（SDEZ / MAGiCAL）本机版整套换成「maimai NEEDY GIRL OVERDOSE」：
