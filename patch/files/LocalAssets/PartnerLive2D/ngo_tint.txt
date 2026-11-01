@@ -1,0 +1,6 @@
+﻿# NGO runtime tint (NgoTint.cs): textures the game colours from code at runtime, so the asset tints cannot reach them.
+# collection screen selector band / circle / ring (green #5DD18E set by CollectionProcess)
+UI_CMN_Selector_ColorBase_01a
+UI_CMN_Selector_Base_07
+UI_CMN_Selector_Base_04
+UI_CMN_Selector_Ring_01

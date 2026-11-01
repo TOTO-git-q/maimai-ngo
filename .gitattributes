@@ -1,0 +1,4 @@
+# keep every file byte-for-byte (the patch data, PNGs and the .bat/.ps1 line ends must not be converted)
+* -text
+*.png binary
+*.bin binary

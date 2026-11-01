@@ -1,0 +1,24 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_Nationaldata_Base.png",
+  "selected_output": {
+    "path": "redrawn/final_static_r2/s9_musicselect/UI_MSS_Nationaldata_Base.png",
+    "sha": "f76a6a942998a88597e40255cedf510f382b4dbb",
+    "sha256": "b89555a1d11d2615b08e48fbef391a813e32a285d052021eaca97c4401a5feaf",
+    "bytes": 14002
+  },
+  "metadata": {
+    "path": "evidence/20261029_final_static_r2/UI_MSS_Nationaldata_Base/metadata.json",
+    "sha": "5a21f81fe6cc798f0705e2d653f0519534695f8b",
+    "sha256": "318a99063c07ce59fb8a368ecd302a3c97fd493acf6ddc0dbe282a2e614d2bec",
+    "bytes": 3473
+  },
+  "lineage": {
+    "path": "evidence/20261029_final_static_r2/UI_MSS_Nationaldata_Base/lineage.json",
+    "sha": "6a8dfaa3a6ef673bf579346cb17506cb52de80e7",
+    "sha256": "7d65eee35045c2e40de6280159d1c3cc3bd0c301b8612c75cc51c536b4067e4f",
+    "bytes": 2777
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

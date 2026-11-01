@@ -1,0 +1,55 @@
+{
+  "identity": "originals/s9_musicselect/UI_CMN_TabTitle_EventMap_73.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_CMN_TabTitle_EventMap_73.png",
+    "sha": "320931ff2e6ce46933f7da0bae28fb241e70b131",
+    "sha256": "f3a1cf0b73ff1db9f1e574bfcb59f27ba567017ffdd49dc0a0f9d1f9f3709e16",
+    "bytes": 20486
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_EventMap_73/native.png",
+    "sha": "297e6848f0cc0072301c2f8076ce6d0f71e0ec6c",
+    "sha256": "bb68f993dc4fce92e9c3b6ba4cacdfcd7275d368c0a9501fbf1acd91a0d2446e",
+    "bytes": 509362,
+    "size": [
+      1807,
+      870
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_EventMap_73/fitted.png",
+    "sha": "320931ff2e6ce46933f7da0bae28fb241e70b131",
+    "sha256": "f3a1cf0b73ff1db9f1e574bfcb59f27ba567017ffdd49dc0a0f9d1f9f3709e16",
+    "bytes": 20486
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_EventMap_73/metadata.json",
+    "sha": "8df73483aa4fff2617fcb300b783c3177fd2c0b1",
+    "sha256": "b022ddd3e23717de1e5e3bb12826339ab1db0249500930d7b37415228ccff458",
+    "bytes": 346
+  },
+  "review_derivative_geometry": {
+    "crop": [
+      281,
+      225,
+      1557,
+      706
+    ],
+    "target": [
+      78,
+      52,
+      252,
+      132
+    ],
+    "method": "one whole title rectangle crop / nearest resize / transparent pad; no painting; review derivative"
+  },
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "イベントちほー / 電音部 reads correctly. Header now shows two separate colored dakuten strokes.",
+    "Lower complex kanji remain distinguishable at 1x; two-row hierarchy and broad placement preserved."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

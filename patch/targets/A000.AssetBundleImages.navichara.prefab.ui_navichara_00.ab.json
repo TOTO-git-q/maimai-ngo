@@ -1,0 +1,1098 @@
+{
+ "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/navichara/prefab/ui_navichara_00.ab",
+ "objects": [
+  {
+   "type": "Sprite",
+   "name": "UI_CMN_DXkuma_HeadRing_01",
+   "path_id": -6962642210603170745,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "176c6c03c28598beff443e2c17f58b11cc5236f507a4315d2013ff8b4857d897",
+   "patched_raw_sha256": "128382908740173aa85d57a5c2f13362e5da54e09688db7a1566c60d7cd90178",
+   "changes": [
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "x"
+     ],
+     "old": 2.076120376586914,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "y"
+     ],
+     "old": 1.0761204957962036,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "width"
+     ],
+     "old": 564.8477783203125,
+     "new": 568.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "height"
+     ],
+     "old": 564.8477783203125,
+     "new": 568.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "x"
+     ],
+     "old": 2.076120376586914,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "y"
+     ],
+     "old": 1.0761204957962036,
+     "new": 0.0
+    }
+   ]
+  },
+  {
+   "type": "Sprite",
+   "name": "UI_CMN_DXkuma_HeadRing_02",
+   "path_id": 8249023975184745371,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "1b6e63edebfcd7f067529a0350749f5222ca8f7868e788f782e083c7a5f9b0bd",
+   "patched_raw_sha256": "590e5f18885ea2e7fe1b552b5c6005a73981fa3460113b2640340c328e02a234",
+   "changes": [
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "x"
+     ],
+     "old": 2.076120376586914,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "y"
+     ],
+     "old": 1.0761204957962036,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "width"
+     ],
+     "old": 564.8477783203125,
+     "new": 568.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "height"
+     ],
+     "old": 564.8477783203125,
+     "new": 568.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "x"
+     ],
+     "old": 2.076120376586914,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "y"
+     ],
+     "old": 1.0761204957962036,
+     "new": 0.0
+    }
+   ]
+  },
+  {
+   "type": "Sprite",
+   "name": "UI_CMN_DXkuma_Head_01",
+   "path_id": 7530546704649542886,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "7fee427fc495aaab684d326597fea7d34c1040eda31e95c4abf03653abd48aef",
+   "patched_raw_sha256": "d6469e3f1b913bf4d528f1ae86224999f1df70d6422e10935d08a243512ea710",
+   "changes": [
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "x"
+     ],
+     "old": 77.07611846923828,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "y"
+     ],
+     "old": 76.07611846923828,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "width"
+     ],
+     "old": 414.8477783203125,
+     "new": 568.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "height"
+     ],
+     "old": 414.8477783203125,
+     "new": 568.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "x"
+     ],
+     "old": 77.07611846923828,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "y"
+     ],
+     "old": 76.07611846923828,
+     "new": 0.0
+    }
+   ]
+  },
+  {
+   "type": "Sprite",
+   "name": "UI_CMN_DXkuma_S_HeadRing_01",
+   "path_id": -1452038884692332007,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "2111ee509826e2aa2d2c46ccc3220e2345b963ebbb3c695878684e06b7956c57",
+   "patched_raw_sha256": "1033ae11e03050a4bd100fca186ac03aed20f621a4cf4e8fe084aa205dbce49b",
+   "changes": [
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "x"
+     ],
+     "old": 2.076120376586914,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "y"
+     ],
+     "old": 1.0761204957962036,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "width"
+     ],
+     "old": 196.84774780273438,
+     "new": 200.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRect",
+      "height"
+     ],
+     "old": 528.8477783203125,
+     "new": 532.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "x"
+     ],
+     "old": 2.076120376586914,
+     "new": 0.0
+    },
+    {
+     "path": [
+      "m_RD",
+      "textureRectOffset",
+      "y"
+     ],
+     "old": 1.0761204957962036,
+     "new": 0.0
+    }
+   ]
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Body_01",
+   "path_id": -6489754877713726796,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "192296144546d794086cf96b272f544c94ea1ef6e3b34c4285adcb24f9f44f38",
+   "patched_raw_sha256": "5c5ba1e82545cb1093e7cba1b9fb4347c2e9075eb883a690426d29092fe0f8b6",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Body_01__-6489754877713726796.png",
+    "pixels_sha256": "bc0a81ec9de52c58efb89b109a2877e2ca12472aec361dce056a943cb00bde23",
+    "format": 25,
+    "mip_count": 1,
+    "width": 376,
+    "height": 408,
+    "stock": {
+     "format": 25,
+     "width": 376,
+     "height": 408
+    },
+    "exact": {
+     "offset": 44864,
+     "size": 153408,
+     "sha256": "e902c99eb6074d766e8a4e0fc0bcf96a11fd68fd3a50df9060106fdc8da9cfa2"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Body_02",
+   "path_id": -3278232722350992798,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "2a442ee9055500e4c8873fcd7326e1125424d631e33c783b98e618b250357658",
+   "patched_raw_sha256": "6ccbbda6dd338fc9eaca4862fe798bcccc453a7f808e5f889d86596e4507ae00",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Body_02__-3278232722350992798.png",
+    "pixels_sha256": "a9f13b00d2a99d4b52d07dc75e7cd2889328bc94c012f03133ec8bd8623f469b",
+    "format": 25,
+    "mip_count": 1,
+    "width": 420,
+    "height": 668,
+    "stock": {
+     "format": 25,
+     "width": 420,
+     "height": 668
+    },
+    "exact": {
+     "offset": 639440,
+     "size": 280560,
+     "sha256": "4d11f1f9ba8f9e5b766b1c89cf735cceb1513a0785b58802c752276755690194"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Cheek",
+   "path_id": 9133155955077841464,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "1b2f1ef7f115efc064f796afc306d3adef2205e6cdc59a0c33441db92bf099ff",
+   "patched_raw_sha256": "8f7b5744f19bfc6c4fe82deebd625e9f49cae52da83afd91b390c6e935bb7ed0",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Cheek__9133155955077841464.png",
+    "pixels_sha256": "ab31c72acac6259b6c5e60905f702fef37b294348e9672f09e89380a9eba54cc",
+    "format": 25,
+    "mip_count": 1,
+    "width": 92,
+    "height": 92,
+    "stock": {
+     "format": 25,
+     "width": 92,
+     "height": 92
+    },
+    "exact": {
+     "offset": 2408032,
+     "size": 8464,
+     "sha256": "8a6ea26f14b0defcf49af9c815d948b9434b32a84a28d46724c7f581640d1506"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Eye_01",
+   "path_id": 395724218416965355,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "40d56908f78fc1718644e09c777732826550f4af12b6dd5926c9389cfbca5ecf",
+   "patched_raw_sha256": "6347ca7ed567ee34d7dcadd8fe659bc007e30b543d95ade993fe792e84f79582",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Eye_01__395724218416965355.png",
+    "pixels_sha256": "de23d0a671c99598c87856e4e0fd3a27d99b7d87cea9afdce34544aaf0039800",
+    "format": 25,
+    "mip_count": 1,
+    "width": 52,
+    "height": 52,
+    "stock": {
+     "format": 25,
+     "width": 52,
+     "height": 52
+    },
+    "exact": {
+     "offset": 1189568,
+     "size": 2704,
+     "sha256": "c7995d4ae2a3606aa26a93fa6fb7a9c27c0b3dc2b4540fe57561ebc9141ed1e5"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Eye_02",
+   "path_id": -192391535069369516,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "df0e3ab4868d56baac42f43dc2aed2cd545582e9d3e5516eeef47c1c9639bbb5",
+   "patched_raw_sha256": "aae1dd70b50f5571828ce08878c66362f21f5fed124baa0b83388ed060f19dc6",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Eye_02__-192391535069369516.png",
+    "pixels_sha256": "de23d0a671c99598c87856e4e0fd3a27d99b7d87cea9afdce34544aaf0039800",
+    "format": 25,
+    "mip_count": 1,
+    "width": 52,
+    "height": 52,
+    "stock": {
+     "format": 25,
+     "width": 52,
+     "height": 52
+    },
+    "exact": {
+     "offset": 1116464,
+     "size": 2704,
+     "sha256": "c7995d4ae2a3606aa26a93fa6fb7a9c27c0b3dc2b4540fe57561ebc9141ed1e5"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Eye_03_Left",
+   "path_id": -1787671326388329594,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "a2f45a34a3297457f66fd4e17d3b4380c026d14ebab739f80ae16803bb3388e4",
+   "patched_raw_sha256": "632257e989137cea35d13ab077583d49ec6beec01a7196fdb3071700ac9da2a9",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Eye_03_Left__-1787671326388329594.png",
+    "pixels_sha256": "de23d0a671c99598c87856e4e0fd3a27d99b7d87cea9afdce34544aaf0039800",
+    "format": 25,
+    "mip_count": 1,
+    "width": 52,
+    "height": 52,
+    "stock": {
+     "format": 25,
+     "width": 52,
+     "height": 52
+    },
+    "exact": {
+     "offset": 998848,
+     "size": 2704,
+     "sha256": "c7995d4ae2a3606aa26a93fa6fb7a9c27c0b3dc2b4540fe57561ebc9141ed1e5"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Eye_03_Right",
+   "path_id": -7459395044033304356,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "004996604aa6c0e0112560493546de3ff89cbe19dd0ceea661ec69b799ea022c",
+   "patched_raw_sha256": "8899ccd73129ef485e11cc8eafb7cdafade0c3567fb46f9a1b5b0db062d05aeb",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Eye_03_Right__-7459395044033304356.png",
+    "pixels_sha256": "de23d0a671c99598c87856e4e0fd3a27d99b7d87cea9afdce34544aaf0039800",
+    "format": 25,
+    "mip_count": 1,
+    "width": 52,
+    "height": 52,
+    "stock": {
+     "format": 25,
+     "width": 52,
+     "height": 52
+    },
+    "exact": {
+     "offset": 30192,
+     "size": 2704,
+     "sha256": "c7995d4ae2a3606aa26a93fa6fb7a9c27c0b3dc2b4540fe57561ebc9141ed1e5"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Hand_01_01",
+   "path_id": -2967757727348801429,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "2e854f098d0aa41fd396de5a4142e57f0af9b65e43eec571f1d750c6ec474226",
+   "patched_raw_sha256": "e50e1ca1e567048f0310fd80c578ac40b0239930f22732a50db2f793b98bf498",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Hand_01_01__-2967757727348801429.png",
+    "pixels_sha256": "8cd22a873579167d494d55dfbb6e68ce934d1d6758e42bddf1e38a37fcd1131d",
+    "format": 25,
+    "mip_count": 1,
+    "width": 112,
+    "height": 244,
+    "stock": {
+     "format": 25,
+     "width": 112,
+     "height": 244
+    },
+    "exact": {
+     "offset": 944192,
+     "size": 27328,
+     "sha256": "9c25285e91ffef64645cd90593c727ce5b978fe9d974d880a0bf460f0858e3fd"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Hand_01_02",
+   "path_id": -1823401983218063828,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "c7fa6572c47526419484c9582a031e4247c1987d5675007a68ab6c65632ead1d",
+   "patched_raw_sha256": "a0072b2b7db734b24865f4c6c1e9818328b5507578278427ac2bffa2de7c8322",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Hand_01_02__-1823401983218063828.png",
+    "pixels_sha256": "8cd22a873579167d494d55dfbb6e68ce934d1d6758e42bddf1e38a37fcd1131d",
+    "format": 25,
+    "mip_count": 1,
+    "width": 112,
+    "height": 244,
+    "stock": {
+     "format": 25,
+     "width": 112,
+     "height": 244
+    },
+    "exact": {
+     "offset": 971520,
+     "size": 27328,
+     "sha256": "9c25285e91ffef64645cd90593c727ce5b978fe9d974d880a0bf460f0858e3fd"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Hand_02_01",
+   "path_id": 2035086593470775038,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "0dc571e8d69ef0d34938e0ef45442ef86022cbfc7310c4b6bba6a3253f9c4fa4",
+   "patched_raw_sha256": "8b4d02dfe89ae19562fd1afd614f87dbde47982d87bc4963b343eb0517094198",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Hand_02_01__2035086593470775038.png",
+    "pixels_sha256": "974839bd9a229260f6e5e78180d5931b5221f40887f4dbfe77470e74c29bf509",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 232,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 232
+    },
+    "exact": {
+     "offset": 1514896,
+     "size": 27840,
+     "sha256": "31791b1368b89b65eaf3c813b40a23fa344bc3c8a9ee9f2238fe30d1a1fb4eeb"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Hand_02_02",
+   "path_id": -4049731276231830040,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "ce46de8deefd7d5907a6a0410c5848f6d6410751f2c56b7df48aca9d379eb743",
+   "patched_raw_sha256": "59f1bfb29f78ddd265c42f21c91a47bc1652ffd367d7a7a72a0e40de104e08d7",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Hand_02_02__-4049731276231830040.png",
+    "pixels_sha256": "974839bd9a229260f6e5e78180d5931b5221f40887f4dbfe77470e74c29bf509",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 232,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 232
+    },
+    "exact": {
+     "offset": 240000,
+     "size": 27840,
+     "sha256": "31791b1368b89b65eaf3c813b40a23fa344bc3c8a9ee9f2238fe30d1a1fb4eeb"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Hand_03_01",
+   "path_id": 6421982973780718878,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "748363cf2024d59bda3103e303b738f6401799246d7cbf7694213ca09f523307",
+   "patched_raw_sha256": "84105dacf5dddb51ace686f19adfa29b8b368c7fe4a58daaf1bb97a7de32eeac",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Hand_03_01__6421982973780718878.png",
+    "pixels_sha256": "f1739a57717e562857b06b1a6688654ef72c0a47074e32057e170171eed8acdb",
+    "format": 25,
+    "mip_count": 1,
+    "width": 204,
+    "height": 148,
+    "stock": {
+     "format": 25,
+     "width": 204,
+     "height": 148
+    },
+    "exact": {
+     "offset": 2043248,
+     "size": 30192,
+     "sha256": "20cff8b72223ae3b101cbd0cabe18cd8357b83dd81de667fcc201e111314c835"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Hand_03_02",
+   "path_id": -7713979490848143479,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "4268ffafc7b6a6f86159ccad2a7038d5dd951d1a1f585ff8f5bc08c944430d1c",
+   "patched_raw_sha256": "30b7ff9d386a23c52da34626d1e16b8657f8d19c594fd76edaee9d8599c7f461",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Hand_03_02__-7713979490848143479.png",
+    "pixels_sha256": "f1739a57717e562857b06b1a6688654ef72c0a47074e32057e170171eed8acdb",
+    "format": 25,
+    "mip_count": 1,
+    "width": 204,
+    "height": 148,
+    "stock": {
+     "format": 25,
+     "width": 204,
+     "height": 148
+    },
+    "exact": {
+     "offset": 0,
+     "size": 30192,
+     "sha256": "20cff8b72223ae3b101cbd0cabe18cd8357b83dd81de667fcc201e111314c835"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_HeadRing_01",
+   "path_id": 2182958906580461513,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "3611ead9106c48ebcf963b2edb4fa684aca7609439e8fa49b8218a7a398ad332",
+   "patched_raw_sha256": "7eef45533641c64b896d3ffb26d8bd1f029b2eb4e9bcdee478c672e1299e72f5",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_HeadRing_01__2182958906580461513.png",
+    "pixels_sha256": "e8d96d506ed776d2c90c9169ced99f5ee035f8072777a0809d4a3d30e894af04",
+    "format": 25,
+    "mip_count": 1,
+    "width": 568,
+    "height": 568,
+    "stock": {
+     "format": 25,
+     "width": 568,
+     "height": 568
+    },
+    "exact": {
+     "offset": 1542736,
+     "size": 322624,
+     "sha256": "6c34b8ff852af131dcac9ac04be057a50cbc7e1b41c3cef46ed562dfd0f9dfc3"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_HeadRing_02",
+   "path_id": 6564406798165481721,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "993d9f3bca119ecab11289de8677a217fd1e45a572a2c950c61e783177ae5265",
+   "patched_raw_sha256": "03dc8cbaf761961469df851f95339ae2693c55db32dc6560bd6595791f9dfcd6",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_HeadRing_02__6564406798165481721.png",
+    "pixels_sha256": "e8d96d506ed776d2c90c9169ced99f5ee035f8072777a0809d4a3d30e894af04",
+    "format": 25,
+    "mip_count": 1,
+    "width": 568,
+    "height": 568,
+    "stock": {
+     "format": 25,
+     "width": 568,
+     "height": 568
+    },
+    "exact": {
+     "offset": 2073440,
+     "size": 322624,
+     "sha256": "6c34b8ff852af131dcac9ac04be057a50cbc7e1b41c3cef46ed562dfd0f9dfc3"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Head_01",
+   "path_id": 1799169158577883981,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "9a39ba559a294913f3b6735b4a5bf4734c8bdfe13bfd31503aafefc2024b3276",
+   "patched_raw_sha256": "4c99d044876fd3442465161e199f289b81a1a6fbce1bb3e500a545a43a6ef45f",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Head_01__1799169158577883981.png",
+    "pixels_sha256": "e8d96d506ed776d2c90c9169ced99f5ee035f8072777a0809d4a3d30e894af04",
+    "format": 25,
+    "mip_count": 1,
+    "width": 568,
+    "height": 568,
+    "stock": {
+     "format": 25,
+     "width": 568,
+     "height": 568
+    },
+    "exact": {
+     "offset": 1192272,
+     "size": 322624,
+     "sha256": "6c34b8ff852af131dcac9ac04be057a50cbc7e1b41c3cef46ed562dfd0f9dfc3"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Leg_01_01",
+   "path_id": -930788762662860617,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "6c09c7addda504a5249181ced1b4e9d26314f32cfb8a6eceadebe2fa0c30bfa3",
+   "patched_raw_sha256": "b1353db7e5ba5f42d3dd97175843d70486e2f30b931880f7f071a5550ad1187d",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Leg_01_01__-930788762662860617.png",
+    "pixels_sha256": "66ecdd2e81b4213a6302c2a1bd48a1a20533f48326417012653ef1110f938140",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 248,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 248
+    },
+    "exact": {
+     "offset": 1056464,
+     "size": 29760,
+     "sha256": "92710ffef02cc02b178e513a7c2dc7f94419e70e74c9a6c68a4f1f606a8a5c12"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Leg_01_02",
+   "path_id": 5080970552718629053,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "7e994b20a74f8a2653a5117ce1662eabe0168b220f276809026b65ea6bb84029",
+   "patched_raw_sha256": "75f93b04685dad26586b8021c194574615e8a9154fe8d62a69c968cff2929b3a",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Leg_01_02__5080970552718629053.png",
+    "pixels_sha256": "66ecdd2e81b4213a6302c2a1bd48a1a20533f48326417012653ef1110f938140",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 248,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 248
+    },
+    "exact": {
+     "offset": 1907088,
+     "size": 29760,
+     "sha256": "92710ffef02cc02b178e513a7c2dc7f94419e70e74c9a6c68a4f1f606a8a5c12"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Leg_02_01",
+   "path_id": -5286716246934761597,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "53ef8febec82c006f01aa5b731ab403cbb829848523ab3ec0b6ba52ab7fdf86b",
+   "patched_raw_sha256": "71d8029ba0f745524fac7d72dd180b9a8d367c20e255a9aebc5fca41f14a172a",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Leg_02_01__-5286716246934761597.png",
+    "pixels_sha256": "66ecdd2e81b4213a6302c2a1bd48a1a20533f48326417012653ef1110f938140",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 248,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 248
+    },
+    "exact": {
+     "offset": 210240,
+     "size": 29760,
+     "sha256": "92710ffef02cc02b178e513a7c2dc7f94419e70e74c9a6c68a4f1f606a8a5c12"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Leg_02_02",
+   "path_id": 4545958763504175421,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "aa688bf9376233104d12c168abd079ff1031cb4317857ca331c6ff11c20c246a",
+   "patched_raw_sha256": "6db0b35f32ef9af38fa5549c7610aefee7d82e6ddf8d390146d1429d18ee22bd",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Leg_02_02__4545958763504175421.png",
+    "pixels_sha256": "66ecdd2e81b4213a6302c2a1bd48a1a20533f48326417012653ef1110f938140",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 248,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 248
+    },
+    "exact": {
+     "offset": 1877328,
+     "size": 29760,
+     "sha256": "92710ffef02cc02b178e513a7c2dc7f94419e70e74c9a6c68a4f1f606a8a5c12"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Mouth_01_01",
+   "path_id": -3727205840357009468,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "e4fc89fcf1bf22c5d184603d389f5ca3a3cfbf2f1fe7e647e1886f08cc9e838b",
+   "patched_raw_sha256": "8b26f3038389e9bb7af81a25a729225e39e07d5ef567b95d92ef948be043c9d1",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Mouth_01_01__-3727205840357009468.png",
+    "pixels_sha256": "73f88c3663376bf8c8bf6b5ef90bf751cdeea787ff659e0fff2c2c23291f93e3",
+    "format": 25,
+    "mip_count": 1,
+    "width": 136,
+    "height": 88,
+    "stock": {
+     "format": 25,
+     "width": 136,
+     "height": 88
+    },
+    "exact": {
+     "offset": 627472,
+     "size": 11968,
+     "sha256": "67630c29e2d382ca34a846ab0f4812462a8a820e667ce7f8feaf291a64fa8dff"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Mouth_01_02",
+   "path_id": -5480407808341157667,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "73fb276f1b30614876e01d5c0327f4f4d0e1096d678874e27a3172f64b51f7c4",
+   "patched_raw_sha256": "ed766cd824218ae83429458df698ab9ec1593b69a96fa6f6505d6fcdb304fb4e",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Mouth_01_02__-5480407808341157667.png",
+    "pixels_sha256": "73f88c3663376bf8c8bf6b5ef90bf751cdeea787ff659e0fff2c2c23291f93e3",
+    "format": 25,
+    "mip_count": 1,
+    "width": 136,
+    "height": 88,
+    "stock": {
+     "format": 25,
+     "width": 136,
+     "height": 88
+    },
+    "exact": {
+     "offset": 198272,
+     "size": 11968,
+     "sha256": "67630c29e2d382ca34a846ab0f4812462a8a820e667ce7f8feaf291a64fa8dff"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Mouth_02_01",
+   "path_id": 7451940111334265953,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "1a66a35a7c77e45ffdf839a14b2bb4f83bf8c251e7681f74aec40249a2deb163",
+   "patched_raw_sha256": "7f304f41f9e4e1335024e7a0743b5ef24b7247cf16701fcf8b5ec8f49de4719a",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Mouth_02_01__7451940111334265953.png",
+    "pixels_sha256": "73f88c3663376bf8c8bf6b5ef90bf751cdeea787ff659e0fff2c2c23291f93e3",
+    "format": 25,
+    "mip_count": 1,
+    "width": 136,
+    "height": 88,
+    "stock": {
+     "format": 25,
+     "width": 136,
+     "height": 88
+    },
+    "exact": {
+     "offset": 2396064,
+     "size": 11968,
+     "sha256": "67630c29e2d382ca34a846ab0f4812462a8a820e667ce7f8feaf291a64fa8dff"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Mouth_02_02",
+   "path_id": 2769172170139074328,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "1f65a28a94226c28832b89a0ee11aabc03be1312c737d446a05438b7a44e2d10",
+   "patched_raw_sha256": "7a5314e96112d48a3630f0c7407e2c4fa433fcefe57e1264c33c0c4862d33563",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Mouth_02_02__2769172170139074328.png",
+    "pixels_sha256": "73f88c3663376bf8c8bf6b5ef90bf751cdeea787ff659e0fff2c2c23291f93e3",
+    "format": 25,
+    "mip_count": 1,
+    "width": 136,
+    "height": 88,
+    "stock": {
+     "format": 25,
+     "width": 136,
+     "height": 88
+    },
+    "exact": {
+     "offset": 1865360,
+     "size": 11968,
+     "sha256": "67630c29e2d382ca34a846ab0f4812462a8a820e667ce7f8feaf291a64fa8dff"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Mouth_03_01",
+   "path_id": -6606920064237419487,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "21e99797604739e4c4b57129094a17c5f62b43230301541dd277c6682710090d",
+   "patched_raw_sha256": "b299484001fd69224862be5c8dc9a91d008bb54556775dbfdd00fff96494b25a",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Mouth_03_01__-6606920064237419487.png",
+    "pixels_sha256": "73f88c3663376bf8c8bf6b5ef90bf751cdeea787ff659e0fff2c2c23291f93e3",
+    "format": 25,
+    "mip_count": 1,
+    "width": 136,
+    "height": 88,
+    "stock": {
+     "format": 25,
+     "width": 136,
+     "height": 88
+    },
+    "exact": {
+     "offset": 32896,
+     "size": 11968,
+     "sha256": "67630c29e2d382ca34a846ab0f4812462a8a820e667ce7f8feaf291a64fa8dff"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_S_Body_01",
+   "path_id": -3981236688581166881,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "158f03f1019daf05091fefdff805490185857e9d76a4b138949c195046d79820",
+   "patched_raw_sha256": "200453903028b3e4b51ae17f00e4e29f18304473939e7fc25186c4485be074c5",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_S_Body_01__-3981236688581166881.png",
+    "pixels_sha256": "dca60342864b7809e5a7c598b14c86cf80905925c7c77601caa0bd8dd2908ada",
+    "format": 25,
+    "mip_count": 1,
+    "width": 532,
+    "height": 676,
+    "stock": {
+     "format": 25,
+     "width": 532,
+     "height": 676
+    },
+    "exact": {
+     "offset": 267840,
+     "size": 359632,
+     "sha256": "f738adbc90e0fbd4880b5e636d1784d337d9a6a9eef4d46e96f700b1d8fff3eb"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_S_Hand_01",
+   "path_id": -3248823972075861728,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "375e5c77108d09e22f517040189cb97ce84cd6f98183d326dd6cc9bfc9a89ceb",
+   "patched_raw_sha256": "48b54f0cbb794dbc5866f88b2bdf4e37e4f0f039e2f0c4d0e67a0d94f7b1c59b",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_S_Hand_01__-3248823972075861728.png",
+    "pixels_sha256": "44040ce1a40c7659b4b32d43d876f15e13dd9ed80710267ff23c3524f4248df0",
+    "format": 25,
+    "mip_count": 1,
+    "width": 112,
+    "height": 216,
+    "stock": {
+     "format": 25,
+     "width": 112,
+     "height": 216
+    },
+    "exact": {
+     "offset": 920000,
+     "size": 24192,
+     "sha256": "9e04a21e08f5c56a6db6d33346e4c72f53622325d13d17fc5afbd6b7cce87659"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_S_HeadRing_01",
+   "path_id": 5460529038669141793,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "64c32fd26fe618a2db74f91652b90cfa469c9da396a264271543ef3a57e67eac",
+   "patched_raw_sha256": "499ce6d8bc8479216a1dfd119adcf2a9ed9f99e0bdf5fef27b2d7e43cc1880fd",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_S_HeadRing_01__5460529038669141793.png",
+    "pixels_sha256": "cd87d3a63f661a1e250a38793ec51595051ca0c6ac5402058e8d32ade80c3f4c",
+    "format": 25,
+    "mip_count": 1,
+    "width": 200,
+    "height": 532,
+    "stock": {
+     "format": 25,
+     "width": 200,
+     "height": 532
+    },
+    "exact": {
+     "offset": 1936848,
+     "size": 106400,
+     "sha256": "14e4826d830e01b93bec6e4a4892e29d242874f82de29389fdc93e98d3be47a6"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_S_Leg_01",
+   "path_id": -226225042747256865,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "55e6f766dc4e393aaf94231b136a26a11c9e37e16d34ff15c9dd340ccc6930c9",
+   "patched_raw_sha256": "235f3649c1fb918998db984633460cb23e9d125d0d1f978df75a53f06f8f9991",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_S_Leg_01__-226225042747256865.png",
+    "pixels_sha256": "8a66b290390d890360f1cbc649195d0b04d1298812f5604f47026c1af6b08674",
+    "format": 25,
+    "mip_count": 1,
+    "width": 120,
+    "height": 252,
+    "stock": {
+     "format": 25,
+     "width": 120,
+     "height": 252
+    },
+    "exact": {
+     "offset": 1086224,
+     "size": 30240,
+     "sha256": "ce0001a541178b4597f040e6b34cf66e79a198a5b59e71ee45bf7c71e15ac588"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Tail_01",
+   "path_id": -955097813005021446,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "cfe24c615bfddb6d5e423ad092904e2760478e9e5e12c3938c90347c0ae6d905",
+   "patched_raw_sha256": "84bd5b4ce60d10a67cc4a1e2927c4407516f50ce748be000b0e04ea7370573b3",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Tail_01__-955097813005021446.png",
+    "pixels_sha256": "c4ee074f69a3a46803e890d9fec3b3d65b892056fa4d2873730751faa8249f22",
+    "format": 25,
+    "mip_count": 1,
+    "width": 352,
+    "height": 156,
+    "stock": {
+     "format": 25,
+     "width": 352,
+     "height": 156
+    },
+    "exact": {
+     "offset": 1001552,
+     "size": 54912,
+     "sha256": "70ecde6ff091f1792c4ffed4dbde864e8e23bf92d3fa55834b63e886ed00ad0c"
+    }
+   },
+   "changes": []
+  },
+  {
+   "type": "Texture2D",
+   "name": "UI_CMN_DXkuma_Tail_02",
+   "path_id": 102903183843299025,
+   "cab": "CAB-538f987cd8bd41549cadcacc92796168",
+   "stock_raw_sha256": "adee14bcbc6bf7a8f32ac47f765654cec7feda5a7829cc53887d35870a677960",
+   "patched_raw_sha256": "bef78e13d824c922ef191f58729504ff2a6e94b9a83b57b541be689e2b7e7fff",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab/UI_CMN_DXkuma_Tail_02__102903183843299025.png",
+    "pixels_sha256": "6186fbeb21143edadebc6d8b796151666185135c15435fad32028a620ab8500d",
+    "format": 25,
+    "mip_count": 1,
+    "width": 440,
+    "height": 160,
+    "stock": {
+     "format": 25,
+     "width": 440,
+     "height": 160
+    },
+    "exact": {
+     "offset": 1119168,
+     "size": 70400,
+     "sha256": "0d997fb12df19ddcd7d9703d0dc2d4d3b1a1f1644cd9bf3248a518f946c0eaed"
+    }
+   },
+   "changes": []
+  }
+ ]
+}

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live2D 搭档调整</title>
+<style>
+  :root { --bg:#f6f4f1; --card:#fff; --ink:#1f1d1a; --sub:#6b665f; --line:#e4e0da; --accent:#c4622d; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1b1a19; --card:#252322; --ink:#eeeae4; --sub:#a39d95; --line:#38342f; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 "Microsoft YaHei UI","PingFang SC",sans-serif; }
+  main { max-width:980px; margin:0 auto; padding:16px; display:grid; grid-template-columns: 300px 1fr; gap:16px; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
+  h1 { font-size:18px; margin:0 0 4px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  .sub { color:var(--sub); font-size:13px; }
+  .preview { aspect-ratio: 9/16; background: repeating-conic-gradient(var(--line) 0 25%, transparent 0 50%) 0 0/20px 20px; border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .preview img { max-width:100%; max-height:100%; }
+  label.row { display:grid; grid-template-columns: 76px 1fr 58px; align-items:center; gap:8px; margin:10px 0; }
+  input[type=range] { width:100%; accent-color: var(--accent); }
+  input[type=number] { width:58px; }
+  select, input[type=number] { background:var(--card); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:4px 6px; font:inherit; }
+  .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:8px 12px; }
+  .grid2 label { display:flex; flex-direction:column; gap:2px; font-size:13px; color:var(--sub); }
+  button { font:inherit; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:6px; padding:6px 12px; cursor:pointer; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button:disabled { opacity:.45; cursor:default; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .msg { min-height:20px; font-size:13px; color:var(--sub); margin-top:8px; }
+  h2 { font-size:15px; margin:16px 0 6px; }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <div class="card">
+      <h1>Live2D 搭档调整</h1>
+      <div class="sub" id="status">连接游戏中…</div>
+      <div style="margin:10px 0"><select id="partner"></select></div>
+      <div class="preview" id="previewBox"><span class="sub" id="previewHint">还没有画面</span><img id="preview" alt="" hidden></div>
+      <div class="bar">
+        <button id="overlayBtn">在屏幕中间预览</button>
+        <button id="shotBtn">看整个游戏画面</button>
+      </div>
+      <div class="sub" style="margin-top:8px">位置和大小以结算页原搭档为基准。打完一首歌停在结算页时调整最准。</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0">位置和大小</h2>
+    <label class="row">大小 <input type="range" id="scale" min="0.3" max="2.5" step="0.01"><input type="number" id="scale_n" step="0.01"></label>
+    <label class="row">左右 <input type="range" id="offsetX" min="-1" max="1" step="0.01"><input type="number" id="offsetX_n" step="0.01"></label>
+    <label class="row">上下 <input type="range" id="offsetY" min="-1" max="1" step="0.01"><input type="number" id="offsetY_n" step="0.01"></label>
+    <label class="row">视线跟随 <input type="range" id="lookStrength" min="0" max="2" step="0.05"><input type="number" id="lookStrength_n" step="0.05"></label>
+    <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="flipY"> 画面上下颠倒时勾上</label>
+
+    <h2>每个时刻播哪组动作</h2>
+    <div class="grid2" id="motions"></div>
+
+    <h2>试播</h2>
+    <div class="bar" id="tryBar"></div>
+
+    <div class="bar">
+      <button class="primary" id="saveBtn">保存</button>
+      <button id="revertBtn">还原成文件里的设置</button>
+    </div>
+    <div class="msg" id="msg"></div>
+  </section>
+  <section class="card" style="grid-column:1/-1">
+    <h2 style="margin-top:0">Music-select POC - normal Music only</h2>
+    <label><input type="checkbox" id="selectEnabled"> Enable select view</label>
+    <label><input type="checkbox" id="selectCategoryKeys"> Category keys (02/07, A2/A7)</label>
+    <label style="margin-left:16px">Select partner / custom fallback <select id="selectPartner"></select></label>
+    <label style="margin-left:16px"><input type="checkbox" id="selectDebug"> Touch-zone debug</label>
+    <p class="sub">Coordinates use Main local pixels. Fixed buttons and touch hints stay at their original positions. Save persists this opt-in for the next launch.</p>
+    <div id="selectFields" class="grid2"></div>
+    <details><summary>UI tree and node editor</summary>
+      <label>Tree root (blank = Main) <input id="selectTreeRoot" style="width:70%"></label>
+      <label>Depth <input id="selectTreeDepth" type="number" min="0" max="20" value="3"></label>
+      <label>Side <select id="selectTreePlayer"><option value="">First active</option><option value="0">1P</option><option value="1">2P</option></select></label>
+      <button id="selectTreeLoad">Load tree</button>
+      <div id="selectTree" style="max-height:420px;overflow:auto"></div>
+      <label>Node path <input id="selectNodePath" style="width:80%" placeholder="relative under Main or full hierarchy path"></label>
+      <label>Scale <input id="selectNodeScale" type="number" min="0.35" max="2" step="0.01" value="1"></label>
+      <label>Offset X <input id="selectNodeX" type="number" min="-540" max="540" value="0"></label>
+      <label>Offset Y <input id="selectNodeY" type="number" min="-540" max="540" value="0"></label>
+      <label><input id="selectNodeHidden" type="checkbox">Hidden</label>
+      <label>Sprite PNG filename (blank clears) <input id="selectNodeSprite" placeholder="edited.png"></label>
+      <a id="selectSpriteExport" href="#" target="_blank" rel="noopener">Export current sprite PNG</a>
+      <button id="selectNodeLoad">Load preset values</button><button id="selectNodeApply">Apply node</button>
+      <p class="sub">Click a tree row to edit its full path. Node values override named groups on that exact object. Save select preset persists nodes.</p>
+    </details>
+    <details><summary>Custom overlay images</summary>
+      <label>Saved images <select id="selectImageList"><option value="">New image</option></select></label>
+      <label>ID <input id="selectImageId" value="board" maxlength="64"></label>
+      <label>PNG filename <input id="selectImageSprite" value="board.png"></label>
+      <label>Parent under Main <input id="selectImageParent" style="width:90%" value="Null_SelectorBackgroundTarget/UI_CMN_SelectorBG(Clone)/Null_CanvasGroup"></label>
+      <label>Sibling index (first / last / integer) <input id="selectImageSibling" value="first"></label>
+      <label>X <input id="selectImageX" type="number" value="0" min="-10000" max="10000"></label>
+      <label>Y <input id="selectImageY" type="number" value="0" min="-10000" max="10000"></label>
+      <label>Width <input id="selectImageWidth" type="number" value="800" min="0.01" max="8192"></label>
+      <label>Height <input id="selectImageHeight" type="number" value="500" min="0.01" max="8192"></label>
+      <label><input id="selectImageHidden" type="checkbox">Hidden</label>
+      <button id="selectImageApply">Create / update image</button><button id="selectImageDelete">Delete image</button>
+      <p class="sub">Place PNGs in LocalAssets/PartnerLive2D/select_sprites. Image coordinates use the parent's local space, centered at its pivot. Images appear only during normal Music. Save select preset persists images.</p>
+    </details>
+    <div class="bar"><button id="selectReset">Reset and disable</button><button id="selectSave" class="primary">Save select preset</button></div>
+    <div class="msg" id="selectMsg"></div>
+    <details><summary>Phase, song metadata, events and baseline/current transforms</summary><pre id="selectStatus" style="white-space:pre-wrap;max-height:420px;overflow:auto"></pre></details>
+  </section>
+</main>
+<script>
+const STATES = [["Default","结算开场"],["Welcom","搭档房间打招呼"],["FunStart","过关那一下"],["FunStartLoop","过关后循环"],["Sad01","没过关"]];
+let partners = [], current = null, liveViewId = null, overlayOn = false, pushTimer = null, pending = {};
+const $ = id => document.getElementById(id);
+
+async function api(path, body) {
+  const opt = body === undefined ? {} : { method: "POST", headers: { "X-PartnerLive2D": "1", "Content-Type": "application/json" }, body: JSON.stringify(body) };
+  const r = await fetch(path, opt);
+  const j = await r.json();
+  if (!j.ok) throw new Error(j.error || r.status);
+  return j;
+}
+function say(t) { $("msg").textContent = t; }
+
+async function refresh() {
+  try {
+    const s = await api("/api/status");
+    partners = s.partners;
+    fillSelect(s.musicSelect);
+    const name = current ? current.name : (partners[0] && partners[0].name);
+    $("partner").innerHTML = partners.map(p => `<option value="${p.name}">${p.name}（搭档 ${p.partnerId}）</option>`).join("");
+    if (name) $("partner").value = name;
+    current = partners.find(p => p.name === $("partner").value) || null;
+    const views = s.views.filter(v => current && v.partner === current.name);
+    const live = views.find(v => v.context === "result") || views.find(v => v.context !== "overlay") || views[0];
+    liveViewId = live ? live.id : null;
+    overlayOn = views.some(v => v.context === "overlay");
+    $("overlayBtn").textContent = overlayOn ? "关掉中间预览" : "在屏幕中间预览";
+    $("status").textContent = liveViewId ? `已连接 · 正在显示（${live.context === "result" ? "结算页" : live.context === "room" ? "搭档房间" : "预览"}）` : "已连接 · 现在屏幕上没有这个搭档";
+    fill();
+  } catch (e) { $("status").textContent = "连不上游戏：请先启动游戏（" + e.message + "）"; }
+}
+
+function setPair(key, v) { $(key).value = v; $(key + "_n").value = (+v).toFixed(2); }
+function fill() {
+  if (!current) return;
+  for (const k of ["scale","offsetX","offsetY","lookStrength"]) if (!(k in pending)) setPair(k, current[k]);
+  $("flipY").checked = !!current.flipY;
+  const groups = Object.keys(current.model.motionGroups || {});
+  const opts = sel => `<option value="">保持待机</option>` + groups.map(g => `<option ${g===sel?"selected":""}>${g}</option>`).join("");
+  $("motions").innerHTML = STATES.map(([k,label]) => `<label>${label}<select data-key="motion.${k}">${opts(current.motions[k])}</select></label>`).join("")
+    + `<label>被摸的时候<select data-key="tap">${opts(current.tap)}</select></label><label>平时待机<select data-key="idle">${opts(current.idle)}</select></label>`;
+  $("motions").querySelectorAll("select").forEach(s => s.onchange = () => queue(s.dataset.key, s.value));
+  $("tryBar").innerHTML = STATES.map(([k,label]) => `<button data-state="${k}" ${liveViewId?"":"disabled"}>${label}</button>`).join("") + `<button id="tapBtn" ${liveViewId?"":"disabled"}>摸一下</button>`;
+  $("tryBar").querySelectorAll("button[data-state]").forEach(b => b.onclick = () => api(`/api/views/${liveViewId}/state`, { state: b.dataset.state }).catch(e => say(e.message)));
+  $("tapBtn").onclick = () => api(`/api/views/${liveViewId}/tap`, {}).catch(e => say(e.message));
+}
+
+function queue(key, value) {
+  pending[key] = String(value);
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(push, 120);
+}
+async function push() {
+  if (!current) return;
+  const values = pending; pending = {};
+  try {
+    const r = await api(`/api/partners/${encodeURIComponent(current.name)}/config`, { values });
+    Object.assign(current, r);
+    const errs = Object.entries(r.errors || {});
+    say(errs.length ? "有的值没生效：" + errs.map(([k,m]) => k + " " + m).join("；") : "已生效（还没保存）");
+  } catch (e) { say(e.message); }
+}
+
+for (const k of ["scale","offsetX","offsetY","lookStrength"]) {
+  $(k).oninput = () => { $(k + "_n").value = (+$(k).value).toFixed(2); queue(k, $(k).value); };
+  $(k + "_n").onchange = () => { $(k).value = $(k + "_n").value; queue(k, $(k + "_n").value); };
+}
+$("flipY").onchange = () => queue("flipY", $("flipY").checked ? "true" : "false");
+$("partner").onchange = () => { current = partners.find(p => p.name === $("partner").value); pending = {}; refresh(); };
+$("saveBtn").onclick = async () => { try { await push(); await api(`/api/partners/${encodeURIComponent(current.name)}/save`, {}); say("已保存到 partner.ini"); } catch (e) { say(e.message); } };
+$("revertBtn").onclick = async () => { try { pending = {}; await api(`/api/partners/${encodeURIComponent(current.name)}/reload`, {}); await refresh(); say("已还原"); } catch (e) { say(e.message); } };
+$("overlayBtn").onclick = async () => { try { await api(`/api/partners/${encodeURIComponent(current.name)}/preview`, { show: !overlayOn }); await refresh(); } catch (e) { say(e.message); } };
+$("shotBtn").onclick = () => { $("preview").src = "/api/screenshot.png?t=" + Date.now(); $("preview").hidden = false; $("previewHint").hidden = true; liveViewIdHold = Date.now() + 8000; };
+
+let liveViewIdHold = 0;
+setInterval(() => {
+  if (Date.now() < liveViewIdHold) return;
+  if (liveViewId) { $("preview").src = `/api/views/${liveViewId}/frame.png?t=${Date.now()}`; $("preview").hidden = false; $("previewHint").hidden = true; }
+  else { $("preview").hidden = true; $("previewHint").hidden = false; }
+}, 700);
+
+// Latest-value queue: one in-flight request, merged at 12.5 Hz during a drag.
+let selectPreset = null, selectPending = null, selectBusy = null, selectTimer = null;
+const selectGroups = ['chains','tabs','selector','status','myStatus','difficultyHeader','achievementRate','rivalData','extraInfo','festaDeco','challengeBG','challengeDeco'];
+const selectSpecs = [
+  ...selectGroups.flatMap(g => [
+    [`groups.${g}.scale`, .35, 1.2, .01],
+    [`groups.${g}.offsetX`, -540, 540, 1], [`groups.${g}.offsetY`, -540, 540, 1]]),
+  ['partner.bottomX',-600,600,1], ['partner.bottomY',-1400,400,1], ['partner.height',100,2400,1], ['partner.cropBottom',0,1,.01],
+  ['myStatusContent.offsetX',-540,540,1], ['myStatusContent.offsetY',-540,540,1],
+  ['difficultyLabel.x',-500,500,1], ['difficultyLabel.y',-500,500,1],
+  ['difficultyLabel.width',80,400,1], ['difficultyLabel.height',24,120,1]
+];
+function selectValue(o, path, value) {
+  const keys = path.split('.'); let v = o;
+  for (const k of keys.slice(0,-1)) v = v[k];
+  if (value !== undefined) v[keys.at(-1)] = value;
+  return v[keys.at(-1)];
+}
+for (const [path,min,max,step] of selectSpecs) {
+  const label = document.createElement('label'); label.textContent = path;
+  const row = document.createElement('div'); row.style.display='flex';
+  const slider = document.createElement('input'), number = document.createElement('input');
+  slider.type='range'; number.type='number';
+  for (const input of [slider,number]) { input.min=min; input.max=max; input.step=step; input.dataset.selectPath=path; }
+  slider.oninput = () => { number.value=slider.value; selectValue(selectPreset,path,+slider.value); queueSelect(); };
+  number.onchange = () => { slider.value=number.value; selectValue(selectPreset,path,+number.value); queueSelect(); };
+  row.append(slider,number); label.append(row); $('selectFields').append(label);
+}
+for (const group of selectGroups) {
+  const label=document.createElement('label'), input=document.createElement('input');
+  input.type='checkbox'; input.dataset.selectHidden=group;
+  input.onchange=()=>{if(selectPreset) {selectPreset.groups[group].hidden=input.checked; queueSelect();}};
+  label.append(input,document.createTextNode(`groups.${group}.hidden`)); $('selectFields').append(label);
+}
+function loadNodePreset() {
+  const path=$('selectNodePath').value, v=selectPreset?.nodes?.[path] || {scale:1,offsetX:0,offsetY:0,hidden:false};
+  $('selectNodeScale').value=v.scale; $('selectNodeX').value=v.offsetX; $('selectNodeY').value=v.offsetY; $('selectNodeHidden').checked=v.hidden; $('selectNodeSprite').value=v.sprite || '';
+  $('selectSpriteExport').href='/api/music-select/sprite.png?'+new URLSearchParams({path});
+}
+$('selectNodeLoad').onclick=loadNodePreset;
+$('selectSpriteExport').onclick=()=>{ $('selectSpriteExport').href='/api/music-select/sprite.png?'+new URLSearchParams({path:$('selectNodePath').value}); };
+$('selectNodeApply').onclick=async()=>{try {
+  clearTimeout(selectTimer); selectTimer=null; await flushSelect();
+  const s=await api('/api/music-select/node',{path:$('selectNodePath').value,scale:+$('selectNodeScale').value,
+    offsetX:+$('selectNodeX').value,offsetY:+$('selectNodeY').value,hidden:$('selectNodeHidden').checked,sprite:$('selectNodeSprite').value || null});
+  fillSelect(s); $('selectMsg').textContent='Node preset updated in memory; Save select preset to persist.';
+} catch(e){selectError(e);}};
+$('selectTreeLoad').onclick=async()=>{try {
+  const query=new URLSearchParams({root:$('selectTreeRoot').value,depth:$('selectTreeDepth').value});
+  if($('selectTreePlayer').value!=='') query.set('player',$('selectTreePlayer').value);
+  const s=await api('/api/music-select/tree?'+query); $('selectTree').replaceChildren();
+  function row(node,level) {
+    const line=document.createElement('div'), button=document.createElement('button');
+    line.style.marginLeft=`${level*14}px`; button.textContent=`${node.name} (${node.childCount}) ${node.active?'':'[inactive]'}`;
+    button.onclick=()=>{$('selectNodePath').value=node.path; loadNodePreset();};
+    const detail=document.createElement('details'), summary=document.createElement('summary'), pre=document.createElement('pre');
+    summary.textContent='Transform, bounds and components'; const {children,...info}=node; pre.textContent=JSON.stringify(info,null,2);
+    detail.append(summary,pre); line.append(button,detail); $('selectTree').append(line);
+    for(const child of node.children) row(child,level+1);
+  }
+  row(s.tree,0);
+} catch(e){selectError(e);}};
+function loadImagePreset() {
+  const id=$('selectImageList').value, v=selectPreset?.images?.[id];
+  if (!v) return;
+  $('selectImageId').value=id;
+  for (const [field,key] of [['Sprite','sprite'],['Parent','parent'],['Sibling','siblingIndex'],['X','x'],['Y','y'],['Width','width'],['Height','height']]) $('selectImage'+field).value=v[key];
+  $('selectImageHidden').checked=v.hidden;
+}
+$('selectImageList').onchange=loadImagePreset;
+async function updateSelectImage(remove) {
+  try {
+    clearTimeout(selectTimer); selectTimer=null; await flushSelect();
+    const body={id:$('selectImageId').value};
+    if (remove) body.delete=true;
+    else {
+      const sibling=$('selectImageSibling').value.trim();
+      Object.assign(body,{sprite:$('selectImageSprite').value,parent:$('selectImageParent').value,
+        siblingIndex:['first','last'].includes(sibling)?sibling:Number(sibling),
+        x:+$('selectImageX').value,y:+$('selectImageY').value,width:+$('selectImageWidth').value,height:+$('selectImageHeight').value,hidden:$('selectImageHidden').checked});
+    }
+    fillSelect(await api('/api/music-select/image',body));
+    $('selectImageList').value=remove?'':body.id;
+    $('selectMsg').textContent=remove?'Image deleted in memory; Save to persist.':'Image updated in memory; Save to persist.';
+  } catch(e) {selectError(e);}
+}
+$('selectImageApply').onclick=()=>updateSelectImage(false);
+$('selectImageDelete').onclick=()=>updateSelectImage(true);
+function fillSelect(s) {
+  $('selectStatus').textContent=JSON.stringify(s,null,2);
+  if (selectPending || selectBusy || document.activeElement?.dataset.selectPath) return;
+  selectPreset=s.preset;
+  const imageId=$('selectImageList').value;
+  $('selectImageList').replaceChildren();
+  for (const id of ['',...Object.keys(selectPreset.images || {})]) {
+    const option=document.createElement('option'); option.value=id; option.textContent=id || 'New image'; $('selectImageList').append(option);
+  }
+  $('selectImageList').value=Object.hasOwn(selectPreset.images || {},imageId)?imageId:'';
+  $('selectCategoryKeys').checked=selectPreset.categoryKeys;
+  $('selectEnabled').checked=selectPreset.enabled; $('selectDebug').checked=selectPreset.debugTouchZones;
+  $('selectPartner').replaceChildren();
+  for (const name of ['',...new Set(['equipped','stock',...partners.map(p=>p.name),selectPreset.selectPartner].filter(Boolean))]) {
+    const o=document.createElement('option'); o.value=name; o.textContent=name === 'equipped' ? "Equipped (custom if available, otherwise stock)" : name === 'stock' ? "Stock (player's equipped game partner)" : name || '(current custom partner only)'; $('selectPartner').append(o);
+  }
+  $('selectPartner').value=selectPreset.selectPartner;
+  document.querySelectorAll('[data-select-hidden]').forEach(el=>el.checked=selectPreset.groups[el.dataset.selectHidden].hidden);
+  document.querySelectorAll('[data-select-path]').forEach(el=>el.value=selectValue(selectPreset,el.dataset.selectPath));
+}
+function queueSelect() {
+  if (!selectPreset) return;
+  selectPreset.enabled=$('selectEnabled').checked; selectPreset.selectPartner=$('selectPartner').value;
+  selectPreset.debugTouchZones=$('selectDebug').checked; selectPreset.categoryKeys=$('selectCategoryKeys').checked;
+  selectPending=structuredClone(selectPreset);
+  if (!selectTimer) selectTimer=setTimeout(()=>{selectTimer=null; flushSelect().catch(selectError);},80);
+}
+function selectError(e) { $('selectMsg').textContent=e.message; }
+async function flushSelect() {
+  if (selectBusy) { await selectBusy; return flushSelect(); }
+  if (!selectPending) return;
+  const payload=selectPending; selectPending=null;
+  const request=api('/api/music-select/layout',payload); selectBusy=request;
+  try {
+    const s=await request;
+    $('selectMsg').textContent=s.failure ? `Disabled: ${s.failure}` : 'Applied in memory; save to persist.';
+    $('selectStatus').textContent=JSON.stringify(s,null,2);
+  } finally { selectBusy=null; }
+  if (selectPending && !selectTimer) await flushSelect();
+}
+for (const id of ['selectEnabled','selectPartner','selectDebug','selectCategoryKeys']) $(id).onchange=queueSelect;
+$('selectSave').onclick=async()=>{try { clearTimeout(selectTimer); selectTimer=null; await flushSelect(); const s=await api('/api/music-select/save',{}); fillSelect(s); $('selectMsg').textContent='Saved select_layout.ini + settings.ini'; } catch(e){selectError(e);} };
+$('selectReset').onclick=async()=>{try { clearTimeout(selectTimer); selectTimer=null; selectPending=null; if(selectBusy) await selectBusy; const s=await api('/api/music-select/reset',{}); fillSelect(s); $('selectMsg').textContent='Restored and disabled. Save to persist reset.'; } catch(e){selectError(e);} };
+
+setInterval(refresh, 3000);
+refresh();
+</script>
+</body>
+</html>

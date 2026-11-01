@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_MachingInfo_03.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_MSS_MachingInfo_03.png",
+    "sha": "197f4c8c91c0326cdda41dc71ae9172bcb82f63a",
+    "sha256": "ff9ca6dbbd0fd3ead90cf7005cc0d79fc31c8f4a7e6d5d74ec94bd526c4477da",
+    "bytes": 63473
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_MachingInfo_03/native.png",
+    "sha": "df9b2c4cde0b0f0c3d79ee73fef06d93cae62c4a",
+    "sha256": "3c3aeb5325f4e6311616a1efd3c9ccca1e39b844819f387008ddd83f709be0c6",
+    "bytes": 938933,
+    "size": [
+      1604,
+      980
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_MachingInfo_03/fitted.png",
+    "sha": "197f4c8c91c0326cdda41dc71ae9172bcb82f63a",
+    "sha256": "ff9ca6dbbd0fd3ead90cf7005cc0d79fc31c8f4a7e6d5d74ec94bd526c4477da",
+    "bytes": 63473,
+    "size": [
+      360,
+      220
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_MachingInfo_03/metadata.json",
+    "sha": "fb6efe3e8664d985177eff77651565bf1a23dec4",
+    "sha256": "0177adfb90363ba2b2944818fd0eb664ecf23012ffa9dea12f7382849f63390c",
+    "bytes": 650
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "参加キャンセル blue-violet cancel state preserved; cyan boundary and blank white field present. Prior black/gray central pit removed.",
+    "Left-flush edge and blank runtime-content area retained; no runtime-content collision observed offline, runtime untested."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

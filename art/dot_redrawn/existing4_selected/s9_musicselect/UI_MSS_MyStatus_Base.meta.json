@@ -1,0 +1,32 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_MyStatus_Base.png",
+  "selected_output": {
+    "path": "redrawn/existing4_selected/s9_musicselect/UI_MSS_MyStatus_Base.png",
+    "sha": "8134474e6a5ecb6b3d577b51451d10ac0d68bec3",
+    "sha256": "50dc2359e59c8c34e016163ca43631dbd54123c21561cb1e498e16ca59007de4",
+    "bytes": 28988
+  },
+  "source_metadata": {
+    "path": "evidence/20261029_existing4_selection/UI_MSS_MyStatus_Base/metadata.json",
+    "sha": "60cd2f217648308c14e55e30e86a8eb98289914d",
+    "sha256": "d091dd218c83baa9138a00e7e7ec279e2def908ddf14eeaf1a8ab8c2947383dc",
+    "bytes": 4975
+  },
+  "review": {
+    "path": "evidence/20261029_existing4_selection/UI_MSS_MyStatus_Base/independent_review.json",
+    "sha": "2f22e924d66d7d061e9165774640e3e7cb96a357",
+    "sha256": "03fe964d1718b2cb859c04353d8679068e579238786b12ca50234980673609b7",
+    "bytes": 2814
+  },
+  "existing_fitted_reference": {
+    "paths": [
+      "drafts/needs_rework/20261029_next29/s9_musicselect/UI_MSS_MyStatus_Base.png"
+    ],
+    "bytes": 28988,
+    "sha256": "50dc2359e59c8c34e016163ca43631dbd54123c21561cb1e498e16ca59007de4",
+    "sha": "8134474e6a5ecb6b3d577b51451d10ac0d68bec3"
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s11_login/UI_ENT_AimeTouch_Text_05.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s11_login/UI_ENT_AimeTouch_Text_05.png",
+    "sha": "003858ce9854ae4505065e62898a67dcd378a75e",
+    "sha256": "8270a994f123bc36939b3797fb91aa920e7a463d6a73f07f16884883e77fcbdb",
+    "bytes": 8556
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_ENT_AimeTouch_Text_05/native.png",
+    "sha": "49de7fd54e465a14cba9615c67e446e77df150b3",
+    "sha256": "5f499a461e2855885403990c0affd1c1816c259bcc7d5e68a4d1e22720e4abad",
+    "bytes": 823842,
+    "size": [
+      1937,
+      812
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_ENT_AimeTouch_Text_05/fitted.png",
+    "sha": "003858ce9854ae4505065e62898a67dcd378a75e",
+    "sha256": "8270a994f123bc36939b3797fb91aa920e7a463d6a73f07f16884883e77fcbdb",
+    "bytes": 8556,
+    "size": [
+      124,
+      52
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_ENT_AimeTouch_Text_05/metadata.json",
+    "sha": "92353952fb07709b077f66ec3916c4fd25a4a25c",
+    "sha256": "ac580d1e5b852fe3f0cf4ec42af77bb2212fdad90635ae30c5f6570566f8ad35",
+    "bytes": 2185
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "TOUCH is exact and readable. Previously translucent O/C bodies are restored; decorative stepped pink/violet perimeter is larger in visual weight but stays within original canvas/footprint.",
+    "Uniform near-opaque fill is not a visible central hole. Word/call-to-action remains clear on both backgrounds."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

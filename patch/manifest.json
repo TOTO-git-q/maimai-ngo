@@ -1,0 +1,72 @@
+{
+ "format": 1,
+ "name": "maimai NGO skin 20261101",
+ "game": "maimai DX SDEZ 1.70 (resources.assets SHA256 1b4b6a7c6ad8ef3b251253c5768828a438396c0933610b77002ace9aced3c63a)",
+ "created": "2026-11-01T18:26:35",
+ "targets": [
+  {
+   "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_455101.ab",
+   "kind": "bundle",
+   "objects": "targets/A000.AssetBundleImages.chara.ui_chara_455101.ab.json",
+   "exact": "exact/A000.AssetBundleImages.chara.ui_chara_455101.ab.bin",
+   "stock_sha256": "7d0103fd4cdf585af2ab5e6080cb5aacce6270115e75e66a168403b7ca9c421b",
+   "patched_sha256": "eeb8bb71e64b524d14ff202dcef8f0f8847b9d0dc48c33ad7dca5b9d85777315",
+   "packer": "lz4"
+  },
+  {
+   "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_455102.ab",
+   "kind": "bundle",
+   "objects": "targets/A000.AssetBundleImages.chara.ui_chara_455102.ab.json",
+   "exact": "exact/A000.AssetBundleImages.chara.ui_chara_455102.ab.bin",
+   "stock_sha256": "914e0e52145f2d2c4a3233eaeb4c372ba5ea10654468c362dd4a9b25b99197e4",
+   "patched_sha256": "9ea9c97fb23f0b382c9ca63115a3656f509787451d3b3d7f73c41e84d4fc1725",
+   "packer": "lz4"
+  },
+  {
+   "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_555103.ab",
+   "kind": "bundle",
+   "objects": "targets/A000.AssetBundleImages.chara.ui_chara_555103.ab.json",
+   "exact": "exact/A000.AssetBundleImages.chara.ui_chara_555103.ab.bin",
+   "stock_sha256": "c4ff42cbe4400893bb5b68606e7d4b3a725e39b98a459ea2bf2db1955aef0dc3",
+   "patched_sha256": "53f04b3053a13e26ba23890016280eaf2c95e3ceb48f201998fe200cba2aed19",
+   "packer": "lz4"
+  },
+  {
+   "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_555104.ab",
+   "kind": "bundle",
+   "objects": "targets/A000.AssetBundleImages.chara.ui_chara_555104.ab.json",
+   "exact": "exact/A000.AssetBundleImages.chara.ui_chara_555104.ab.bin",
+   "stock_sha256": "21062de3e96411cf98c7a3a853cffb9dfa60c8578f2f395c77b895216f838d57",
+   "patched_sha256": "8568b00c8cc0b9444795a2225feb97250e994817e19f40c596edfe6909f3c8e6",
+   "packer": "lz4"
+  },
+  {
+   "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_555106.ab",
+   "kind": "bundle",
+   "objects": "targets/A000.AssetBundleImages.chara.ui_chara_555106.ab.json",
+   "exact": "exact/A000.AssetBundleImages.chara.ui_chara_555106.ab.bin",
+   "stock_sha256": "cc726b84b05826dd6670396c64917b12ee5edb108dca8a00a3627f9459d23e77",
+   "patched_sha256": "1141c225c55d7de496fc83507cb3a0577abf42d1c8f62c6d8ea609fe089c418a",
+   "packer": "lz4"
+  },
+  {
+   "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/navichara/prefab/ui_navichara_00.ab",
+   "kind": "bundle",
+   "objects": "targets/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab.json",
+   "exact": "exact/A000.AssetBundleImages.navichara.prefab.ui_navichara_00.ab.bin",
+   "stock_sha256": "96343d86f95e6f12d6f2b2d54a7578a2056689438704b11305e7de812ebedf78",
+   "patched_sha256": "4ce95454f6f363ff295600892f21db5786a273449db29053b16b7f5e27308ee8",
+   "packer": "lz4"
+  },
+  {
+   "file": "Sinmai_Data/resources.assets",
+   "kind": "assets",
+   "objects": "targets/resources.assets.json",
+   "exact": "exact/resources.assets.bin",
+   "stock_sha256": "1b4b6a7c6ad8ef3b251253c5768828a438396c0933610b77002ace9aced3c63a",
+   "patched_sha256": "ee7d6caa527ab722d500d21e45f6c87c010a5a222a04b02c7c3ac07aeefabf07"
+  }
+ ],
+ "xml": "xml_patch.json",
+ "files": "files.json"
+}

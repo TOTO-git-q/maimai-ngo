@@ -1,0 +1,55 @@
+{
+  "identity": "originals/s9_musicselect/UI_CMN_TabTitle_EventMap_23.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_CMN_TabTitle_EventMap_23.png",
+    "sha": "778d3f97da811fff390b941ef831819d702527f0",
+    "sha256": "e578b01a80ecffe86c3d56c0496020a730a223a2531ffb559cb796152f0dc04e",
+    "bytes": 21772
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_EventMap_23/native.png",
+    "sha": "d17f3ea9604baaf7640551d713fa6a8cc6a4fe4c",
+    "sha256": "a7434b2cea82242f10f21957e216515ca9a983f918b31a076fca5bd17f313784",
+    "bytes": 634782,
+    "size": [
+      1806,
+      871
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_EventMap_23/fitted.png",
+    "sha": "778d3f97da811fff390b941ef831819d702527f0",
+    "sha256": "e578b01a80ecffe86c3d56c0496020a730a223a2531ffb559cb796152f0dc04e",
+    "bytes": 21772
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_EventMap_23/metadata.json",
+    "sha": "e1f6ac070e4a7e69df696f483d91dfd70aca8f70",
+    "sha256": "60ed7dff5c38e8ee11556187514e10ccc8e590ef4f01f3e0ae0bb8f4a51ce4ba",
+    "bytes": 346
+  },
+  "review_derivative_geometry": {
+    "crop": [
+      197,
+      179,
+      1608,
+      699
+    ],
+    "target": [
+      78,
+      52,
+      252,
+      131
+    ],
+    "method": "one whole title rectangle crop / nearest resize / transparent pad; no painting; review derivative"
+  },
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "イベントちほー / GYARI 2 reads correctly from actual source and r2. Two colored dakuten strokes identifiable in native and fitted; outlines touching neighboring outlines do not alone alter glyph identity.",
+    "Whole-title fit preserves two-row hierarchy and source footprint; bold pink/lavender/white visual style retained."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s8_ticket/UI_CRD_UsedTicket_Title_03.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s8_ticket/UI_CRD_UsedTicket_Title_03.png",
+    "sha": "72bd29aaae76e31076c25e777f4ee91b0cea84b2",
+    "sha256": "f4a584721feec3791551d99de9038447bf7aacf8e787d5b8b1837429b6c128ab",
+    "bytes": 37716
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_CRD_UsedTicket_Title_03/native.png",
+    "sha": "dd9c24d46a406f4babf9012f64b17341e2b096e9",
+    "sha256": "d5e657973f1f652c3a528bd8f7ee030355f05498ad01dbcc3d799a249a11e13f",
+    "bytes": 484360,
+    "size": [
+      2170,
+      725
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_CRD_UsedTicket_Title_03/fitted.png",
+    "sha": "72bd29aaae76e31076c25e777f4ee91b0cea84b2",
+    "sha256": "f4a584721feec3791551d99de9038447bf7aacf8e787d5b8b1837429b6c128ab",
+    "bytes": 37716,
+    "size": [
+      524,
+      48
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_CRD_UsedTicket_Title_03/metadata.json",
+    "sha": "e2596af424d19d9a9e4c408743da792fe9b07151",
+    "sha256": "ee6b68648f9fc6ccd0bd1ca3c470c732c35056579a64819994e3a96068fdc5d0",
+    "bytes": 2166
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "チケット未使用でプレイします! is intact; white contrast outline restored in r2 and readable against dark/light.",
+    "Native contains edge speckle and glyph strokes vary from source. Fitted outline is somewhat jagged but no observed wrong glyph or text loss."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

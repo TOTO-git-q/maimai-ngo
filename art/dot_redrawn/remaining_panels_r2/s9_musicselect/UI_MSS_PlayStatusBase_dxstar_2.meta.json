@@ -1,0 +1,30 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_PlayStatusBase_dxstar_2.png",
+  "selected_output": {
+    "path": "redrawn/remaining_panels_r2/s9_musicselect/UI_MSS_PlayStatusBase_dxstar_2.png",
+    "sha": "4ef263bf1a11e2aa330928d76ec4aec09f70167a",
+    "sha256": "b54b55773a2f872b9978fa4a5c603c72b15b1a6282240deb9b5834dac0ef00e3",
+    "bytes": 2749
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_PlayStatusBase_dxstar_2/fitted.png",
+    "sha": "4ef263bf1a11e2aa330928d76ec4aec09f70167a",
+    "sha256": "b54b55773a2f872b9978fa4a5c603c72b15b1a6282240deb9b5834dac0ef00e3",
+    "bytes": 2749
+  },
+  "metadata": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_PlayStatusBase_dxstar_2/metadata.json",
+    "sha": "911a3c3486ec0b9d7674348bfb6876869fa7bf91",
+    "sha256": "3a00966738a1dafbeb4e084c00a33fc01cf8c2b4c481819ffe006c9939894272",
+    "bytes": 2116
+  },
+  "lineage": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_PlayStatusBase_dxstar_2/lineage.json",
+    "sha": "5e3268aa161da813c9b079c96431d11a67e2352d",
+    "sha256": "5c941f60fc6bd54c7e8cac87e3cf41a697f035f1ce78626be5096b6350d2ad48",
+    "bytes": 2983
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

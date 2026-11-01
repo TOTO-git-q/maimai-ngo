@@ -1,0 +1,32 @@
+{
+ "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_455101.ab",
+ "objects": [
+  {
+   "type": "Texture2D",
+   "name": "UI_Chara_455101",
+   "path_id": 6779349679736372169,
+   "cab": "CAB-1fcda741b5a8c51c936c1a472a5ad8a6",
+   "stock_raw_sha256": "08fa102b624d41d52afbccd6520c819af4020198fa996d36704bd5a62536d499",
+   "patched_raw_sha256": "a884722f37acd541ba989a0647aee7678f898cb8e6f5f20c8be93ae8955d4cc6",
+   "texture": {
+    "png": "textures/A000.AssetBundleImages.chara.ui_chara_455101.ab/UI_Chara_455101__6779349679736372169.png",
+    "pixels_sha256": "a23579aa77866d02e97d49881d8f211dfa6cf052c2ac975f8c462fe375081749",
+    "format": 25,
+    "mip_count": 1,
+    "width": 512,
+    "height": 512,
+    "stock": {
+     "format": 25,
+     "width": 512,
+     "height": 512
+    },
+    "exact": {
+     "offset": 0,
+     "size": 262144,
+     "sha256": "1fdd310e9590a4523b14afe5ffa0b674b7c73482b28810fbd62401f719e87544"
+    }
+   },
+   "changes": []
+  }
+ ]
+}

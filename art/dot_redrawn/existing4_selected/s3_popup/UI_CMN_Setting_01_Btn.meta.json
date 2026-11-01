@@ -1,0 +1,32 @@
+{
+  "identity": "originals/s3_popup/UI_CMN_Setting_01_Btn.png",
+  "selected_output": {
+    "path": "redrawn/existing4_selected/s3_popup/UI_CMN_Setting_01_Btn.png",
+    "sha": "3f4c728ba4b3dbf57156f754be96d484e44ac04e",
+    "sha256": "01e60bb483f9f48577e8542e620f858f2b5ead4bfa8180f1e35d5a2c214133d0",
+    "bytes": 35896
+  },
+  "source_metadata": {
+    "path": "evidence/20261029_existing4_selection/UI_CMN_Setting_01_Btn/metadata.json",
+    "sha": "f1b14123319caf86886b6c1860605d60a76e064b",
+    "sha256": "1f9a520045cf0b555dfb720a689cdd4e9af8231670730a6bf1f84515c927da38",
+    "bytes": 3336
+  },
+  "review": {
+    "path": "evidence/20261029_existing4_selection/UI_CMN_Setting_01_Btn/independent_review.json",
+    "sha": "883e382664a6e03c3f1b032a8a3ddfc8ff84ec46",
+    "sha256": "a01ca1ddfb28600a0fda8649dd9c3fe64ca6d09d671a8da66651b1a4403140dc",
+    "bytes": 1528
+  },
+  "existing_fitted_reference": {
+    "paths": [
+      "drafts/hold/20261029_next29/s3_popup/UI_CMN_Setting_01_Btn.png"
+    ],
+    "bytes": 35896,
+    "sha256": "01e60bb483f9f48577e8542e620f858f2b5ead4bfa8180f1e35d5a2c214133d0",
+    "sha": "3f4c728ba4b3dbf57156f754be96d484e44ac04e"
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

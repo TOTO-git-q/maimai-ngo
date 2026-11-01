@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_MachingInfo_02.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_MSS_MachingInfo_02.png",
+    "sha": "496adfbcc16ab0ccd9c15a6ad2c880bc2d022cc6",
+    "sha256": "b664dcb1b342fa0a8f419a2de548a47217c424776c0bf7f0b0d54ae928215637",
+    "bytes": 60214
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_MachingInfo_02/native.png",
+    "sha": "a8b6d44b63562d6ec35844e4864d6f04ee5958b7",
+    "sha256": "6ec5a3b91e738fca5907988054465145534c05b19dfa1de7d898487788b978ae",
+    "bytes": 894036,
+    "size": [
+      1604,
+      980
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_MachingInfo_02/fitted.png",
+    "sha": "496adfbcc16ab0ccd9c15a6ad2c880bc2d022cc6",
+    "sha256": "b664dcb1b342fa0a8f419a2de548a47217c424776c0bf7f0b0d54ae928215637",
+    "bytes": 60214,
+    "size": [
+      360,
+      220
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_MachingInfo_02/metadata.json",
+    "sha": "68b37d3ce2e49a031ba0d5298da9376cbfe2b675",
+    "sha256": "3836f64729f0a582fa1583c22728b0b872566c17493fdad4ead8c56b6535f8fa",
+    "bytes": 650
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "参加します！ pink join state preserved; cyan boundary and large blank white field present. Central gray smudge/transparency no longer visible.",
+    "Left-flush edge and canvas preserved; stepped cloud contour changes are stylistic and are not exact contour equivalence."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

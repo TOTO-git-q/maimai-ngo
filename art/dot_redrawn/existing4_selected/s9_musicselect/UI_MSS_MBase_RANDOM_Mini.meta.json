@@ -1,0 +1,32 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_MBase_RANDOM_Mini.png",
+  "selected_output": {
+    "path": "redrawn/existing4_selected/s9_musicselect/UI_MSS_MBase_RANDOM_Mini.png",
+    "sha": "a75c81d7349d5d47b535d2520c066c14d878c3c8",
+    "sha256": "e7c2e1b73c7acbc09832000031471ee6e1dc61f01e721860262714009f931308",
+    "bytes": 124486
+  },
+  "source_metadata": {
+    "path": "evidence/20261029_existing4_selection/UI_MSS_MBase_RANDOM_Mini/metadata.json",
+    "sha": "b7fd90a6d7be740a01bf168a417299bc3872c712",
+    "sha256": "9f7c35d46442e70a582a93d478f9548b0f8ff98a8c9f81bf658d0b56d6e8bb62",
+    "bytes": 5875
+  },
+  "review": {
+    "path": "evidence/20261029_existing4_selection/UI_MSS_MBase_RANDOM_Mini/independent_review.json",
+    "sha": "2c7e61d6900ebb72dd68cfaaf98b5f0207b3d67c",
+    "sha256": "079840fafdf24a12044d6078bff6698963d666d8753c103a84b51709fa2f44c1",
+    "bytes": 2928
+  },
+  "existing_fitted_reference": {
+    "paths": [
+      "drafts/needs_rework/s9_musicselect/UI_MSS_MBase_RANDOM_Mini.png"
+    ],
+    "bytes": 124486,
+    "sha256": "e7c2e1b73c7acbc09832000031471ee6e1dc61f01e721860262714009f931308",
+    "sha": "a75c81d7349d5d47b535d2520c066c14d878c3c8"
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

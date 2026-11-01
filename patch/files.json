@@ -1,0 +1,287 @@
+{
+ "files": [
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/checkmark.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/checkmark.png",
+   "sha256": "5592df0daa73a736d2a42293e106836e5fdddacbd3cbba812a1cc6df59277dc8",
+   "size": 562
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_0.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_0.png",
+   "sha256": "c977f3a71f74728ba856f0a0cf2cfde1f3c059ec65c17d7fdf7643cab107d9e8",
+   "size": 225
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_1.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_1.png",
+   "sha256": "5bfc403d4d4970ded93f55bcff044b21050a3de4454198558230fb08664fb435",
+   "size": 234
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_2.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_2.png",
+   "sha256": "08006a2f5373e32e7662c936b58645d5998d84c0f913a953d08dbdbb39df8f38",
+   "size": 228
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_3.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_3.png",
+   "sha256": "6b9e6fbbc805cb922e1533ac02f883791d0df098e85adc4de1635ed1f87bbc98",
+   "size": 234
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_4.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_4.png",
+   "sha256": "6eeac8ef9d4048d7b4aac5e4a20e1e3cef10baf4d2ac807f429ad8806ce1c0ed",
+   "size": 218
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_5.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_5.png",
+   "sha256": "e16e3ee9b333623410c77a3b5a78c72cd655eaaf39bf81759a87e40e42545d58",
+   "size": 233
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_6.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_6.png",
+   "sha256": "29bafc1fe8f3e365f14502920dbc88ddce12b89581c387074435ae635bba21f6",
+   "size": 225
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/loading_7.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/loading_7.png",
+   "sha256": "84ed1ae431dd1a087b078999c0e1447c579c2469ca9eaffe16d1c37a3c60668d",
+   "size": 231
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/login.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/login.png",
+   "sha256": "b7a550d0a861f33fb7a85e54b2657813f2ade935cde458dbe17599a831d65ceb",
+   "size": 4131
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/login_account.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/login_account.png",
+   "sha256": "19e4495b095bcd55c9d2a14e1f916bd1453d48e37d94076c8b7826e9468fc04b",
+   "size": 5598
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/login_card.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/login_card.png",
+   "sha256": "a8cec827207e61e28db80b7be31dd07c12ef618616b6779639f1a142012ce576",
+   "size": 3132
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/login_strip.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/login_strip.png",
+   "sha256": "79c7adf67bdbbebb1aa943016d97a29506aab36f3330fc73c0d463390d1761ff",
+   "size": 1978
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/login_wide.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/login_wide.png",
+   "sha256": "cce96d99527103fa8ed9e4d2fb4baca4bc497bb6c39bf1ed3f04ac1aabdd5b9e",
+   "size": 6874
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/top_static.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/top_static.png",
+   "sha256": "b39f6d570e0543dfb543331eab1e51e5d527e19a19a0488823984dfc9f26c666",
+   "size": 8217
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/boot/windose_boot.png",
+   "src": "files/LocalAssets/PartnerLive2D/boot/windose_boot.png",
+   "sha256": "70af6b50cc9eacb9355276b7697da5c52488eccf46a68f453fcea87f568c37b6",
+   "size": 723431
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_ame_walk/frame_1.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_ame_walk/frame_1.png",
+   "sha256": "f6127b7b9aaf3ef922524258efe82d1e7177349c82028bac7de6146be7867ee7",
+   "size": 187219
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_ame_walk/frame_2.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_ame_walk/frame_2.png",
+   "sha256": "9a2b4ffab865e9651b06caa43479f01b6e5987b0ff410aec555da3f8e2aa7e18",
+   "size": 184957
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_ame_walk/frame_3.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_ame_walk/frame_3.png",
+   "sha256": "4364e51444b43d5f984e2bc1a8425e9376c0d230b9a23a7546b899c77d4b7739",
+   "size": 189651
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_ame_walk/frame_4.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_ame_walk/frame_4.png",
+   "sha256": "14155c7ddb99bbe1f5368ba5f37b58943ee1b96b53ae5d1f48d927a33bee1752",
+   "size": 181259
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/float_cursor.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/float_cursor.png",
+   "sha256": "b9d85c7a0f58bbf0e5cb2b8566f38c396732a087351c4016f959d8d93280d11b",
+   "size": 20132
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/float_halo.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/float_halo.png",
+   "sha256": "f633f88020844cec753b9874807b274b6e56729aaf9474f959cdf6d945a4e368",
+   "size": 17506
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/float_heart.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/float_heart.png",
+   "sha256": "5511417baf8b928d976e7130728ec9dd18e9c1340dcd1475a84bcd5a0ee4feed",
+   "size": 30070
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/float_jine.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/float_jine.png",
+   "sha256": "bccfd9ddc0c8d2d3f9a9bac0d9f97c175d0b2ef61bbe7323dfbcd889869d2e22",
+   "size": 30869
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/float_pill.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/float_pill.png",
+   "sha256": "9b4460d573fbf832bc0248a0982702e86b8150c1b247033a4e4d7e48da378e09",
+   "size": 22508
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/float_star.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/float_star.png",
+   "sha256": "09c14a654cce49a1fb05ba91558fae4db37faf6ee8d56a65a86e5d75a46d7047",
+   "size": 18589
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/main.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/main.png",
+   "sha256": "0949edf0c70503583e3f1c3c3ea016d0198ddf7d2f63944d56db38116a69d9b7",
+   "size": 1332546
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_bg/sub.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_bg/sub.png",
+   "sha256": "c10a568f17317bee67d4d4966a5711f6f8b595ed28149498a4c64b234047b8f9",
+   "size": 602173
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_open_cards.txt",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_open_cards.txt",
+   "sha256": "c61ef3eeaf59a19a17ec9a793c07a22f66ba6a83602cd8e311495c5298b5eb83",
+   "size": 71
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_tint.txt",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_tint.txt",
+   "sha256": "f0ec27d013c65e2c17355d90d8fba2117784213784655f190fb9608483d04a4e",
+   "size": 316
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_transi_kangel/01_01.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_transi_kangel/01_01.png",
+   "sha256": "961217f66ca50612fa5665a7cf63fcaf9800d82f7c6d47092c6545e15480af6a",
+   "size": 13351
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_transi_kangel/Sub_01.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_transi_kangel/Sub_01.png",
+   "sha256": "e729737035d9aa6e4a1d95c5950b588d750ef847b2b8b92b990c9a190bd3768b",
+   "size": 651558
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_transi_kangel/Sub_02.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_transi_kangel/Sub_02.png",
+   "sha256": "589d050271f28f2aa9d740c1f60d04ddc82880a49594056652f5b1f0fa013ffa",
+   "size": 546819
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_transi_kangel/sub_03.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_transi_kangel/sub_03.png",
+   "sha256": "4249591f2c8d6751f803604a118f936f6619d7cfd1049d3ee5c287137d1325a1",
+   "size": 569934
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/ngo_upload/upload_scene.png",
+   "src": "files/LocalAssets/PartnerLive2D/ngo_upload/upload_scene.png",
+   "sha256": "850709e750e5816876ac2624d0c24e04d41cc3196495970b3622da8dd162adc0",
+   "size": 1467766
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/pixel_font.txt",
+   "src": "files/LocalAssets/PartnerLive2D/pixel_font.txt",
+   "sha256": "346c1c2a73906499a8fc82274ded3db93d9e1e77d4eff0a9a8b332a8e48f29f2",
+   "size": 49
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_layout.ini",
+   "src": "files/LocalAssets/PartnerLive2D/select_layout.ini",
+   "sha256": "e13fdb0607b894e344f13220763bc636e922829105f309b2d32f5d95943d8352",
+   "size": 5326
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/back_flat.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/back_flat.png",
+   "sha256": "80197c05f14f85e736f95f4fd36ef777ebda1bd0f1a7d8e2adb4e8a6cc48f080",
+   "size": 29951
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/back_flat2.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/back_flat2.png",
+   "sha256": "28780bb7bc37f2ea3c71581c00651de68c3c5dec186c05dc2b6cdc81467b0665",
+   "size": 29951
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/board.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/board.png",
+   "sha256": "4b081c509917df2dd94ce6003cefbe60af524704ed7af1b456f968a6e4d6201c",
+   "size": 24949
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/next_flat.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/next_flat.png",
+   "sha256": "617c695aed6c6ca5c2826b5ef5b6a68bf0767998046e0cb3e6fb957336b48301",
+   "size": 30175
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/next_flat2.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/next_flat2.png",
+   "sha256": "4130edd0e1b268e8bb9753d2eb9bac612566231de5836dded16b7991d1cd07ef",
+   "size": 30174
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/tabbase_flat.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/tabbase_flat.png",
+   "sha256": "1325c52823d7d0b3d1df4062cb46a825b7ea7e4ee4e410a5ab55210451725356",
+   "size": 2191
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/select_sprites/tabwhite_flat.png",
+   "src": "files/LocalAssets/PartnerLive2D/select_sprites/tabwhite_flat.png",
+   "sha256": "a6ccc52e817a781e8ba414aafb2a7fab890556947026657292227a6d401dd2f2",
+   "size": 1157
+  },
+  {
+   "path": "LocalAssets/PartnerLive2D/settings.ini",
+   "src": "files/LocalAssets/PartnerLive2D/settings.ini",
+   "sha256": "7b465a7d9b43603fa3f091a9380bbf80b6f5fbf574179543d2c3fd5c7e235f09",
+   "size": 882
+  },
+  {
+   "path": "Mods/PartnerLive2D.dll",
+   "src": "files/Mods/PartnerLive2D.dll",
+   "sha256": "893953e0f812f82274b624ea4eea243e9e61ce3b00f56af84c66768842e38a57",
+   "size": 315392,
+   "release_only": true
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A500/DataConfig.xml",
+   "src": "files/Sinmai_Data/StreamingAssets/A500/DataConfig.xml",
+   "sha256": "aea9d4215ae1ff61cab8f542bd42bc0717e61e1d3791cff986cb56f9b0b2ee47",
+   "size": 414
+  }
+ ]
+}

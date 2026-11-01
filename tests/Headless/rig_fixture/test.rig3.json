@@ -1,0 +1,280 @@
+{
+  "Version": 1,
+  "Canvas": {
+    "Width": 20,
+    "Height": 20,
+    "PixelsPerUnit": 10,
+    "OriginX": 5,
+    "OriginY": 5
+  },
+  "Parameters": [
+    {
+      "Id": "A",
+      "Min": 0,
+      "Max": 1,
+      "Default": 0
+    },
+    {
+      "Id": "B",
+      "Min": -1,
+      "Max": 1,
+      "Default": 0
+    }
+  ],
+  "Parts": [
+    {
+      "Id": "Root",
+      "Opacity": 0.8
+    },
+    {
+      "Id": "Child",
+      "Parent": "Root",
+      "Opacity": 0.5
+    }
+  ],
+  "Deformers": [
+    {
+      "Id": "Warp",
+      "Type": "Warp",
+      "Rect": [
+        0,
+        0,
+        10,
+        10
+      ],
+      "Rows": 2,
+      "Cols": 2,
+      "Bindings": [
+        {
+          "Parameter": "A",
+          "Keys": [
+            0,
+            1
+          ]
+        }
+      ],
+      "Keyforms": [
+        {},
+        {
+          "Points": [
+            0.0,
+            0.0,
+            5.0,
+            2.5,
+            10.0,
+            5.0,
+            0.0,
+            5.0,
+            7.5,
+            7.5,
+            15.0,
+            10.0,
+            0.0,
+            10.0,
+            10.0,
+            12.5,
+            20.0,
+            15.0
+          ],
+          "Opacity": 0.5
+        }
+      ]
+    },
+    {
+      "Id": "Rotate",
+      "Type": "Rotation",
+      "Parent": "Warp",
+      "Origin": [
+        5,
+        5
+      ],
+      "Bindings": [
+        {
+          "Parameter": "B",
+          "Keys": [
+            -1,
+            0,
+            1
+          ]
+        }
+      ],
+      "Keyforms": [
+        {
+          "Angle": -90,
+          "X": -2,
+          "Opacity": 0.5
+        },
+        {},
+        {
+          "Angle": 90,
+          "X": 2,
+          "Opacity": 0.5
+        }
+      ]
+    }
+  ],
+  "Meshes": [
+    {
+      "Id": "Face",
+      "Part": "Child",
+      "Parent": "Rotate",
+      "Texture": 0,
+      "DrawOrder": 20,
+      "Blend": "Additive",
+      "Masks": [
+        "Mask"
+      ],
+      "InvertMask": true,
+      "Vertices": [
+        5,
+        5,
+        10,
+        5,
+        15,
+        10
+      ],
+      "Uvs": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "Indices": [
+        0,
+        1,
+        2
+      ],
+      "Bindings": [
+        {
+          "Parameter": "A",
+          "Keys": [
+            0,
+            1
+          ]
+        },
+        {
+          "Parameter": "B",
+          "Keys": [
+            -1,
+            0,
+            1
+          ]
+        }
+      ],
+      "Keyforms": [
+        {
+          "Offsets": [
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            -1
+          ],
+          "DrawOrder": 20
+        },
+        {
+          "Offsets": [
+            2,
+            -1,
+            2,
+            -1,
+            2,
+            -1
+          ],
+          "DrawOrder": 0
+        },
+        {
+          "Offsets": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "DrawOrder": 20
+        },
+        {
+          "Offsets": [
+            2,
+            0,
+            2,
+            0,
+            2,
+            0
+          ],
+          "DrawOrder": 0
+        },
+        {
+          "Offsets": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "DrawOrder": 20
+        },
+        {
+          "Offsets": [
+            2,
+            1,
+            2,
+            1,
+            2,
+            1
+          ],
+          "DrawOrder": 0
+        }
+      ]
+    },
+    {
+      "Id": "Mask",
+      "Texture": 0,
+      "DrawOrder": 10,
+      "Blend": "Multiplicative",
+      "Vertices": [
+        0,
+        0,
+        10,
+        0,
+        0,
+        10
+      ],
+      "Uvs": [
+        0,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "Indices": [
+        0,
+        1,
+        2
+      ],
+      "Bindings": [
+        {
+          "Parameter": "A",
+          "Keys": [
+            0,
+            1
+          ]
+        }
+      ],
+      "Keyforms": [
+        {
+          "Opacity": 0
+        },
+        {
+          "Opacity": 0.8
+        }
+      ]
+    }
+  ]
+}

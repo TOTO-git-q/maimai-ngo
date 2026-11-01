@@ -1,0 +1,165 @@
+{
+  "Version": 2,
+  "Canvas": {
+    "Width": 40,
+    "Height": 40,
+    "PixelsPerUnit": 10,
+    "OriginX": 5,
+    "OriginY": 5
+  },
+  "Camera": {
+    "Focal": 100,
+    "Center": [
+      5,
+      5
+    ],
+    "ParamX": "ParamCamX",
+    "ParamY": "ParamCamY",
+    "ParamZ": "ParamCamZ",
+    "OrbitPx": 10,
+    "DollyPx": 20
+  },
+  "Parameters": [
+    {
+      "Id": "ParamCamX",
+      "Min": -1,
+      "Max": 1,
+      "Default": 0
+    },
+    {
+      "Id": "ParamCamY",
+      "Min": -1,
+      "Max": 1,
+      "Default": 0
+    },
+    {
+      "Id": "ParamCamZ",
+      "Min": -1,
+      "Max": 1,
+      "Default": 0
+    }
+  ],
+  "Parts": [
+    {
+      "Id": "Part",
+      "Opacity": 0.8
+    }
+  ],
+  "Deformers": [
+    {
+      "Id": "Transform",
+      "Type": "Rotation",
+      "Origin": [
+        0,
+        0
+      ],
+      "Keyforms": [
+        {
+          "Scale": 2,
+          "X": 1,
+          "Y": 3,
+          "Opacity": 0.5
+        }
+      ]
+    }
+  ],
+  "Meshes": [
+    {
+      "Id": "DepthMesh",
+      "Parent": "Transform",
+      "Part": "Part",
+      "DrawOrder": 2,
+      "Masks": [
+        "ZeroDepth"
+      ],
+      "Vertices": [
+        6,
+        4,
+        6,
+        4,
+        6,
+        4,
+        6,
+        4,
+        6,
+        4,
+        6,
+        4
+      ],
+      "Depths": [
+        0,
+        50,
+        79,
+        79.5,
+        80,
+        90
+      ],
+      "Uvs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "Keyforms": [
+        {
+          "Offsets": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+          ],
+          "Opacity": 0.5
+        }
+      ]
+    },
+    {
+      "Id": "ZeroDepth",
+      "DrawOrder": 1,
+      "Vertices": [
+        15,
+        15,
+        25,
+        15,
+        15,
+        25
+      ],
+      "Uvs": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "Indices": [
+        0,
+        1,
+        2
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <version>
+    <major>1</major>
+    <minor>70</minor>
+    <release>1</release>
+  </version>
+  <cardMakerVersion>
+    <major>1</major>
+    <minor>70</minor>
+    <release>0</release>
+  </cardMakerVersion>
+</DataConfig>
+<!-- 2026/9 -->
+<!-- 1.70-A -->

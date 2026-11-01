@@ -1,0 +1,63 @@
+﻿maimai 本机版 使用说明
+========================
+
+【第一次用之前，必须做的 3 件事】
+
+1. 填机台 keyid
+   - 去 MuNET（www.mumur.net）注册账号并“创建机台”，拿到 keyid。
+   - 用记事本打开 Package\segatools.ini，找到 [keychip] 下面的
+       id=请在这里输入你的keychip
+     把等号后面换成你的 keyid，保存。
+
+2. 填你自己的卡号
+   - 有读卡器：直接刷卡即可。
+   - 没有读卡器：把你自己的 20 位 aime 卡号写进 Package\DEVICE\aime.txt（只写数字一行）。
+     原包里这个文件写的是打包者的卡号，已经清空，不清空的话你会登进别人的账号。
+   - 游戏里“刷卡”= 按住键盘回车键。
+
+3. 声音（已按这台电脑实测过，基本不用改）
+   - 游戏走 WASAPI 独占模式，直接占用“默认输出设备”，绕过 Windows 混音器：
+     缓冲最低 3ms（普通共享模式是 10ms），格式 48kHz 32位/24位有效，和本机声卡原生格式完全一致，不重采样。
+   - 最推荐：有线耳机插电脑的 3.5mm 耳机孔。
+     笔记本自带喇叭要多经过一个 TI 智能功放的保护处理，会稍晚一点；蓝牙会多 100–250ms 且不稳定，不要用。
+   - 开玩前确认 Windows 右下角的“默认输出”是你要用的设备。
+     注意：插上带喇叭的 HDMI 显示器时，Windows 可能自动把默认输出切过去（显示器自己还会再加延迟）。
+     启动器会把本次用的输出设备记到 launcher.log 里，选到蓝牙/HDMI 时会写一行 WARNING。
+   - 游戏运行时这个设备被游戏独占，别的程序（浏览器、QQ）会暂时没声音，这是正常的。
+   - “允许应用程序独占控制该设备”保持默认的勾选状态；“音频增强”在独占模式下本来就不起作用，不用管。
+
+【启动】
+   双击桌面上的 “maimai” 图标（或者 <GAME_ROOT>\Play-maimai.bat）。
+   - 控制器的屏幕接上时自动在第二块屏幕上显示；只有一块屏幕时显示在主屏。
+   - 想强制指定屏幕：Play-maimai.bat -Monitor 1   （或 2）
+   - 退出游戏后，后台的 amdaemon 会被自动关掉，电源模式自动恢复。
+
+   启动器每次会做这些：
+   - 让 Sinmai.exe 用 NVIDIA 独显（不用 Intel 核显）、关闭“全屏优化”
+   - 电源模式临时切到“最佳性能”，退出时恢复原来的模式
+   - 游戏进程设为“高”优先级，只在 6 个性能核(P核)上跑，不会被调度到小核/低功耗核上
+   - 关掉 Windows 对游戏进程的节能降频（EcoQoS）
+   提示：联想笔记本请插着电源玩，并在 Lenovo Vantage 里开“野兽/性能模式”，否则 Vantage 可能把性能压回去。
+
+【声音和判定的微调】
+   独占模式下延迟是固定的，但每套耳机/音箱的固定延迟不一样，需要对一次：
+   - 游戏内设置里的 “判定调整 A / B” 先调（这是官方方法）；
+   - 只觉得“打击音（正解音）”早了/晚了：在 Package\AquaMai.toml 里把
+       #[Utils.MoveAnswerSound] 这一行前面的 # 去掉，再改下面的 MoveValue_1P（单位毫秒，变大=更晚）。
+
+【加自制谱】
+   推荐用 MaiChartManager（微软商店里搜得到，开源：github.com/MuNET-OSS/MaiChartManager）：
+   1. 打开 MaiChartManager，游戏目录选 <PKG>
+   2. 资源目录选 A500（专门给你放自制谱的空文件夹，已经建好了）
+   3. 把自制谱文件夹（maidata.txt + track.mp3 + bg.png/jpg，可选 pv.mp4）拖进去导入，
+      它会自动把谱面转成游戏格式、把音频转码。
+   - AquaMai 由 Mods\MuMod.dll 负责：每次启动联网取最新版（校验签名后加载），没网时用上次缓存的版本。
+     所以 MaiChartManager 提示“安装/更新 AquaMai”时不要点，否则 Mods 里会多一个 AquaMai.dll，和 MuMod 重复加载。
+     AquaMai 的设置照常改 Package\AquaMai.toml（或在 MaiChartManager 里图形化改）。
+   - 别人打包好的曲包（形如 N005、A123 这种字母+数字的文件夹）直接放进
+       Package\Sinmai_Data\StreamingAssets\  就行。
+
+【出问题时看这里】
+   - <GAME_ROOT>\launcher.log            启动器每一步做了什么
+   - <PKG>\MelonLoader\Latest.log   游戏和 MOD 的日志
+   - 游戏路径必须全英文，且不能放在 E 盘或 Y 盘（启动器会检查并提示）。

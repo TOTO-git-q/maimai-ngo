@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_PlayStatusBase_AP.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_MSS_PlayStatusBase_AP.png",
+    "sha": "555bdadf8dd951c2c1a1feb28dc76bc5c7210b68",
+    "sha256": "9716e7493469b9edebdb55a7bd6968a82f6966e66029edb4ecb9be6a725b2e99",
+    "bytes": 2891
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_PlayStatusBase_AP/native.png",
+    "sha": "356c855c1259e328b6bff06a835e6fbc5a5dc514",
+    "sha256": "9a709adbeacdb4f71abc4b71d2900178c0eb5ad125eb3099022be4563c25ed17",
+    "bytes": 934848,
+    "size": [
+      1306,
+      1205
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_PlayStatusBase_AP/fitted.png",
+    "sha": "555bdadf8dd951c2c1a1feb28dc76bc5c7210b68",
+    "sha256": "9716e7493469b9edebdb55a7bd6968a82f6966e66029edb4ecb9be6a725b2e99",
+    "bytes": 2891,
+    "size": [
+      52,
+      48
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_PlayStatusBase_AP/metadata.json",
+    "sha": "bc753a2eb9ba4bcf56075c23d1d8ae82d63f3168",
+    "sha256": "d509fda49a6f6d3556dde91774fedf93c2954da227d0c2ea6db567fce1212285",
+    "bytes": 2482
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "AP exact lettering and red state retained. Prior left header patch removed; header is visually continuous on dark/light.",
+    "Blank lower field and broad footprint retained. Near-opaque254 does not alone disqualify offline candidate; contour/bevel differ from source."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

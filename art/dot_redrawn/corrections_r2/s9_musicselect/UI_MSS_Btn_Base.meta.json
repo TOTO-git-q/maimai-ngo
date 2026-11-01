@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_Btn_Base.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_MSS_Btn_Base.png",
+    "sha": "033886e22bd405ea335f5538299742dae6a81505",
+    "sha256": "baa53d3c12dbd80a593583d6a96344138697c4b03fa09d29163ea5aab5f029e3",
+    "bytes": 3098
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_Btn_Base/native.png",
+    "sha": "4bb3efae19f403c682ab727bc0591006c506b362",
+    "sha256": "a23524c8d8e4e035e72511d1d91a869822e08ec4409c88ecf4666d033a7caa05",
+    "bytes": 723362,
+    "size": [
+      1254,
+      1254
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_Btn_Base/fitted.png",
+    "sha": "033886e22bd405ea335f5538299742dae6a81505",
+    "sha256": "baa53d3c12dbd80a593583d6a96344138697c4b03fa09d29163ea5aab5f029e3",
+    "bytes": 3098,
+    "size": [
+      72,
+      72
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_MSS_Btn_Base/metadata.json",
+    "sha": "b0cb1b391111b0791e02a9cfa24fb03391ea34e6",
+    "sha256": "b4ca2a251f13ddeab8fb622ae4de1b0675e1c2c2476f45ba2ba2d23694bc0124",
+    "bytes": 643
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "Central transparent hole removed; center is clean near-white and visually continuous on light/dark. Rounded/stepped blank button and bottom gray shadow preserved.",
+    "72x72 identity explicitly distinguished from same-name216x128 asset. Near-uniform254 alpha is quantization, not an observed functional transparency hole; exact nine-slice behavior remains untested."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

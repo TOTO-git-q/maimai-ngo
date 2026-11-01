@@ -1,0 +1,30 @@
+{
+  "identity": "originals/s9_musicselect/UI_CMN_TabTitle_EventMap_151.png",
+  "selected_output": {
+    "path": "redrawn/remaining_corrections_r2/s9_musicselect/UI_CMN_TabTitle_EventMap_151.png",
+    "sha": "67bfb0a6d93bc2d8f99a3f3cecd56fa68cb349ef",
+    "sha256": "27d37db8ec35f283cf7ea494678d75f150ad9bc1a32c129643ffcf98170db2eb",
+    "bytes": 30018
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_remaining_corrections_r2/UI_CMN_TabTitle_EventMap_151/fitted.png",
+    "sha": "67bfb0a6d93bc2d8f99a3f3cecd56fa68cb349ef",
+    "sha256": "27d37db8ec35f283cf7ea494678d75f150ad9bc1a32c129643ffcf98170db2eb",
+    "bytes": 30018
+  },
+  "metadata": {
+    "path": "evidence/20261029_remaining_corrections_r2/UI_CMN_TabTitle_EventMap_151/metadata.json",
+    "sha": "ff1219f9a4c1f5aadb0623ad5fe1c74e4867b01c",
+    "sha256": "e7365dbedca6513a981b47784942ba740913c065743646edb02626afb1c73405",
+    "bytes": 1796
+  },
+  "lineage": {
+    "path": "evidence/20261029_remaining_corrections_r2/UI_CMN_TabTitle_EventMap_151/lineage.json",
+    "sha": "ac92023e39260b2c2a5d70d37c59ed0761aa6358",
+    "sha256": "a42c8da9f78fe01b3e393e9e71253470d7754b7ca5f73a64d563ca14664cf208",
+    "bytes": 2766
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

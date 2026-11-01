@@ -1,0 +1,55 @@
+{
+  "identity": "originals/s9_musicselect/UI_CMN_TabTitle_OriginalMap_36.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s9_musicselect/UI_CMN_TabTitle_OriginalMap_36.png",
+    "sha": "cd74fa01fb3cfede9b55da64e1f965b5ec1fef95",
+    "sha256": "68e15c4d58bed1b52419f5ff1aec6574be172bbc0e5af0861370e5a367633632",
+    "bytes": 18284
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_OriginalMap_36/native.png",
+    "sha": "33fef00159b7e6ce0930efb1f66395d14c04b538",
+    "sha256": "3e75b5ba74f9f57157270815a722cabbb12a0f22a85e1a5d5c96bdea56d256ed",
+    "bytes": 444664,
+    "size": [
+      1881,
+      836
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_OriginalMap_36/fitted.png",
+    "sha": "cd74fa01fb3cfede9b55da64e1f965b5ec1fef95",
+    "sha256": "68e15c4d58bed1b52419f5ff1aec6574be172bbc0e5af0861370e5a367633632",
+    "bytes": 18284
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_CMN_TabTitle_OriginalMap_36/metadata.json",
+    "sha": "9bc02c5f83eee2f1d02d9a16bcaca0917def8949",
+    "sha256": "7e59e06d1aa563ef3cf495843d4366ceebdbd5a39f05c5a3f440fba196161302",
+    "bytes": 352
+  },
+  "review_derivative_geometry": {
+    "crop": [
+      64,
+      304,
+      1813,
+      572
+    ],
+    "target": [
+      36,
+      82,
+      300,
+      125
+    ],
+    "method": "one whole title rectangle crop / nearest resize / transparent pad; no painting; review derivative"
+  },
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "ユニバースちほー2 reads correctly. バ now has two colored marks, including at 1x.",
+    "Single-row placement and broad footprint retained; changing green original lettering to pink themed art is stylistic, not state-loss evidence in supplied title metadata."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

@@ -1,0 +1,30 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_Parfechalle_LifeBase_01.png",
+  "selected_output": {
+    "path": "redrawn/remaining_panels_r2/s9_musicselect/UI_MSS_Parfechalle_LifeBase_01.png",
+    "sha": "7c7de8a973f1987a17749c7ed03e28c390e4351d",
+    "sha256": "d9e36ddba0f93c4b515f4181892ce322dafa2219407c747accad23690dd36729",
+    "bytes": 13026
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_Parfechalle_LifeBase_01/fitted.png",
+    "sha": "7c7de8a973f1987a17749c7ed03e28c390e4351d",
+    "sha256": "d9e36ddba0f93c4b515f4181892ce322dafa2219407c747accad23690dd36729",
+    "bytes": 13026
+  },
+  "metadata": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_Parfechalle_LifeBase_01/metadata.json",
+    "sha": "a2a33f120a19aa861dc363af0b2bf9314381e60c",
+    "sha256": "232acfc20a571e84975708b6d02da09b1ef6893cc92b4c1fa8a5b66ee22e486b",
+    "bytes": 3391
+  },
+  "lineage": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_Parfechalle_LifeBase_01/lineage.json",
+    "sha": "0a781824e7a14ed7943d3775b2825611d3d6a320",
+    "sha256": "6c0d05f209eabbc1b610ca0573789febd60f6c9d06f4fda9cbcd5cb0cc73478c",
+    "bytes": 3345
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

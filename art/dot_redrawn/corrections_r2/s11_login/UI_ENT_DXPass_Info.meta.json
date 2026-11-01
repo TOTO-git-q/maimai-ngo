@@ -1,0 +1,46 @@
+{
+  "identity": "originals/s11_login/UI_ENT_DXPass_Info.png",
+  "selected_output": {
+    "path": "redrawn/corrections_r2/s11_login/UI_ENT_DXPass_Info.png",
+    "sha": "b6624d7498e34f05f66aa5f75df16a573326d1ee",
+    "sha256": "66537e74b62e0aa35f7edcde1e6165c2d1b54351de28c7f56c5b2040879cc44b",
+    "bytes": 5032
+  },
+  "archive_native": {
+    "path": "evidence/20261029_correction_r2/UI_ENT_DXPass_Info/native.png",
+    "sha": "2a97f3653909e29b9fefa67218beb66fb819e705",
+    "sha256": "e43195a9207641abd2aa700e499679bddb0e0a52d9cbb5098929671983fe0a28",
+    "bytes": 491084,
+    "size": [
+      2080,
+      756
+    ],
+    "image_mode": "RGBA"
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_correction_r2/UI_ENT_DXPass_Info/fitted.png",
+    "sha": "b6624d7498e34f05f66aa5f75df16a573326d1ee",
+    "sha256": "66537e74b62e0aa35f7edcde1e6165c2d1b54351de28c7f56c5b2040879cc44b",
+    "bytes": 5032,
+    "size": [
+      168,
+      28
+    ],
+    "image_mode": "RGBA"
+  },
+  "metadata": {
+    "path": "evidence/20261029_correction_r2/UI_ENT_DXPass_Info/metadata.json",
+    "sha": "e3c388388e5e307887282ff6a703a97b1804d3df",
+    "sha256": "593e2ffb2f87406c80b9297cb60302a8ada1015244615003e89159567e8d8e57",
+    "bytes": 1806
+  },
+  "review_derivative_geometry": null,
+  "independent_verdict": "usable_offline_candidate",
+  "reason": [
+    "でらっくすパス期限切れ is restored inside salmon/red pill. Actual source expiration-state color, one-line hierarchy and readable text retained.",
+    "Tiny fitted glyphs are denser than source; no observed missing character. Uniform254 alpha alone not functional failure."
+  ],
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

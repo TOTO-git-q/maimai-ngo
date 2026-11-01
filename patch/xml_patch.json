@@ -1,0 +1,2207 @@
+{
+ "files": [
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000000/MusicClearRank.xml",
+   "stock_sha256": "3e1c4d207ebd65778399b8098ef7644aa2d1d992f63746cd0cea8a851ed2c06f",
+   "patched_sha256": "88d44f4f056662c9e25c1acf1dd8cda4963f4ab338e98f1e1997ebf31d6d6f1c",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000001/MusicClearRank.xml",
+   "stock_sha256": "be096b35592524fea96175f898343278fb5a037ae9e8a5689c1b58b0cd6c30e5",
+   "patched_sha256": "c3a6ba1b0362f22a98ee242fcdaf12bf4438eddfa6e41ade0d0106facb51b4c9",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000002/MusicClearRank.xml",
+   "stock_sha256": "1b7e29d535214456817f191a88d543735a669a932d1bb8f60c8f6b4ad2a3c408",
+   "patched_sha256": "2503dfcf351b371d1fee7936f0a5e252de24725cd8303bbc964395e888f20f17",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000003/MusicClearRank.xml",
+   "stock_sha256": "cc15fdaa86411f490488ebebbfff7fd1b8d09ccd166588f592faa1673ca80e1e",
+   "patched_sha256": "f4a037cb70c10aea53c9cdc7400b1dbcfb210d6757e6ba1d4bf47047a22d93d5",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000004/MusicClearRank.xml",
+   "stock_sha256": "5c9bf586bc7201d55d3ceab3cc199acafcd26e5489781183c5425869c6774df7",
+   "patched_sha256": "219e4c135192d256c5011be725e001158b12768d1289709ad30a362279d51517",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000005/MusicClearRank.xml",
+   "stock_sha256": "418392352b11bc4270859e30ff0c688e228eb26892c537a50435fc60e07b70eb",
+   "patched_sha256": "14f3ce7532bdc80f5e6bc59a20c6fa8fb8209c467ecfb2407bef84a0e8b028b5",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000006/MusicClearRank.xml",
+   "stock_sha256": "a1f9404e0e08a482a9dabb9c9ba0bc9e16720081eb5857cf367fb7782d2aa328",
+   "patched_sha256": "64f679e268b15109ee63296dfe47b57a4297a087a9dacf6d608dff97d3136a41",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000007/MusicClearRank.xml",
+   "stock_sha256": "27b6174ca71bbc6246bc17eea50fa1e76abc60717e09c6674e56d8f413e81081",
+   "patched_sha256": "07711f98c1f174e9cce594f7a6d43b7a07731053f97460510ec9fec2752b36f9",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000008/MusicClearRank.xml",
+   "stock_sha256": "c1132878266ba0e319d2eaa4f5ed5027a544a6e357d69ffae108f6cdbe29059d",
+   "patched_sha256": "ddd2f52fe48a157361e377637f4b768d3f5a47b816e35c38624d8ff0a859fa94",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000009/MusicClearRank.xml",
+   "stock_sha256": "116bbec489fbeea2143a426e45c2e556acaf86af724c3f6c59a4c6a4b42cd9ce",
+   "patched_sha256": "ebb558e0dcd870b1f03cbe9fd80d008f477e83763dd38dc9544285b93868404c",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000010/MusicClearRank.xml",
+   "stock_sha256": "391cca9c8cb29a19fdbb6df89d9c239f5ab3e120f745e29e76c1633b6461947f",
+   "patched_sha256": "88f84c870e4e3d493fcc442caff9f4daa78f45402a384e3decb13bedacf64754",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000011/MusicClearRank.xml",
+   "stock_sha256": "02b3daf2d082a004c1ea2a7300e44993f669dbc383b2fc9f84dc9d4f5d3429b0",
+   "patched_sha256": "279315e1a0d6375cebe4ad81947cb84a33144045ac0049f768c5c45fcb84d07a",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000012/MusicClearRank.xml",
+   "stock_sha256": "2ecd638833922c6bfdd00ff769b01732a15c4a3f412a8b6bd539c648b4f614d6",
+   "patched_sha256": "6567753c074eabebd4a0f81f0f390772accd848d0414243e72e01c0ee68e8ab2",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicClearRank/MusicClearRank000013/MusicClearRank.xml",
+   "stock_sha256": "5784ca547cf6cb83294a41ba73029c2ffe5d651439d37312ad5c234746e84861",
+   "patched_sha256": "d65936b50db8575a8998f7738a181939da46b882cad34953bfd269648bb2963e",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>238</R>",
+      "    <G>89</G>",
+      "    <B>247</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000001/MusicGenre.xml",
+   "stock_sha256": "211354eef3414fdd24b9a38bcca680a4d4a014fe05f6200c14b734655d265402",
+   "patched_sha256": "27eb6c07df6b64af8d5772ad26dd9e4200354121847d1c16a1b9d7041ef6825f",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>251</R>",
+      "    <G>96</G>",
+      "    <B>153</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000002/MusicGenre.xml",
+   "stock_sha256": "20d44e355ae48c7c9113e47cc267f21b03b35113c8b2ee98a9d151cfc31efe69",
+   "patched_sha256": "c5ec9c1f832850701de3bdc953414efdc3c23cd11315db5e3d71d0500e054844",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>245</R>",
+      "    <G>161</G>",
+      "    <B>51</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000004/MusicGenre.xml",
+   "stock_sha256": "799c3e37dac16a72dc412c7975ce390cafed2c078b06d2766887d77c2a8842c8",
+   "patched_sha256": "f78e8999887a085ee25a5e79ddf4b5303aa9820abdae2d5f3196b9bbaf3933f8",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>245</R>",
+      "    <G>161</G>",
+      "    <B>51</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000005/MusicGenre.xml",
+   "stock_sha256": "36f18d1da363eeba65cf79d5bc312b7f54ab9f603908c0b3838c34f255e85307",
+   "patched_sha256": "d977b06d0258a4c8776fe4a2e90519ccddb48a87117c75f8f98ce229f24b53d1",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>1</R>",
+      "    <G>169</G>",
+      "    <B>189</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000010/MusicGenre.xml",
+   "stock_sha256": "0060e6143231b7b361db275f8d50826befb218d367f17b13f9759dbb02cbbb15",
+   "patched_sha256": "ba4aba98aff8c2299db49f339feb27c6a73b25227f8b4af51999d5626f538b96",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>86</R>",
+      "    <G>210</G>",
+      "    <B>48</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000012/MusicGenre.xml",
+   "stock_sha256": "d586de8943746ceea7e4a92db79f8507dbc666918d6729d414ba33c69efa3667",
+   "patched_sha256": "8812dc23ef49c659b4fa92e5a0a89d521333966a39dcaa4f9d505079f837c008",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>254</R>",
+      "    <G>221</G>",
+      "    <B>1</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000014/MusicGenre.xml",
+   "stock_sha256": "2cca0b79e4e264ca00ae1dbc601280450ceb671251759948e54246844765730c",
+   "patched_sha256": "e42629db2b5a52309f41851988f9a7a4dc8a668acb0fa1aa5d84d87a8ea7bda5",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>255</R>",
+      "    <G>93</G>",
+      "    <B>93</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000020/MusicGenre.xml",
+   "stock_sha256": "6c2e6fad34130e580d035f3ed2cad276739832701fe823f994eb2926703f8c42",
+   "patched_sha256": "d59f5641efb7c3abe823d55da704d0a78444a5a60d46b8b10623decac8c4e365",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>255</R>",
+      "    <G>112</G>",
+      "    <B>240</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000101/MusicGenre.xml",
+   "stock_sha256": "4a10a57fcadd706fc8db0a535cae84b0bc4efdab6474aa40174c59484cf06f3d",
+   "patched_sha256": "038e95b739bbf987b1fef813a0f02bd18ebc5242a78d984bffb30abd2e590bea",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>255</R>",
+      "    <G>151</G>",
+      "    <B>42</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000102/MusicGenre.xml",
+   "stock_sha256": "384f8b4bc2d44cd83aef5235cd0c41a59724e605d28d5b30594d83c5f03ef9e8",
+   "patched_sha256": "e767e368edd6f7948359f435627ebfe414127e58e58d319200508d1c18a3ba31",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>0</R>",
+      "    <G>218</G>",
+      "    <B>203</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000103/MusicGenre.xml",
+   "stock_sha256": "9f3915ae29274a3a8281c879a7c5aa6fca6da0c8f0c7a230a338f1d545e70290",
+   "patched_sha256": "8ebe8566a7e0c5182c0f46af18629dba418156075c05b04567716ecd9d348106",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>177</R>",
+      "    <G>91</G>",
+      "    <B>244</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000104/MusicGenre.xml",
+   "stock_sha256": "8badc163ff3ae9db8ad24988eb3a266720145d17b596a3483c4808e746ec0005",
+   "patched_sha256": "e0e5434eb8ec45f8bc55ee134d24b0eb042d84c3498e0ac89e1c1842cdc3a6c6",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>66</R>",
+      "    <G>222</G>",
+      "    <B>106</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000105/MusicGenre.xml",
+   "stock_sha256": "33d7d6338e8c35b347e1776981409cb0d82f91dddfe26b44d032a016b472c0a1",
+   "patched_sha256": "dc460ecdc2d8277f8f448d65d79888b06643735b15b4744dd4030a5551c1a731",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>247</R>",
+      "    <G>73</G>",
+      "    <B>73</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000106/MusicGenre.xml",
+   "stock_sha256": "e782eb940bcfc77333d5998b4c5a2cd45f3ec62aca2695d8f803d64fff490e8d",
+   "patched_sha256": "0ab2dfc01149ebf4565f10187400d900ddbeac80d788ac32997adc672d2eb6b7",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>53</R>",
+      "    <G>133</G>",
+      "    <B>254</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000107/MusicGenre.xml",
+   "stock_sha256": "698a327d8c43d1310480e3a8521b931397a74df93acecabb30416a6196647ab0",
+   "patched_sha256": "d0689543ac3714f42a9016dbce02988a1a4e53ce76e9bfd2f9471af94d965eb4",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>228</R>",
+      "    <G>52</G>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000120/MusicGenre.xml",
+   "stock_sha256": "8ad369d8fc09052a3e465e57d730856345dc15f285f11a7f360bb5bf26baa4d7",
+   "patched_sha256": "8652dd986187a20b6889a54c2b6ce468b9c08f4dea4af7c607c90f2ce22d7960",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>53</R>",
+      "    <G>133</G>",
+      "    <B>254</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000195/MusicGenre.xml",
+   "stock_sha256": "707033bf54dc4952050f49881037e846a8ee3d191a7cd82b95e5476e73b1f281",
+   "patched_sha256": "363ba18e288eef8fdf1f2cd40ce318f73aa2e1c7a81f67ced1f812dadcaa2894",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>223</R>",
+      "    <G>60</G>",
+      "    <B>60</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000196/MusicGenre.xml",
+   "stock_sha256": "829e0ef6d009e08c2bc9e21b85ff28022d84386b7a9671d9510443c4282b9d2b",
+   "patched_sha256": "c1bfa340cfa5dfac170377ef419aba85d9a70dae06a898febcb9f15d82ad097a",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>82</R>",
+      "    <G>77</G>",
+      "    <B>91</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000197/MusicGenre.xml",
+   "stock_sha256": "3f0d1ff1f262ca4277efc51b7718289e06a19fcdc8ee0a357290ca42e0b11ce6",
+   "patched_sha256": "5facad5081bc5b9cabbf17e6c42f27eeb07914017184f819cd7b2b5bb74dab88",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>191</R>",
+      "    <G>151</G>",
+      "    <B>30</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000198/MusicGenre.xml",
+   "stock_sha256": "266607cf27acda02126d18bf88c60fa9d67ad767da060a1d2f502ce16803aa3a",
+   "patched_sha256": "e4c03537ae1d7cd08c7c92f83f5af76e21a92a4619a62399d62c3510dff0b143",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>67</R>",
+      "    <G>89</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000199/MusicGenre.xml",
+   "stock_sha256": "10e42d2cf05fdb91ce6d79a3c1a97efeddc9eb7bab060f4a2e9e03e3621daf02",
+   "patched_sha256": "55300ca7b7ddecc098e7bd12ade6061a2e6b18e9388b14b16772b0c07eda0cdd",
+   "hunks": [
+    {
+     "at": 10,
+     "old": [
+      "    <R>255</R>",
+      "    <G>99</G>",
+      "    <B>68</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicGenre/musicgenre000300/MusicGenre.xml",
+   "stock_sha256": "1e7ba12197aca774f98db6b8c71fd69b8f041ba6805b022f117c25812d28b670",
+   "patched_sha256": "b77164b1b89b10d42670c25918c8eb3fff5ab9d282f727dd148a84a067d7f2c0",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>191</R>",
+      "    <G>151</G>",
+      "    <B>30</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000000/MusicLevel.xml",
+   "stock_sha256": "1fa90fdf7c6eb5bb5b6ddeb85c27f1403e98ecea49daddf4e19a99c149652a60",
+   "patched_sha256": "1274fe99a6eb79223aaa6c3563ee922a0577ec5359d66a00c59359c0fbfca4cd",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000001/MusicLevel.xml",
+   "stock_sha256": "3dcc02dcfa72032c7044b5b6b8aa12762bedeb0476808e18b22cf60735af0e0b",
+   "patched_sha256": "73a5836f445718249b54981977cf6abaf6aa72b2dfb12347e8b217243497d1fd",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000002/MusicLevel.xml",
+   "stock_sha256": "92a6ea5b65d85352dbc1f1eb90aa9a7d368d1e1e931840f6faf6d4848b999bec",
+   "patched_sha256": "62b74ff0ff184d2eedbd50e621bf2dacdc79d2283ab4bc6016daef52c4256913",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000003/MusicLevel.xml",
+   "stock_sha256": "0c44463eaa676b975358d71345cb355b46ff009659401c1bf847a15de07d69fe",
+   "patched_sha256": "f9ca6be86c00e320020deb6f4b980fe3f791b96878948bcebe46189da033dd68",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000004/MusicLevel.xml",
+   "stock_sha256": "169a6ced1d365c3acb77e93bbd9d9b51bf8582f1cc3ee8f5e4837bd948701f4b",
+   "patched_sha256": "cc562ad953a2fde69f2870eaa877dc9d1fcbd36f529c8d90032271d798668739",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000005/MusicLevel.xml",
+   "stock_sha256": "bde21c2c7954ef6fdf4a13cc582da9d080c697ed8c84a37d8554674478c5c48b",
+   "patched_sha256": "d306ad2f7c5f015f84028c027624fb469614fdc723a869a84278414b6d233be1",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000006/MusicLevel.xml",
+   "stock_sha256": "6beecfef394dfbcd3b49b9be323f1a882a87150ace001f70c97a3398feaa9cba",
+   "patched_sha256": "fd0f59432b4a8a1e2e02310b3e4a4c328f23eecb99f19ea35031b41b4caf4c74",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000007/MusicLevel.xml",
+   "stock_sha256": "f3a44e6928223ce2b6a2ce24c7f32f4dc5ffbcb5916c6a7c8884d8756c16be7a",
+   "patched_sha256": "6f164bf274d98a80c9dbb855c5f03f53bc58f6b3f45d51c263c59fee0ebf15b4",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000008/MusicLevel.xml",
+   "stock_sha256": "964ce4edd06a4318337e8f5f727c861ee2d94181d936404a4ba3a93fe33db02d",
+   "patched_sha256": "e2038a3621f7dffcefa94f0912a9c54f670c32522f6bd84e3ba4ac2c4766be08",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000009/MusicLevel.xml",
+   "stock_sha256": "a580d09ea4c4327cb4c296dffee74ac3055139e331fa6ab549712178952d1ba9",
+   "patched_sha256": "b209c8a356f7b60707995477b4499d050ea7f6ceb3fe04ca41145fb5b7d2ac25",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000010/MusicLevel.xml",
+   "stock_sha256": "053d49eed90f3a4edea7125501a505524475e07824312de39812f03db1419a24",
+   "patched_sha256": "205bfe36a4037ca23c7f4e712a3a06b67ec5dd7662a7dc821ca121952f15ea2a",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000011/MusicLevel.xml",
+   "stock_sha256": "a433cfc25e28aad3dee9849a26a7949484e847a3a1bc2356e70bd218441a12cc",
+   "patched_sha256": "b8652398aea1386c55c3789ab5b8b98e69c0c5c55c69fb3e082d6e0490f1c9f6",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000012/MusicLevel.xml",
+   "stock_sha256": "74f91ddfca97335cb00bc9fb4e4f9840706149608184479026c4f4132dc59dea",
+   "patched_sha256": "6d55cb20669cbf9b41379b4e7455ad3bbfa8102f846c980a5d7266f7d7543202",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000013/MusicLevel.xml",
+   "stock_sha256": "bd7bec093b787d1a77efe4cf2cd15395eb5a8ad28a07c589a2bcf0d39dd3337d",
+   "patched_sha256": "2eb821d3a9acbde8ced357bb355dc5b8d4b03ce761d1e4f11bff2c0273a4f81c",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000014/MusicLevel.xml",
+   "stock_sha256": "34e54998118adfce25a06668942f6f3c9c79a33817b12c17f50d4f00954a7c23",
+   "patched_sha256": "3b8ebc2f46de6d9ba59a41c4ba215b8268d11607c03de5d5244ef66b735072da",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000015/MusicLevel.xml",
+   "stock_sha256": "8dd33e04ee9912b136ed78e6fb2058ed46012333462538913a829215e349a981",
+   "patched_sha256": "23d6d531a182277cf420acb4c1c95d1b64702b977790863735586a49b41c62c8",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000016/MusicLevel.xml",
+   "stock_sha256": "89b67e94334cfa3f65ed9be29fb925a7b8d2656b79f70b7403e4ce03a2d60c31",
+   "patched_sha256": "68258da2a2b4ef9c7a4781ab7a6fe9b1e092897c92907940871d3fcfcdcb2f17",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000017/MusicLevel.xml",
+   "stock_sha256": "943228bb4dbb096aa1e7a20df9056b7b9ad63630d06cc489a34db4e90e38135b",
+   "patched_sha256": "a004b994872f861eff709741b747ea7dc3cb2506b8f591041b5fefa2c0f0fb35",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000018/MusicLevel.xml",
+   "stock_sha256": "d6c1d0dc9d1ea4019012d3f10f5be0a6effc711d8352ffab9a158df15d187bf6",
+   "patched_sha256": "05befc426a2852e909d743faa2e67b6fc389e5fca6d3efc11e9c71d8b470af33",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000019/MusicLevel.xml",
+   "stock_sha256": "1119f089f68b01f12d308eac9afb1b61325977104f2c5b2f6e82aece80e28060",
+   "patched_sha256": "6b2d117c423091e42d7ab6c1a3063c35f87531da64b4ccb45bb7685ca9007a00",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000020/MusicLevel.xml",
+   "stock_sha256": "af16f99f1691372ff3903e3371a1bc6834c748ac1d585f2c3eb46b0fbcbc5847",
+   "patched_sha256": "f60c2f4faa5de823e79549a130d6bff6d9e61970e41e9195e66e6f80a9d9795b",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000021/MusicLevel.xml",
+   "stock_sha256": "86bea79ed6d5872b969dcf3de74bfff2ce1ab52a3b27b3d3049062813b3b7188",
+   "patched_sha256": "ee08b25a43442494e1bf51158d98aee2cd478b1d04d4f989b1aa177d11db1f86",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000022/MusicLevel.xml",
+   "stock_sha256": "128030f9624bdc18eb955b250715d0a5c4163769b8fa5a00fd73dfb6eb200037",
+   "patched_sha256": "b98fad5088e75052e6df856c4919aeb495d0fe9f526e52fb8ca50007afe7115e",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000023/MusicLevel.xml",
+   "stock_sha256": "49aac5291788ba44d149cbfb1cdcd97e136c3302eb42fdda1dff281e48ca8ab4",
+   "patched_sha256": "88738def38d92a2ca96217ba036b85b0cb243817160f35553b1ea85f31cff8a0",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicLevel/MusicLevel000024/MusicLevel.xml",
+   "stock_sha256": "8c7f28b7ef82126758eaeb3765f3beb6be886050e292c09cec9a36912210d216",
+   "patched_sha256": "15308a9c5717e8871a860004f2ebf922e603a3da15a58125af38c175ec7db7b6",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>251</R>",
+      "    <G>114</G>",
+      "    <B>95</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000000/MusicNameSort.xml",
+   "stock_sha256": "392e78ccb05f6adeb41007334868d9b035dc7e99bd8422317671474b445184c7",
+   "patched_sha256": "ea2569a9d14669dc234281120a29210cc3216d912a21aeb71bd1509a0afab6ec",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000001/MusicNameSort.xml",
+   "stock_sha256": "c44bbefe8dec5750a8711219877aea41e78add14df766fb327f480a035a7b16a",
+   "patched_sha256": "0b967dcd2f0ea805cdb0a3f18855a16f41cb9c8d10cc75b1e9b87217bd1498bc",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000002/MusicNameSort.xml",
+   "stock_sha256": "7f6bd5e8f09b4f832cf18a9c372a4fd18c0a9d5bbbb128d9267d04282f179e38",
+   "patched_sha256": "36e1f7abf09ac54e53d80039e3d917867c9ab089c3521ab0ae4366ee78657ad2",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000003/MusicNameSort.xml",
+   "stock_sha256": "0f252c55b70c049a199db4e1a0e37e26a5f32f0a690178ecfc737b242b99e06a",
+   "patched_sha256": "6d082bc4f595046fd2cbc91030dcf83c9bc0874f9d4e663722acd1fafb787c7a",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000004/MusicNameSort.xml",
+   "stock_sha256": "ef15a0469936ffdf794f12c690fc63f6b54fafc440223cdf8bd83a33af959a5b",
+   "patched_sha256": "0a74c068357ac45f8fd271963837098040ed3bd1e8cd019064ab242a5d41b486",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000005/MusicNameSort.xml",
+   "stock_sha256": "00e0355ba59612cc23bd56b4c6c26fc323c88f05572e334f6b13e83d39b6e9ab",
+   "patched_sha256": "96a2db048f60d3631ec393abc1ffbae961eb6a310b338533e496faf198b9f6d0",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000006/MusicNameSort.xml",
+   "stock_sha256": "aa36293b6f62d7cec9d33911324c921daa81e5da2971e9b391855a0e94ed5c0c",
+   "patched_sha256": "d8276c451b1a48a3aa8bf73c5af7d213f0fcc8d057602238cf3ee4c55a675add",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000007/MusicNameSort.xml",
+   "stock_sha256": "834b564a6674b64fef8adb6d7e854d124bd5b4d0be246f5098b4af24c5f1a01a",
+   "patched_sha256": "bebbc01b6e44dffe5b86b899c0a76498988d24d4fd722bd9dae9469145bf8846",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000008/MusicNameSort.xml",
+   "stock_sha256": "d52c957d8b49f708125d4f70c89eaa39e19c3dbacdfd943887ac1d95b8142675",
+   "patched_sha256": "05f0aede2b2086be447a821dc434b1423d735952c96bab8c69875b4fa03641ce",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000009/MusicNameSort.xml",
+   "stock_sha256": "af5bbb267def2e04f859c26d198ac4bd87c5f1ce227c3754bfc923c549e32ffb",
+   "patched_sha256": "19aa06784fc19237988d24d3b325b5669b869e79a6478b52a4f5fa67e5e0b9a6",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000010/MusicNameSort.xml",
+   "stock_sha256": "c6b23f8918e8b02840f6a18808087b8198f6578f83435e0ddf5c35cf75ec2019",
+   "patched_sha256": "ebaf31075589a38de74355c02b5ea8003baba28c7cbd769deef3e677abce09a0",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000011/MusicNameSort.xml",
+   "stock_sha256": "4c8adc0fca53d6c9a39dbadc8a99392cf74f05aadefc5fab66a74de185813e78",
+   "patched_sha256": "f0c39fc76c240585d63e85bba24db4505662f2702c814e2ec955e12440746b16",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000012/MusicNameSort.xml",
+   "stock_sha256": "5ea6d4ad230d3bf2b9e4144d574675db6682f4fb8c9e26ca82fb4d386c589374",
+   "patched_sha256": "52c59ea0084c91ecb80746fcd3677eb666f64640ea37125a15c8073a9126446d",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000013/MusicNameSort.xml",
+   "stock_sha256": "1bf0e7bc87918aacad720b63ced43d60def4dfa53366d40ac06e4d5b9cdf46f9",
+   "patched_sha256": "204c7040cba140ead081598dc4bbbfafd4cba76553bdb436dbefa496110eba68",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000014/MusicNameSort.xml",
+   "stock_sha256": "b309868ece8524e96c680ad6d8846c63725c0599a826d5f4cc828539f76b7230",
+   "patched_sha256": "bfd4d3d40609bd94c1e0e2bb4bc4503f0b59e72f6bffe732e8d4340c2ab85162",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicNameSort/MusicNameSort000015/MusicNameSort.xml",
+   "stock_sha256": "4778efa0812c90104b215ac25dc857476469ad5acf68b6a90fabf13a95b11652",
+   "patched_sha256": "52b7e3d9a3c9d64b2db3bbe4bce25a171d9691fa2aa842320ce2e0d47bcfb926",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>76</R>",
+      "    <G>110</G>",
+      "    <B>255</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000000/MusicVersion.xml",
+   "stock_sha256": "ecdc893d92ab7fadcef16c33068143697c6664f13c2efc669f0efa99694efc2c",
+   "patched_sha256": "25cf5e2dd81e7a8f43a9fbd9133d2bca08eeeb324c5742aa918b74e510580716",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000001/MusicVersion.xml",
+   "stock_sha256": "64542669c25809b88d7b6a27b18452317c9c826832276ef3ac7c0f35f29af8e9",
+   "patched_sha256": "0970ee8bfe92a484b07bf17f951ad8d0500dbc4853b89ef665dfdf4d98e8be30",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000002/MusicVersion.xml",
+   "stock_sha256": "df8b567f338e495a759f74f80d4b44e25b2df62f4b69d07f219ac0e607911ca0",
+   "patched_sha256": "a9d6a98e74ae0536c3981e21c3b44303460700d6864616d41f18a9a61a1bcd9d",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000003/MusicVersion.xml",
+   "stock_sha256": "c40ff6f8626f52a32822568fcfef14313de9e98e59747d1cc9f0d7af8183be64",
+   "patched_sha256": "b01b6960d7306504d2ae4a49f30a64ab3ad3e0f70beafe4f6095431dbedf7bf3",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000004/MusicVersion.xml",
+   "stock_sha256": "1b998f2e82377b7e36c187c536e0a9fe231c58cb408af5cf32458bb7e01ca0d3",
+   "patched_sha256": "65989291728814cb889ffadfeaec3a735727b1f8e17f26d8b2c866a3c872e5a5",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000005/MusicVersion.xml",
+   "stock_sha256": "d59317892f081c55f1045f2f0f494045d63eba7404cb8057d1e64ee6e62dd391",
+   "patched_sha256": "14c6ad356206509f812b5e1a0324becdd960083e0b3971b51f4fca1d454688a7",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000006/MusicVersion.xml",
+   "stock_sha256": "c9b94f0fed29ce79f9605bea13e52f05cf1decd0cd0fd7731d2cc266f74bea33",
+   "patched_sha256": "4780263c91057e2f2b86ad45e05b0a6d749ed44e4563bb124cda02bf17b65c2a",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000007/MusicVersion.xml",
+   "stock_sha256": "239b8bc2e5db2a64ef000ba40a761af31135f6c701d3a355381a4bd95d0bf41b",
+   "patched_sha256": "34c71b51b39cd6be03eab8f5f6bb8c5d55e60617ce83e41ce0a68b06c05d10cf",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000008/MusicVersion.xml",
+   "stock_sha256": "dcd8e5792090b900f539d027003131d7a33ca2370e9bbc08e1b94cd02b3b0122",
+   "patched_sha256": "9b48978dfce037361035e6d2c921ad60f966389f14c8aaea94baf234c29b6e01",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000009/MusicVersion.xml",
+   "stock_sha256": "df6d01fb46405bd99065d9b6be538c89e10df0807eda6e1b858fb57dca005d04",
+   "patched_sha256": "d2808317809bff6015666a773b0dfa3cbdb62f21a06152c961f943903b13d380",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000010/MusicVersion.xml",
+   "stock_sha256": "341a51defb61acc279198cbe7d8b1e5932c7380555058ea57a079280bf296a0c",
+   "patched_sha256": "1db904dc0cd851242a92078ee7ed8acfcf76667738569512b2aabbc7f444e575",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000011/MusicVersion.xml",
+   "stock_sha256": "8c07f48239b7ee91d513a4936475fdb55967f9c228eaf1990082f5c53056a3fc",
+   "patched_sha256": "51679637da1c91eb2d1f8e75dd45876dba612ff3cba2a855182bb0ab20982577",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000012/MusicVersion.xml",
+   "stock_sha256": "7c65ca8b58f099b03bb66522247325ff7b65c011c244f54737535eecccb5da93",
+   "patched_sha256": "894e9c7d867576318acec9bcdfee89412469aff81241723db6918d80add361bb",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000013/MusicVersion.xml",
+   "stock_sha256": "84c3be6195f4d5b6eff66cf8d796a5ff56f3cb368f60b5aad74a4f5c6632e1e1",
+   "patched_sha256": "5d47c8be6525cb01687e5e5589a741a8cec07c178b5918e46be3e4c99714fbf8",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000014/MusicVersion.xml",
+   "stock_sha256": "7515e36f04187a4de85dc86af84701524209836c1b228366473fe8b095c6801a",
+   "patched_sha256": "fc1b285d83c0de32713a54ab335bc4664fcfaeb7ad762231cfa570934c964a5e",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000015/MusicVersion.xml",
+   "stock_sha256": "869be52d22812f92aa09dc484c83f4806ab3cd20f6338410517d823b640f1926",
+   "patched_sha256": "38151e9b6c06334e79698c622fa67e8af6fb480ec71696fd45e1356cbe37f47c",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000016/MusicVersion.xml",
+   "stock_sha256": "1b431b012f37626bea879b7037abc4f5349f8fc9ca540d7e90cfb5f7a289b8a4",
+   "patched_sha256": "c314b66a6e92f3ab0d28ef0ecdb13ac4ac70dab6f3417113f0db39b387eb7016",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000017/MusicVersion.xml",
+   "stock_sha256": "61673dd8b88e0c0033fc53d62e359a4185c974052be575c7ced52bcf2803f469",
+   "patched_sha256": "5b2535458b9dc57a821fcfeee45719b3cb508c2f8dc69879ed0f7ae4bfaccd65",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000018/MusicVersion.xml",
+   "stock_sha256": "cab47a8f7610aca0a831476641feb14a59b06f250dfdae45439042592d7cba36",
+   "patched_sha256": "049286a430e5b92d1ff3b423d7891bda6974d807e8d4a5f846d75eaf4de6994f",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000019/MusicVersion.xml",
+   "stock_sha256": "a5fb8b10b80a84cb84275348747875655143eba00c3b0f05e875d13737067d2f",
+   "patched_sha256": "46a87051ab5abd26b62820dd7401f3d3e60f7a430984bf225e25fc094b3b8fa8",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000020/MusicVersion.xml",
+   "stock_sha256": "2bc3d8c94bb9dd1fc58fcb137a8895947845836000b2ffc1bced5731e5c77805",
+   "patched_sha256": "7a37bd708913764149e3f39752609b63bb2ffbac985d90f168580f9de959cfdf",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000021/MusicVersion.xml",
+   "stock_sha256": "fedd8eb197433649a1df6b5ec1cbd5259e09bffca093afc1702c9655a6ebc1e5",
+   "patched_sha256": "67d437045080bb3a590695de032908c07741151cb4583aa57b8660776feb2b1f",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000022/MusicVersion.xml",
+   "stock_sha256": "ab5edb049f5cc2148bb18c2bc15c5864527b8801a63848647fe602036b056345",
+   "patched_sha256": "5e4b53f6d32fa7d3907aee642ad232f7fb1c8a7bbf2e731df472437ff95f27a8",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000023/MusicVersion.xml",
+   "stock_sha256": "e10a0c30beccab60e3c0666956715995d9ea54a1c10388ae7e9b4ff27f401200",
+   "patched_sha256": "33b00a90846994f47ce1ce484631a7ca578bad571276399171a73f0a9fd6264c",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000024/MusicVersion.xml",
+   "stock_sha256": "6c256ebb8d3dad7a48e4a930d17eb21df1ffdf7dfcd0d33c9f06f4ce441342a1",
+   "patched_sha256": "00b50ba9195ecb73d25c8b05066835e191203fd546d0c0234ea62f24ae25c8ed",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>129</R>",
+      "    <G>92</G>",
+      "    <B>221</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000025/MusicVersion.xml",
+   "stock_sha256": "129eaf135844a4ad5e2d13b19891f1a6b9b60ca4e32665f8211237f41cde3e48",
+   "patched_sha256": "bbaf77f5f09f3e99885cbfeb4031a9572c1d70c46966621f02aacf1686dd7967",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>58</R>",
+      "    <G>159</G>",
+      "    <B>214</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000026/MusicVersion.xml",
+   "stock_sha256": "f7b3780fb119c6dc8ce4d2351b74f4a3d6070395cde2b56e127a6b006fc313a1",
+   "patched_sha256": "df8ff7fa8cf8bc81ed57c14d3e7c3cf1de3412828171929b1b5e39d4957669e3",
+   "hunks": [
+    {
+     "at": 12,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>224</R>",
+      "    <G>90</G>",
+      "    <B>180</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  },
+  {
+   "path": "Sinmai_Data/StreamingAssets/A000/musicVersion/MusicVersion000027/MusicVersion.xml",
+   "stock_sha256": "fe8cdf5ca6b4388d70c89942cdf903e77d96519ba47d2d15abdcd77b7063659b",
+   "patched_sha256": "d35368b07e9008eff8892f9543869d93ddc03bd09c2fe1121b7775c1d34c09c9",
+   "hunks": [
+    {
+     "at": 11,
+     "old": [
+      "    <R>110</R>",
+      "    <G>217</G>",
+      "    <B>67</B>"
+     ],
+     "new": [
+      "    <R>77</R>",
+      "    <G>35</G>",
+      "    <B>207</B>"
+     ]
+    }
+   ],
+   "eol": "lf"
+  }
+ ]
+}

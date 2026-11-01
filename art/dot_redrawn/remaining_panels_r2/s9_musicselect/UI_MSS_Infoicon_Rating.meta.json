@@ -1,0 +1,30 @@
+{
+  "identity": "originals/s9_musicselect/UI_MSS_Infoicon_Rating.png",
+  "selected_output": {
+    "path": "redrawn/remaining_panels_r2/s9_musicselect/UI_MSS_Infoicon_Rating.png",
+    "sha": "773d8d35b8dd8f3d93e75d3c5c149810402255c0",
+    "sha256": "a0abfcecc8462561ab5e5e80a607188ab8c6a273cd9ef967b4e4072d65fc1f6d",
+    "bytes": 1647
+  },
+  "archive_fitted": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_Infoicon_Rating/fitted.png",
+    "sha": "773d8d35b8dd8f3d93e75d3c5c149810402255c0",
+    "sha256": "a0abfcecc8462561ab5e5e80a607188ab8c6a273cd9ef967b4e4072d65fc1f6d",
+    "bytes": 1647
+  },
+  "metadata": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_Infoicon_Rating/metadata.json",
+    "sha": "b3b3632706d492bc7c01b5e4f98a5e25cd516d74",
+    "sha256": "be87d13e32c1ffa80cf85413c99c42aa5ea0137af9e4870ac483c6cc8a90114a",
+    "bytes": 3257
+  },
+  "lineage": {
+    "path": "evidence/20261029_remaining_panels_r2/UI_MSS_Infoicon_Rating/lineage.json",
+    "sha": "73f04339cb9c1b5c2a53de7d627e67ae5e53cb91",
+    "sha256": "446589d5ee8f4b9306dd289f0df2614887d519b1b11ed60f7272a404aac1c034",
+    "bytes": 2930
+  },
+  "candidate_only": true,
+  "owner_approved": false,
+  "runtime_verified": false
+}

@@ -1,0 +1,245 @@
+[
+ {
+  "out_start": 0.0,
+  "out_end": 3.0,
+  "src_start": 0.0,
+  "src_end": 3.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "开机"
+ },
+ {
+  "out_start": 3.0,
+  "out_end": 7.3048,
+  "src_start": 3.0,
+  "src_end": 45.27,
+  "speed": 9.819271510871586,
+  "kind": "var",
+  "label": "Windose 封面 + 登录卡打字 kangelkawaii"
+ },
+ {
+  "out_start": 7.3048,
+  "out_end": 25.034799999999997,
+  "src_start": 45.27,
+  "src_end": 63.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "NGO 标题 → 刷卡（Ame/超天酱）→ 确认登录 → 换场"
+ },
+ {
+  "out_start": 25.034799999999997,
+  "out_end": 29.125300000000003,
+  "src_start": 63.0,
+  "src_end": 77.8,
+  "speed": 3.618139591736946,
+  "kind": "var",
+  "label": "玩家信息、请稍等"
+ },
+ {
+  "out_start": 29.125300000000003,
+  "out_end": 30.52530000000001,
+  "src_start": 77.8,
+  "src_end": 79.2,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "换场进选模式"
+ },
+ {
+  "out_start": 30.52530000000001,
+  "out_end": 37.8535,
+  "src_start": 79.2,
+  "src_end": 108.87,
+  "speed": 4.048743211156907,
+  "kind": "var",
+  "label": "选模式，翻到 FREEDOM"
+ },
+ {
+  "out_start": 37.8535,
+  "out_end": 40.98349999999999,
+  "src_start": 108.87,
+  "src_end": 112.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "第一次换场动画"
+ },
+ {
+  "out_start": 40.98349999999999,
+  "out_end": 44.3177,
+  "src_start": 112.0,
+  "src_end": 120.3,
+  "speed": 2.489352768280241,
+  "kind": "var",
+  "label": "FREEDOM 规则弹窗"
+ },
+ {
+  "out_start": 44.3177,
+  "out_end": 46.5817,
+  "src_start": 120.3,
+  "src_end": 123.13,
+  "speed": 1.25,
+  "kind": "fix",
+  "label": "换场进选歌"
+ },
+ {
+  "out_start": 46.5817,
+  "out_end": 51.4517,
+  "src_start": 123.13,
+  "src_end": 128.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "选歌：伙伴卡、队长、Live2D"
+ },
+ {
+  "out_start": 51.4517,
+  "out_end": 54.85316933333334,
+  "src_start": 128.0,
+  "src_end": 148.5,
+  "speed": 6.026807238597266,
+  "kind": "var",
+  "label": "翻歌到 きゅびずむ"
+ },
+ {
+  "out_start": 54.85316933333334,
+  "out_end": 57.67390000000002,
+  "src_start": 148.5,
+  "src_end": 157.0,
+  "speed": 3.013403619298633,
+  "kind": "var",
+  "label": "选曲、难度大弧"
+ },
+ {
+  "out_start": 57.67390000000002,
+  "out_end": 74.50390000000003,
+  "src_start": 157.0,
+  "src_end": 173.83,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "菜单 → 换场 → 糖糖走路"
+ },
+ {
+  "out_start": 74.50390000000003,
+  "out_end": 84.40390000000001,
+  "src_start": 173.83,
+  "src_end": 183.73,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "打歌"
+ },
+ {
+  "out_start": 84.40390000000001,
+  "out_end": 88.67390000000002,
+  "src_start": 183.73,
+  "src_end": 188.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "超天酱换场"
+ },
+ {
+  "out_start": 88.67390000000002,
+  "out_end": 89.82857307379054,
+  "src_start": 188.0,
+  "src_end": 198.6,
+  "speed": 9.180087628788913,
+  "kind": "var",
+  "label": "结算页"
+ },
+ {
+  "out_start": 89.82857307379054,
+  "out_end": 90.58383093337679,
+  "src_start": 198.6,
+  "src_end": 201.2,
+  "speed": 3.4425328607958425,
+  "kind": "var",
+  "label": "换场"
+ },
+ {
+  "out_start": 90.58383093337679,
+  "out_end": 91.37903031438347,
+  "src_start": 201.2,
+  "src_end": 208.5,
+  "speed": 9.180087628788913,
+  "kind": "var",
+  "label": "回选歌"
+ },
+ {
+  "out_start": 91.37903031438347,
+  "out_end": 91.95999789868058,
+  "src_start": 208.5,
+  "src_end": 210.5,
+  "speed": 3.4425328607958425,
+  "kind": "var",
+  "label": "换场"
+ },
+ {
+  "out_start": 91.95999789868058,
+  "out_end": 93.13210000000001,
+  "src_start": 210.5,
+  "src_end": 218.57,
+  "speed": 6.885065721591685,
+  "kind": "var",
+  "label": "收藏页"
+ },
+ {
+  "out_start": 93.13210000000001,
+  "out_end": 98.56210000000002,
+  "src_start": 218.57,
+  "src_end": 224.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "换场 + 服务器通信页（三人走轨道）"
+ },
+ {
+  "out_start": 98.56210000000002,
+  "out_end": 104.93932914669224,
+  "src_start": 224.0,
+  "src_end": 233.0,
+  "speed": 1.411271226574657,
+  "kind": "var",
+  "label": "续关 CONTINUE?"
+ },
+ {
+  "out_start": 104.93932914669224,
+  "out_end": 113.93932914669224,
+  "src_start": 233.0,
+  "src_end": 242.0,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "换场 → SEE YOU 三人 → 换场"
+ },
+ {
+  "out_start": 113.93932914669224,
+  "out_end": 114.95260000000002,
+  "src_start": 242.0,
+  "src_end": 243.43,
+  "speed": 1.411271226574657,
+  "kind": "var",
+  "label": "黑屏、开机标志"
+ },
+ {
+  "out_start": 114.95260000000002,
+  "out_end": 115.85260000000002,
+  "src_start": 243.43,
+  "src_end": 244.33,
+  "speed": 1.0,
+  "kind": "fix",
+  "label": "NGO 标题"
+ },
+ {
+  "out_start": 115.85260000000002,
+  "out_end": 116.96593333333335,
+  "src_start": 244.33,
+  "src_end": 246.0,
+  "speed": 1.5,
+  "kind": "fix",
+  "label": "换场"
+ },
+ {
+  "out_start": 116.96593333333335,
+  "out_end": 119.27,
+  "src_start": 246.0,
+  "src_end": 260.07,
+  "speed": 6.106594137901151,
+  "kind": "var",
+  "label": "回到待机、刷卡页"
+ }
+]
