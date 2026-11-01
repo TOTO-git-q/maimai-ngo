@@ -1,6 +1,6 @@
 # maimai NEEDY GIRL OVERDOSE（私有协作仓库）
 
-> 这是一个为 maimai DX 打造 NEEDY GIRL OVERDOSE 风格界面美化的项目。
+> 这是一个为 maimoller 打造 NEEDY GIRL OVERDOSE 风格界面美化的项目。
 > **游戏本体一个文件都没有**：安装器读你自己机器上的游戏文件，把我们的改动写进去。
 
 把 maimai DX 1.70（SDEZ / MAGiCAL）本机版整套换成「maimai NEEDY GIRL OVERDOSE」：
