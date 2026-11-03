@@ -38,13 +38,30 @@ namespace PartnerLive2D.Unity
         CubismAvatar _avatar;
         Live2DRenderer _renderer;
         SpritePairBackend _sprite;
+        SpriteLibraryBackend _library;      // music select from the frame library (partner.ini "library"); else _sprite
+        bool _libraryFailed;
         string _spriteLoop = "Idle";
-        RenderTexture TargetTexture { get { return _sprite != null ? _sprite.Texture : _renderer.Texture; } }
-        float TargetAspect { get { return _sprite != null ? _sprite.Aspect : _renderer.Aspect; } }
-        public bool IsSprite { get { return _sprite != null; } }
-        public bool SpriteCanPlay(string group) { return _sprite != null && _sprite.Playback != null && _sprite.Playback.CanPlay(group); }
-        public bool SpritePlay(string group) { return _sprite != null && _sprite.Playback != null && _sprite.Playback.Play(group, -1); }
-        public bool SpritePlaying(string group) { return _sprite != null && _sprite.Playback != null && _sprite.Playback.IsPlaying(group); }
+        RenderTexture TargetTexture { get { return _library != null ? _library.Texture : _sprite != null ? _sprite.Texture : _renderer.Texture; } }
+        float TargetAspect { get { return _library != null ? 1f : _sprite != null ? _sprite.Aspect : _renderer.Aspect; } }
+        bool Sprites { get { return _sprite != null || _library != null; } }
+        public bool IsSprite { get { return Sprites; } }
+        // the session's sprite groups as the library's moments
+        static string MomentOf(string group) { return group == "Enter" ? "start" : group == "Confirm" ? "confirm" : group == "Tap" ? "tap" : group; }
+        public bool SpriteCanPlay(string group)
+        {
+            if (_library != null) return _library.CanPlay(MomentOf(group));
+            return _sprite != null && _sprite.Playback != null && _sprite.Playback.CanPlay(group);
+        }
+        public bool SpritePlay(string group)
+        {
+            if (_library != null) return _library.Moment(MomentOf(group), -1);
+            return _sprite != null && _sprite.Playback != null && _sprite.Playback.Play(group, -1);
+        }
+        public bool SpritePlaying(string group)
+        {
+            if (_library != null) return _library.Playing(MomentOf(group));
+            return _sprite != null && _sprite.Playback != null && _sprite.Playback.IsPlaying(group);
+        }
         RawImage _image;
         NavigationCharacter _original;
         CanvasGroup _hider;
@@ -86,15 +103,133 @@ namespace PartnerLive2D.Unity
         }
 
         public void SetSelectLayout(MusicSelectSettings layout) { if (ReferenceEquals(_selectLayout, layout)) return; _selectLayout = layout; ApplyLayout(); }
+        // test: show the view's rectangle as one flat colour (preview compositing measures what the UI covers with a black
+        // and a white fill, and the background with a clear one); null/"" shows the partner again
+        public bool Fill(string hex)
+        {
+            Color c;
+            if (string.IsNullOrEmpty(hex)) { _image.texture = TargetTexture; _image.color = Color.white; return true; }
+            if (!ColorUtility.TryParseHtmlString(hex, out c)) return false;
+            _image.texture = Texture2D.whiteTexture; _image.color = c;
+            return true;
+        }
         public void SelectSongReaction()
         {
-            if (_sprite != null) return;
+            if (Sprites) return;
             if (_avatar.GetMotionCount("TapBody") > 0 && _avatar.StartRandomMotion("TapBody", 2))
                 _selectMotionUntil = Time.realtimeSinceStartup + .65f;
         }
-        public void Nod() { if (_sprite != null) return; _nodUntil = Time.realtimeSinceStartup + .32f; }
+        public void Nod() { if (Sprites) return; _nodUntil = Time.realtimeSinceStartup + .32f; }
+
+        // music select: what happened on the page (MusicSelectReactionRouter events) as the library's moments
+        bool _entered, _countdown;
+        int _lastDifficulty = -1;
+        public void SelectEvent(string type, object data)
+        {
+            if (_library == null) return;
+            try
+            {
+                switch (type)
+                {
+                    case "initial":   // the router starts over after every visit to another phase: once per page
+                        if (_entered) return;
+                        _entered = true;
+                        _library.Moment(GameManager.MusicTrackNumber <= 1 ? "enter" : "return", -1);
+                        break;
+                    case "categoryChanged": _library.Moment("category", -1); break;
+                    case "songChanged": _library.Moment("song", -1); break;
+                    case "difficultyChanged":
+                        int d = data is int ? (int)data : -1;
+                        if (d >= 3 && (_lastDifficulty < 0 || d > _lastDifficulty)) _library.Moment("master", -1);   // up to Master / Re:Master
+                        if (d >= 0) _lastDifficulty = d;
+                        break;
+                }
+            }
+            catch (Exception e) { Mod.Warn(_cfg.Name + ": select event " + type + ": " + e.Message); }
+        }
+        // the select timer shows 10: once per page
+        public void SelectCountdown()
+        {
+            if (_library == null || _countdown) return;
+            _countdown = true;
+            _library.Moment("countdown", -1);
+        }
+        // the third tap on the same one within 1.5 s (one finger often covers two sensors: taps 0.15 s apart count once)
+        readonly float[][] _tapTimes = { new float[3], new float[3] };
+        readonly int[] _tapCount = new int[2];
+        bool Poked(int who)
+        {
+            float now = Time.realtimeSinceStartup; var times = _tapTimes[who]; int n = _tapCount[who];
+            if (n > 0 && now - times[(n - 1) % 3] < .15f) return false;
+            times[n % 3] = now; _tapCount[who] = ++n;
+            return n >= 3 && now - times[n % 3] <= 1.5f;
+        }
+        // a touch sensor's centre on the pair canvas (1024 square, y down), when it lies inside the partner rectangle; the
+        // sensors are laid out around the centre of the monitor's Main canvas (select: the view's parent; room: SetTouchSpace)
+        bool SensorOnPair(string name, out Vector2 pair)
+        {
+            pair = Vector2.zero;
+            int i = name[1] - '1'; char ring = name[0];
+            if (i < 0 || i > 7 || (ring != 'A' && ring != 'B' && ring != 'C' && ring != 'D' && ring != 'E')) return false;
+            float radius = ring == 'A' || ring == 'D' ? 490 : ring == 'B' ? 295 : ring == 'E' ? 205 : 0;
+            float angle = (45 * i + (ring == 'A' || ring == 'B' ? 22.5f : 0)) * Mathf.Deg2Rad;
+            var point = new Vector3(Mathf.Sin(angle) * radius + (ring == 'C' ? (i == 0 ? -30 : 30) : 0), Mathf.Cos(angle) * radius, 0);
+            var rect = (RectTransform)transform;
+            var local = rect.InverseTransformPoint((_touchSpace != null ? _touchSpace : transform.parent).TransformPoint(point));
+            var r = rect.rect;
+            if (!r.Contains(new Vector2(local.x, local.y))) return false;
+            float crop = Context == "musicSelect" ? _selectLayout.CropBottom : 0f;
+            float v = crop + (local.y - r.yMin) / r.height * (1 - crop);
+            pair = new Vector2((local.x - r.xMin) / r.width * 1024f, (1 - v) * 1024f);
+            return true;
+        }
+        // one of the pair touched (pair canvas x, < 0 unknown): squashed now, reacts after; the other one notices a beat later
+        // (owner 2026-11-02: "戳糖糖/超天酱的时候另一个角色的副反应"), only when the touched one does react
+        void TouchPair(int who, float x)
+        {
+            _library.Finger(who, x);
+            if (Poked(who) && _library.Moment("poke", who)) _library.Moment("otherPoke", 1 - who);
+            else if (_library.Moment("tap", who)) _library.Moment("otherTap", 1 - who);
+        }
+        // whoever is under the finger reacts: K in front, Ame behind her
+        void TouchSensor(string name)
+        {
+            Vector2 pair;
+            if (!SensorOnPair(name, out pair)) return;
+            int who = _library.HitTest(pair.x, pair.y);
+            if (Context == "room") _library.Log?.Invoke(string.Format("touch {0} at ({1:0}, {2:0}) on the pair: {3}", name, pair.x, pair.y, _library.CharacterName(who)));
+            if (who >= 0) TouchPair(who, pair.x);
+        }
+        // partner room (2026-11-02 night, owner "搭档房间也换"): the sensors the game itself takes as touching the partner
+        // (CollectionProcess.InputPartnerPresentSequence: B1-B8, C1, C2, E1), read every frame as the select page's router does
+        static readonly InputManager.TouchPanelArea[] RoomAreas = {
+            InputManager.TouchPanelArea.B1, InputManager.TouchPanelArea.B2, InputManager.TouchPanelArea.B3, InputManager.TouchPanelArea.B4,
+            InputManager.TouchPanelArea.B5, InputManager.TouchPanelArea.B6, InputManager.TouchPanelArea.B7, InputManager.TouchPanelArea.B8,
+            InputManager.TouchPanelArea.C1, InputManager.TouchPanelArea.C2, InputManager.TouchPanelArea.E1 };
+        static readonly string[] RoomAreaNames = { "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "C1", "C2", "E1" };
+        Transform _touchSpace;
+        int _roomPlayer = -1;
+        public void SetTouchSpace(Transform space, int player) { _touchSpace = space; _roomPlayer = player; }
+        void RoomTouches()
+        {
+            if (_roomPlayer < 0 || _touchSpace == null || !_placed) return;
+            for (int i = 0; i < RoomAreas.Length; i++)
+                if (InputManager.GetTouchPanelAreaDown(_roomPlayer, RoomAreas[i])) TouchSensor(RoomAreaNames[i]);
+        }
+        // partner room: a present was given (PartnerRoom.PlayPartnerEmotionEffectOnceTime) - both of them are pleased
+        public void RoomPresent()
+        {
+            if (_library != null) _library.Moment("roomPresent", -1);
+        }
         public void TouchArea(string name)
         {
+            if (_library != null)
+            {
+                if (Context != "musicSelect" || name == null || name.Length != 2) return;
+                if (_selectLayout.SelectTapAreas != null && !_selectLayout.SelectTapAreas.Contains(name)) return;
+                TouchSensor(name);
+                return;
+            }
             if (_sprite == null || Context != "musicSelect" || name == null || name.Length != 2) return;
             if (_selectLayout.SelectTapAreas != null)
             {
@@ -134,7 +269,7 @@ namespace PartnerLive2D.Unity
             go.transform.SetSiblingIndex(original.transform.GetSiblingIndex() + 1);
             var view = go.AddComponent<PartnerView>();
             view.Context = context;
-            if (spriteTier != null) view._spriteLoop = "Result" + spriteTier + "Loop";
+            if (spriteTier != null) { view._spriteLoop = "Result" + spriteTier + "Loop"; view._resultTier = spriteTier; }
             if (!view.Init(original, cfg, monitor, timeline)) { Destroy(go); return null; }
             return view;
         }
@@ -218,7 +353,9 @@ namespace PartnerLive2D.Unity
             }
             Id = _nextId++;
             All.Add(this);
-            if (_sprite == null) EnterState("Default");
+            // partner room: the pair greets you as the room opens (the game itself only moves the partner on touches and presents)
+            if (_library != null && Context == "room") _library.Moment("roomEnter", -1);
+            if (!Sprites) EnterState("Default");
             else _state = _spriteLoop;
             return true;
         }
@@ -226,13 +363,29 @@ namespace PartnerLive2D.Unity
         bool LoadBackend()
         {
             if (_sprite != null) { _sprite.Dispose(); _sprite = null; }
+            if (_library != null) { _library.Dispose(); _library = null; }
+            // the select page, (2026-11-02) the result screen and the partner room play from the frame library
+            if ((Context == "musicSelect" || Context == "result" || Context == "room") && !_libraryFailed && !string.IsNullOrEmpty(_cfg.LibraryPath))
+            {
+                try
+                {
+                    if (!System.IO.File.Exists(_cfg.LibraryPath)) throw new System.IO.FileNotFoundException("library not found", _cfg.LibraryPath);
+                    _library = new SpriteLibraryBackend(_cfg.LibraryPath, RuntimeQuality.Policy.RenderSize(_cfg.RenderSize));
+                    var name = _cfg.Name; var where = Context == "result" ? " result: " : Context == "room" ? " room: " : " select: ";
+                    _library.Log = line => Mod.Msg(name + where + line);
+                    if (_renderer != null) { _renderer.Dispose(); _renderer = null; }
+                    if (_avatar != null) { _avatar.Dispose(); _avatar = null; }
+                    return true;
+                }
+                catch (Exception e) { _library = null; _libraryFailed = true; Mod.Warn(_cfg.Name + ": frame library unavailable; using the sprite clips: " + e.Message); }
+            }
             // the partner room plays like the select page: idle loop, random moves, taps
             bool pageClips = Context == "musicSelect" || Context == "room";
             if ((pageClips || (Context == "result" && _spriteLoop != "Idle")) && !string.IsNullOrEmpty(_cfg.SpritePath))
             {
                 try
                 {
-                    _sprite = new SpritePairBackend(_cfg.SpritePath, _spriteLoop, pageClips, _cfg.RenderSize);
+                    _sprite = new SpritePairBackend(_cfg.SpritePath, _spriteLoop, pageClips, RuntimeQuality.Policy.RenderSize(_cfg.RenderSize));
                     if (_renderer != null) { _renderer.Dispose(); _renderer = null; }
                     if (_avatar != null) { _avatar.Dispose(); _avatar = null; }
                     return true;
@@ -249,6 +402,17 @@ namespace PartnerLive2D.Unity
             if (!LoadModel()) throw new InvalidOperationException("sprite fallback model failed", e);
             _image.texture = _renderer.Texture; _state = null; EnterState("Default");
         }
+        // the frame library broke mid-page: the sprite clips (or Live2D) take over for the rest of this page
+        void LibraryFailure(Exception e)
+        {
+            Mod.Warn(_cfg.Name + ": frame library failed; using the sprite clips: " + e);
+            _libraryFailed = true;
+            _library.Dispose(); _library = null;
+            if (!LoadBackend()) throw new InvalidOperationException("library fallback failed", e);
+            _image.texture = TargetTexture; _state = Sprites ? _spriteLoop : null;
+            if (!Sprites) EnterState("Default");
+            if (_placed) ApplyLayout();
+        }
 
         bool LoadModel()
         {
@@ -258,7 +422,7 @@ namespace PartnerLive2D.Unity
                 var t0 = Time.realtimeSinceStartup;
                 var avatar = loading = CubismAvatar.Load(_cfg.ModelPath);
                 if (!string.IsNullOrEmpty(_cfg.IdleGroup)) avatar.IdleGroup = _cfg.IdleGroup;
-                var renderer = new Live2DRenderer(avatar, _cfg.RenderSize);
+                var renderer = new Live2DRenderer(avatar, RuntimeQuality.Policy.RenderSize(_cfg.RenderSize));
                 if (_renderer != null) _renderer.Dispose();
                 if (_avatar != null) _avatar.Dispose();
                 _avatar = avatar;
@@ -286,9 +450,10 @@ namespace PartnerLive2D.Unity
             ApplyResultUnder(null);
             if (rebuild)
             {
+                _libraryFailed = false;
                 if (!LoadBackend()) return false;
                 _image.texture = TargetTexture;
-                var s = _state; _state = null; if (_sprite == null) EnterState(s ?? "Default"); else _state = _spriteLoop;
+                var s = _state; _state = null; if (!Sprites) EnterState(s ?? "Default"); else _state = _spriteLoop;
             }
             else if (_avatar != null && !string.IsNullOrEmpty(_cfg.IdleGroup)) _avatar.IdleGroup = _cfg.IdleGroup;
             if (_placed) ApplyLayout();
@@ -297,7 +462,7 @@ namespace PartnerLive2D.Unity
 
         public void PreviewState(string state)
         {
-            if (_sprite != null) return;
+            if (Sprites) return;
             _manualUntil = Time.realtimeSinceStartup + 10f;
             _state = null;
             EnterState(state);
@@ -305,6 +470,7 @@ namespace PartnerLive2D.Unity
 
         public bool PlayMotion(string group, int index)
         {
+            if (_library != null) return _library.Moment(MomentOf(group), index < 0 ? -1 : index);   // index: 0 Ame, 1 K, -1 both
             if (_sprite != null) return _sprite.Playback != null && _sprite.Playback.Play(group, index);
             _selectMotionUntil = 0;
             _manualUntil = Time.realtimeSinceStartup + 10f;
@@ -333,6 +499,12 @@ namespace PartnerLive2D.Unity
             return png;
         }
 
+        public Dictionary<string, object> LibraryTimeline()
+        {
+            if (_library == null) throw new ApiError(409, "this view does not play the frame library");
+            return _library.Timeline();
+        }
+
         public Dictionary<string, object> Info()
         {
             var groups = new Dictionary<string, object>();
@@ -352,6 +524,7 @@ namespace PartnerLive2D.Unity
                 { "totalTextures", _sprite == null || _sprite.Loader == null ? 0 : _sprite.Loader.Total },
                 { "spriteTextureBytes", _sprite == null || _sprite.Loader == null ? 0L : _sprite.Loader.Bytes },
                 { "estimatedVramBytes", _sprite == null || _sprite.Loader == null ? 0L : _sprite.Loader.Bytes + 8L * TargetTexture.width * TargetTexture.height },
+                { "library", _library == null ? null : _library.Info() },
                 { "motionGroups", groups },
                 { "expressions", _avatar == null ? new List<object>() : new List<object>(_avatar.ExpressionNames) },
                 { "hitAreas", _avatar == null ? new List<object>() : new List<object>(_avatar.HitAreaNames) },
@@ -363,6 +536,7 @@ namespace PartnerLive2D.Unity
         {
             gameObject.SetActive(false); // stop Tick/Render immediately, before deferred Destroy
             if (_sprite != null) { _sprite.Dispose(); _sprite = null; }
+            if (_library != null) { _library.Dispose(); _library = null; }
             if (_overlayCanvas != null) Destroy(_overlayCanvas); else Destroy(gameObject);
         }
 
@@ -385,7 +559,16 @@ namespace PartnerLive2D.Unity
 
         public void OnNaviPlay(NavigationAnime anime)
         {
-            if (_sprite != null)
+            // the staging was skipped (or ran without the timeline): the rank is up when the stock partner reacts
+            if (_library != null && Context == "result" && (anime == NavigationAnime.FunStart || anime == NavigationAnime.FunStartLoop || anime == NavigationAnime.Sad01))
+            {
+                ResultReaction();
+                return;
+            }
+            // partner room: the game's FunStartLoop (every second touch, and after a present) would repeat the reactions
+            // RoomTouches and RoomPresent already started
+            if (_library != null && Context == "room") return;
+            if (Sprites)
             {
                 // partner room: closeness went up (present given) -> the pair reacts
                 if (Context == "room" && anime == NavigationAnime.FunStart) SpritePlay("Confirm");
@@ -399,6 +582,8 @@ namespace PartnerLive2D.Unity
         public void OnTap()
         {
             _tapFrame = Time.frameCount;
+            // result screen: the game only says the partner was touched, not where - one of them, by chance
+            if (_library != null) { TouchPair(Context == "result" ? (UnityEngine.Random.value < .5f ? 0 : 1) : 1, -1); return; }
             if (_sprite != null) { SpritePlay(Context == "result" ? _spriteLoop.Replace("Loop", "Reaction") : "Tap"); return; }
             if (!string.IsNullOrEmpty(_cfg.TapGroup))
                 _avatar.StartRandomMotion(_cfg.TapGroup, 3);
@@ -416,6 +601,27 @@ namespace PartnerLive2D.Unity
             bool loops = state == "FunStartLoop" || state == "Sad01";
             _loopGroup = loops && !string.IsNullOrEmpty(group) ? group : null;
             if (!string.IsNullOrEmpty(group)) _avatar.StartRandomMotion(group, 2);
+        }
+
+        // result screen from the frame library: the pair reacts to the rank (owner 2026-11-02: "结算页面根据成绩出现的反应")
+        // when the stock partner would - FunStart when cleared, Sad01 when not; tiers as SpritePairMath.Tier
+        string _resultTier;
+        bool _resultReacted;
+        void ResultCue()
+        {
+            if (_resultReacted || _timeline == null || _original == null) return;
+            var director = DirectorRef(_timeline);
+            if (director == null || director.state != UnityEngine.Playables.PlayState.Playing) return;
+            double at;
+            if (IsClearRef(_timeline)) { var fun = _original.FunStart; at = FunStartEndRef(_timeline) - (fun != null ? fun.length : 0f); }
+            else { var def = _original.Default; at = def != null ? def.length : 0f; }
+            if (director.time >= at) ResultReaction();
+        }
+        void ResultReaction()
+        {
+            if (_resultReacted || _resultTier == null) return;
+            _resultReacted = true;
+            _library.Moment("result" + _resultTier, -1);
         }
 
         // timeline-driven state while the result staging is playing
@@ -485,6 +691,11 @@ namespace PartnerLive2D.Unity
 
         void UpdateAvatar()
         {
+            if (_library != null)
+            {
+                try { _library.Tick(Time.unscaledDeltaTime); if (Context == "result") ResultCue(); else if (Context == "room") RoomTouches(); } catch (Exception e) { LibraryFailure(e); }
+                return;
+            }
             if (_sprite != null)
             {
                 try { _sprite.Tick(Time.deltaTime); } catch (Exception e) { SpriteFailure(e); }
@@ -508,20 +719,34 @@ namespace PartnerLive2D.Unity
             _avatar.Tick(Mathf.Min(Time.deltaTime, 0.1f));
         }
 
+        // music select: extra vertical offset for the current phase (difficulty header), eased in and out
+        float _phaseDrop;
+        bool _difficultyPhase;
+        public void SetSelectPhase(string phase) { _difficultyPhase = phase == "Difficulty" || phase == "UtageDifficulty"; }
+
         void LateUpdate()
         {
             if (Context != "musicSelect") { RenderAvatar(); return; }
+            float target = _difficultyPhase && _selectLayout != null ? _selectLayout.DifficultyOffsetY : 0;
+            if (_phaseDrop != target)
+            {
+                // critically damped-ish: about 0.2 s to settle, snaps the last half unit
+                _phaseDrop = Mathf.Lerp(_phaseDrop, target, 1f - Mathf.Exp(-Time.unscaledDeltaTime * 14f));
+                if (Mathf.Abs(_phaseDrop - target) < 0.5f) _phaseDrop = target;
+                if (_placed) ApplyLayout();
+            }
             try { RenderAvatar(); }
             catch (Exception e) { gameObject.SetActive(false); _selectFailure?.Invoke(e); }
         }
 
         void RenderAvatar()
         {
-            if (_renderer == null && _sprite == null) return;
+            if (_renderer == null && !Sprites) return;
             if (Context != "overlay" && Context != "musicSelect" && _original == null) { Destroy(gameObject); return; }
             if (!_placed) Place();
             if (_hider != null) _hider.alpha = 0f;
-            if (_sprite != null) { try { _sprite.Render(); } catch (Exception e) { SpriteFailure(e); } }
+            if (_library != null) { try { _library.Render(); } catch (Exception e) { LibraryFailure(e); } }
+            else if (_sprite != null) { try { _sprite.DrawingBlendSeconds = _cfg.SpriteBlend; _sprite.Render(); } catch (Exception e) { SpriteFailure(e); } }
             else _renderer.Render();
 
             if (Context != "musicSelect" && _cfg.DebugDump && _dumps < DumpTimes.Length && Time.realtimeSinceStartup - _placedAt > DumpTimes[_dumps])
@@ -594,7 +819,7 @@ namespace PartnerLive2D.Unity
             {
                 float crop = _selectLayout.CropBottom, remaining = 1 - crop;
                 rt.sizeDelta = new Vector2(_selectLayout.Height * TargetAspect, _selectLayout.Height * remaining);
-                rt.localPosition = new Vector3(_selectLayout.BottomX, _selectLayout.BottomY + _selectLayout.Height * crop, 0);
+                rt.localPosition = new Vector3(_selectLayout.BottomX, _selectLayout.BottomY + _selectLayout.Height * crop + _phaseDrop, 0);
                 rt.localScale = Vector3.one;
                 _image.uvRect = _cfg.FlipY ? new Rect(0, remaining, 1, -remaining) : new Rect(0, crop, 1, remaining);
                 return;
@@ -616,6 +841,7 @@ namespace PartnerLive2D.Unity
                 if (_hider != null) _hider.alpha = 1f;
             }
             if (_sprite != null) _sprite.Dispose();
+            if (_library != null) _library.Dispose();
             if (_renderer != null) _renderer.Dispose();
             if (_avatar != null) _avatar.Dispose();
             if (_image != null && _image.material != null && _image.material.shader != null && _image.material.shader.name.StartsWith("Legacy"))

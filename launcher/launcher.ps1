@@ -83,14 +83,39 @@ public static class MmNative {
 }
 '@
 
-# --- 1. per-user app prefs (idempotent) --------------------------------------
+# --- 1. per-user app prefs (flag-gated stutter trials, 2026-11-02) ---------------
+# Keep any other per-app graphics settings (for example the windowed-optimizations opt-out). Flag files next to this
+# script: stutter-allow-fso.flag drops the fullscreen-optimizations opt-out, stutter-windows-gpu.flag lets Windows pick.
+function Stutter-GpuPreference([string]$current, [bool]$windowsDecides, [bool]$flipUpgrade) {
+    $parts = @($current -split ';' | Where-Object { $_.Trim() -and $_ -notmatch '^\s*(GpuPreference|SwapEffectUpgradeEnable)\s*=' })
+    $value = if ($windowsDecides) { '0' } else { '2' }
+    $parts += "GpuPreference=$value"
+    # flip-upgrade.flag (2026-11-03): Windows 11 "optimizations for windowed games" for Sinmai only. PresentMon showed
+    # every launch in "Composed: Copy with GPU GDI" with 16-55 doubled display frames a minute; flip should end that.
+    if ($flipUpgrade) { $parts += 'SwapEffectUpgradeEnable=1' }
+    return ($parts -join ';') + ';'
+}
+function Stutter-CompatLayers([string]$current, [bool]$allowFso) {
+    $parts = @($current -split '\s+' | Where-Object { $_ -and $_ -ne '~' -and $_ -ne 'DISABLEDXMAXIMIZEDWINDOWEDMODE' })
+    if (-not $allowFso) { $parts += 'DISABLEDXMAXIMIZEDWINDOWEDMODE' }
+    if ($parts.Count -eq 0) { return '' }
+    return '~ ' + ($parts -join ' ')
+}
+$allowFso = Test-Path (Join-Path $Root 'stutter-allow-fso.flag')
+$windowsGpu = Test-Path (Join-Path $Root 'stutter-windows-gpu.flag')
 $gpuKey = 'HKCU:\Software\Microsoft\DirectX\UserGpuPreferences'
 if (-not (Test-Path $gpuKey)) { New-Item -Path $gpuKey -Force | Out-Null }
-Set-ItemProperty -Path $gpuKey -Name $Sinmai -Value 'GpuPreference=2;'
+$oldGpu = (Get-ItemProperty -Path $gpuKey -Name $Sinmai -ErrorAction SilentlyContinue).$Sinmai
+$flipUpgrade = Test-Path (Join-Path $Root 'flip-upgrade.flag')
+$newGpu = Stutter-GpuPreference $oldGpu $windowsGpu $flipUpgrade
+Set-ItemProperty -Path $gpuKey -Name $Sinmai -Value $newGpu
 $layersKey = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers'
 if (-not (Test-Path $layersKey)) { New-Item -Path $layersKey -Force | Out-Null }
-Set-ItemProperty -Path $layersKey -Name $Sinmai -Value '~ DISABLEDXMAXIMIZEDWINDOWEDMODE'
-Log 'GPU preference = high performance; fullscreen optimizations off'
+$oldLayers = (Get-ItemProperty -Path $layersKey -Name $Sinmai -ErrorAction SilentlyContinue).$Sinmai
+$newLayers = Stutter-CompatLayers $oldLayers $allowFso
+if ($newLayers) { Set-ItemProperty -Path $layersKey -Name $Sinmai -Value $newLayers }
+else { Remove-ItemProperty -Path $layersKey -Name $Sinmai -ErrorAction SilentlyContinue }
+Log "app prefs: GPU=$newGpu; layers=$newLayers; allowFSO=$allowFso"
 
 # --- 2. power mode --------------------------------------------------------------
 $bestPerf = [Guid]'ded574b5-45a0-4f42-8737-46345c09c238'
@@ -185,15 +210,18 @@ try {
                       'config_common.json', 'config_server.json', 'config_client.json' | Out-Null
     Log 'amdaemon started via inject'
 
-    if ($Monitor -eq 'auto') {
-        Add-Type -AssemblyName System.Windows.Forms
-        $Monitor = if ([System.Windows.Forms.Screen]::AllScreens.Count -ge 2) { '2' } else { '1' }
-    }
+    # the controller screen: the portrait one (a TV on its side), else the one that is not the main display. It may be
+    # the main display itself (2026-11-02: the owner made it the main display, still extended): Unity's -monitor counts
+    # the main display as 1, so it is 1 then and 2 otherwise
+    Add-Type -AssemblyName System.Windows.Forms
+    $screens = [System.Windows.Forms.Screen]::AllScreens
+    $tv = $screens | Where-Object { $_.Bounds.Height -gt $_.Bounds.Width } | Select-Object -First 1
+    if (-not $tv -and $screens.Count -ge 2) { $tv = $screens | Where-Object { -not $_.Primary } | Select-Object -First 1 }
+    if ($Monitor -eq 'auto') { $Monitor = if ($tv -and -not $tv.Primary) { '2' } else { '1' } }
     $gameArgs = @('-monitor', $Monitor, '--melonloader.hideconsole', '--melonloader.disablestartscreen')
-    if ($Monitor -ne '1') {
+    if ($tv) {
         # controller screen (portrait TV): borderless window at its native pixel size; otherwise Unity
         # reuses a remembered resolution and shows a cropped, title-barred window
-        Add-Type -AssemblyName System.Windows.Forms
         Add-Type @'
 using System.Runtime.InteropServices;
 public static class LaunchMode {
@@ -214,15 +242,30 @@ public static class LaunchMode {
     }
 }
 '@
-        $tv = [System.Windows.Forms.Screen]::AllScreens | Where-Object { -not $_.Primary } | Select-Object -First 1
-        $px = if ($tv) { [LaunchMode]::Size($tv.DeviceName) } else { $null }
+        $px = [LaunchMode]::Size($tv.DeviceName)
         if ($px) {
-            $gameArgs += @('-popupwindow', '-screen-width', "$($px[0])", '-screen-height', "$($px[1])")
-            Log "controller screen $($tv.DeviceName) $($px[0])x$($px[1])"
+            # exclusive.flag next to this script (test 2026-11-02 night): exclusive fullscreen instead of the borderless
+            # window, so frames go straight to the controller screen and not through desktop composition (the late frames
+            # were not the mod's). Needs AquaMai GameSystem.Window Windowed = false. Delete the flag to go back.
+            if (Test-Path (Join-Path $Root 'exclusive.flag')) {
+                $gameArgs += @('-screen-fullscreen', '1', '-window-mode', 'exclusive', '-screen-width', "$($px[0])", '-screen-height', "$($px[1])")
+                Log "controller screen $($tv.DeviceName) $($px[0])x$($px[1]), exclusive fullscreen (exclusive.flag)"
+            } else {
+                $gameArgs += @('-popupwindow', '-screen-width', "$($px[0])", '-screen-height', "$($px[1])")
+                Log "controller screen $($tv.DeviceName) $($px[0])x$($px[1])"
+            }
         }
     }
     $game = Start-Process -FilePath $Sinmai -WorkingDirectory $Pkg -PassThru -ArgumentList $gameArgs
     Log "Sinmai started pid $($game.Id) on monitor $Monitor"
+    # Optional trace: create an EMPTY presentmon.flag next to launcher.ps1.
+    if (Test-Path -LiteralPath (Join-Path $Root 'presentmon.flag') -PathType Leaf) {
+        try {
+            $pmResult = & schtasks.exe /Run /TN 'maimai PresentMon capture' 2>&1
+            $pmExit = $LASTEXITCODE
+            Log ("PresentMon task requested pid {0}; schtasks exit={1}; {2}" -f $game.Id,$pmExit,($pmResult -join ' '))
+        } catch { Log ("PresentMon task request failed: " + $_.Exception.Message) }
+    }
     # lock the NVIDIA GPU clock (1800-3090 MHz) while the game runs, so it never idles down between bursts; the
     # elevated scheduled tasks come from gpu-lock\setup-gpu-lock.bat (run once as administrator)
     $gpuLocked = $false
@@ -237,21 +280,34 @@ public static class LaunchMode {
         Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass',
             '-File', (Join-Path $PSScriptRoot 'play-monitor.ps1'), '-GamePid', $game.Id | Out-Null
     }
+    # every process's CPU once a second (playlogs\procs_*.csv): what else was busy when the mod logs a [stall]
+    if (Test-Path (Join-Path $PSScriptRoot 'proc-sampler.ps1')) {
+        $procsOut = Join-Path $PSScriptRoot ('playlogs\procs_' + $game.StartTime.ToString('yyyyMMdd_HHmmss') + '.csv')
+        Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass',
+            '-File', (Join-Path $PSScriptRoot 'proc-sampler.ps1'), '-Out', $procsOut, '-GamePid', $game.Id | Out-Null
+    }
     # (off 2026-11-01: login by the game itself, Enter = card scan) log in with the card in DEVICE\aime.txt once the attract screen is up (see auto-login.py)
     # $py = (Get-Command python.exe -ErrorAction SilentlyContinue).Source
     # if ($py) {
     # Start-Process -FilePath $py -WindowStyle Hidden -ArgumentList "`"$(Join-Path $PSScriptRoot 'auto-login.py')`"", $game.Id | Out-Null
     # Log 'auto-login started'
     # }
-    if ($Monitor -ne '1') {
-        # Unity ignores the controller screen's display scaling and opens at half size; fit it to the real pixels
-        Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass',
-            '-File', (Join-Path $PSScriptRoot 'fit-window.ps1'), '-GamePid', $game.Id | Out-Null
+    $noFit = Test-Path (Join-Path $Root 'stutter-no-fit.flag')
+    $fitOnce = Test-Path (Join-Path $Root 'stutter-fit-once.flag')
+    if ($Monitor -ne '1' -and -not $noFit) {
+        # Unity ignores the controller screen's display scaling and opens at half size; fit it to the real pixels.
+        # stutter-fit-once.flag (2026-11-02): fit and raise it until it has stayed right for 20 s, then stop, instead of
+        # raising it every 2 s for the whole session (a suspect for the stutter)
+        $fitArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $PSScriptRoot 'fit-window.ps1'), '-GamePid', $game.Id)
+        if ($fitOnce) { $fitArgs += @('-SettleChecks', '10') }
+        Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList $fitArgs | Out-Null
     }
 
     # --- 4. lock scheduling -----------------------------------------------------
-    $game.PriorityClass = 'High'
-    $pMask = [MmNative]::PerformanceCoreMask()
+    $normalScheduling = Test-Path (Join-Path $Root 'stutter-normal-scheduling.flag')
+    $game.PriorityClass = if ($normalScheduling) { 'Normal' } else { 'High' }
+    $pMask = if ($normalScheduling) { 0 } else { [MmNative]::PerformanceCoreMask() }
+    Log "window fit: off=$noFit, once=$fitOnce; scheduling normal=$normalScheduling"
     if ($pMask -ne 0) {
         $game.ProcessorAffinity = [IntPtr]$pMask
         Log ('Sinmai pinned to P-cores, mask 0x{0:X}' -f $pMask)

@@ -39,6 +39,7 @@
 | `/api/test/selectperf?reset=1` | GET | select layout cost per call kind + frame-time stats |
 | `/api/test/autoplay` | POST | `{"mode": None|Critical|Perfect|Great|Good|Miss|Random}` (needs testInput) |
 | `/api/test/rank` | POST | `{"rank": "Rank_SSSP" | "None"}` forced result rank animation (needs testInput) |
+| `/api/test/roompresent` | POST | what the open partner room does after a present (emotion effect + fun loop) without giving one; `rooms` = how many |
 | `/api/test/heapwalk` | POST | managed heap walk -> `<ASSETS>\heapwalk\walk_<time>.tsv` (freezes the game) |
 | `/api/test/key` | POST | in-game virtual key (needs testInput) - does NOT reach the buttons (they are read in amdaemon); not wrapped |
 

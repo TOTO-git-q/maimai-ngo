@@ -4,10 +4,14 @@ a Mask for the sweeping shine (UI_RSL_Rank_Effect_Slide_03) and as the white fla
 - UI_RSL_Rank_S_White01 (Null_eff/S_Base_Eff_Mask): the S's inner highlight line, the shine's mask;
 - UI_RSL_Rank_S_White: the S's outline, flashed white;
 - UI_RSL_Rank_A_mask / B_mask: the same for A and B;
-- UI_RSL_Rank_Plus_White02..04: small corner ticks of the plus.
+- UI_RSL_Rank_Plus_White02..04: thin L-shaped glints, one per quadrant (02 upper right, 03 lower right, 04 lower
+  left), flashed white over the plus on the same 148x148 canvas.
 The NGO re-skin filled them with the letter's full bounding block, so the shine swept the whole rectangle around the
-letter and looked like it flew about. Here every one becomes the matching NGO letter's own silhouette (the installed
-letter texture's alpha), shrunk 2 px so the shine sits inside the outline; the plus ticks keep the plus shape.
+letter and looked like it flew about. Here every letter mask becomes the matching NGO letter's own silhouette (the
+installed letter texture's alpha), shrunk 2 px so the shine sits inside the outline.
+The plus is different: its face is pure white, so a white glint only shows on the purple outline. Each tick is a
+4 px line down the middle of the outline band (chessboard distance 4..7 px from the face; the band is 10 px) around that quadrant's
+inner corner, stopping 6 px short of the arm ends, never on the pink drop shadow. Same corner as the stock tick.
 Inputs: tasks/refs_rank/now_*.png (ngo_dump_tex.py). usage: python ngo_rank_masks.py <out dir> [preview.png]"""
 import os, sys
 import numpy as np
@@ -22,12 +26,32 @@ JOBS = {"UI_RSL_Rank_S_White01": ("UI_RSL_Rank_S_Yellow", 3, 255),
         "UI_RSL_Rank_S_White": ("UI_RSL_Rank_S_Yellow", 1, 255),
         "UI_RSL_Rank_A_mask": ("UI_RSL_Rank_A", 3, 255),
         "UI_RSL_Rank_B_mask": ("UI_RSL_Rank_B", 3, 255),
-        "UI_RSL_Rank_Plus_White02": ("UI_RSL_Rank_Plus", 2, 255),
-        "UI_RSL_Rank_Plus_White03": ("UI_RSL_Rank_Plus", 2, 255),
-        "UI_RSL_Rank_Plus_White04": ("UI_RSL_Rank_Plus", 2, 255)}
+        "UI_RSL_Rank_Plus_White02": ("UI_RSL_Rank_Plus", 0, 255),
+        "UI_RSL_Rank_Plus_White03": ("UI_RSL_Rank_Plus", 0, 255),
+        "UI_RSL_Rank_Plus_White04": ("UI_RSL_Rank_Plus", 0, 255)}
+PLUS_TICKS = {"UI_RSL_Rank_Plus_White02": (+1, -1), "UI_RSL_Rank_Plus_White03": (+1, +1), "UI_RSL_Rank_Plus_White04": (-1, +1)}
 
 
 def load(n): return np.array(Image.open(os.path.join(D, "now_%s.png" % n)).convert("RGBA"))
+
+
+def plus_tick(name):
+    """The quadrant's glint on the NGO plus: the middle of the purple outline band around that inner corner."""
+    sx, sy = PLUS_TICKS[name]
+    a = load("UI_RSL_Rank_Plus").astype(int)
+    face = (a[..., 3] > 128) & (a[..., :3].min(axis=2) > 220)
+    outline = (a[..., 3] > 128) & (a[..., 0] < 120) & (a[..., 2] > 150)          # the purple, not the pink shadow
+    ys, xs = np.nonzero(face)
+    x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()                       # arm ends
+    cols, rows = np.nonzero(face[y0 + 5])[0], np.nonzero(face[:, x0 + 5])[0]
+    vx0, vx1, hy0, hy1 = cols.min(), cols.max(), rows.min(), rows.max()           # the vertical / horizontal arm's sides
+    d = ndimage.distance_transform_cdt(~face, metric="chessboard")
+    yy, xx = np.mgrid[:a.shape[0], :a.shape[1]]
+    quad = (xx > vx1 if sx > 0 else xx < vx0) & (yy < hy0 if sy < 0 else yy > hy1)
+    keep = (yy >= y0 + 6) & (yy <= y1 - 6) & (xx >= x0 + 6) & (xx <= x1 - 6)     # stop short of the arm ends
+    m = quad & keep & outline & (d >= 4) & (d <= 7)
+    out = np.zeros(a.shape, np.uint8); out[..., :3] = 255; out[..., 3] = np.where(m, 255, 0)
+    return Image.fromarray(out), int(m.sum())
 
 
 def s_shine_mask():
@@ -52,6 +76,8 @@ def s_shine_mask():
 for over, (letter, shrink, alpha) in JOBS.items():
     if over == "UI_RSL_Rank_S_White01":
         im = s_shine_mask(); im.save(os.path.join(OUT, over + ".png")); print(over, "remapped to the on-screen S face"); continue
+    if over in PLUS_TICKS:
+        im, n = plus_tick(over); im.save(os.path.join(OUT, over + ".png")); print(over, "outline glint pixels", n); continue
     ref = load(letter)
     size = Image.open(os.path.join(D, "now_%s.png" % over)).size
     sil = ref[..., 3] > 128

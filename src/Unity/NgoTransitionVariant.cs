@@ -57,8 +57,10 @@ namespace PartnerLive2D.Unity
 
         static void Postfix(Image __instance)
         {
+            long t0 = PlayStats.Now();
             try { Apply(__instance); }
             catch (Exception e) { Mod.Error("ngo transition variant: " + e.Message); }
+            finally { PlayStats.Spent(PlayStats.Part.Transition, t0); }
         }
 
         static void Apply(Image img)

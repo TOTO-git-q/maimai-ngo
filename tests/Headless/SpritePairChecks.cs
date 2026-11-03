@@ -45,6 +45,15 @@ namespace PartnerLive2D.Headless
             if (SpritePairMath.DrawingAt(clip, 0, true) != 0 || SpritePairMath.DrawingAt(clip, 2.0 / 24, true) != 1 ||
                 SpritePairMath.DrawingAt(clip, 6.0 / 24, true) != 0 || SpritePairMath.DrawingAt(clip, 8.0 / 24, false) != 1)
                 throw new Exception("sprite timeline or loop");
+            int nx; float w;
+            float near = 1 - (.5f / 24) / .06f;
+            if (SpritePairMath.DrawingBlend(clip, 0, true, .06f, out nx, out w) != 0 || nx != 1 || w != 0 ||
+                SpritePairMath.DrawingBlend(clip, 1.5 / 24, true, .06f, out nx, out w) != 0 || nx != 1 || Math.Abs(w - near) > .0001f ||
+                SpritePairMath.DrawingBlend(clip, 5.5 / 24, true, .06f, out nx, out w) != 1 || nx != 0 || Math.Abs(w - near) > .0001f ||
+                SpritePairMath.DrawingBlend(clip, 5.5 / 24, false, .06f, out nx, out w) != 1 || nx != -1 || w != 0 ||
+                SpritePairMath.DrawingBlend(clip, 8.0 / 24, false, .06f, out nx, out w) != 1 || nx != -1 ||
+                SpritePairMath.DrawingBlend(clip, 1.5 / 24, true, 0, out nx, out w) != 0 || w != 0)
+                throw new Exception("sprite drawing blend");
             if (SpritePairMath.IncomingWeight(0, .12f) != 0 || SpritePairMath.IncomingWeight(.12f, .12f) != 1 ||
                 Math.Abs(SpritePairMath.IncomingWeight(.06f, .12f) - .5f) > .00001f) throw new Exception("sprite crossfade");
             if (SpritePairMath.Tier(true, 969999, false) != "Clear" || SpritePairMath.Tier(true, 970000, false) != "Good" ||

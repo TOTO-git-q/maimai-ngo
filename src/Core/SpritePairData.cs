@@ -109,6 +109,27 @@ namespace PartnerLive2D.Core
             }
             throw new InvalidOperationException("invalid drawing timeline");
         }
+        // DrawingAt plus the drawing that follows and its fade-in weight over the last blendSeconds of the hold
+        // (a loop wraps to drawing 0; a one-shot's last drawing has none: next = -1, weight 0). The clips are on
+        // threes, so this softens the 8-per-second cadence without moving any drawing's own timing.
+        public static int DrawingBlend(SpritePairManifest.Clip clip, double seconds, bool loop, float blendSeconds, out int next, out float weight)
+        {
+            if (seconds < 0 || double.IsNaN(seconds) || double.IsInfinity(seconds)) throw new ArgumentOutOfRangeException("seconds");
+            double frame = seconds * clip.Fps;
+            if (loop) frame %= clip.TotalFrames;
+            else if (frame > clip.TotalFrames - 1) frame = clip.TotalFrames - 1;
+            int end = 0;
+            for (int i = 0; i < clip.Drawings.Length; i++)
+            {
+                end += clip.Drawings[i].Hold;
+                if (frame >= end) continue;
+                next = i + 1 < clip.Drawings.Length ? i + 1 : loop && i > 0 ? 0 : -1;
+                double left = (end - frame) / clip.Fps;
+                weight = next < 0 || blendSeconds <= 0 || left >= blendSeconds ? 0 : (float)(1 - left / blendSeconds);
+                return i;
+            }
+            throw new InvalidOperationException("invalid drawing timeline");
+        }
         public static float IncomingWeight(float elapsed, float duration)
         {
             if (duration <= 0) throw new ArgumentOutOfRangeException("duration");

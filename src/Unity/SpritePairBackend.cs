@@ -31,6 +31,7 @@ namespace PartnerLive2D.Unity
         internal SpritePairPlayback Playback { get { return _playback; } }
         internal SpritePairLoader Loader { get { return _loader; } }
         internal SpritePairManifest Manifest { get { return _manifest; } }
+        internal float DrawingBlendSeconds;   // partner.ini spriteBlend
 
         internal SpritePairBackend(string path, string loop, bool select, int size)
         {
@@ -128,8 +129,12 @@ namespace PartnerLive2D.Unity
                 // so the character never turns translucent and Ame never shows through K.
                 float incoming = _playback.Incoming(c);
                 Drawing(state.Outgoing, state.OutgoingDrawing, 1);
-                int currentDrawing = state.Outgoing != null ? 0 : SpritePairMath.DrawingAt(state.Current, state.Time, state.Current.Group == _loop);
+                if (state.Outgoing != null) { Drawing(state.Current, 0, incoming); continue; }
+                // between drawings the same rule: the next one fades in over the held one (only once it is loaded)
+                int next; float blend;
+                int currentDrawing = SpritePairMath.DrawingBlend(state.Current, state.Time, state.Current.Group == _loop, DrawingBlendSeconds, out next, out blend);
                 Drawing(state.Current, currentDrawing, incoming);
+                if (next >= 0 && blend > 0 && _clips[state.Current].Textures[next] != null) Drawing(state.Current, next, blend * incoming);
             }
             Graphics.ExecuteCommandBuffer(_commands);
         }

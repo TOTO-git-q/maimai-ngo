@@ -23,6 +23,7 @@ namespace PartnerLive2D.Unity
         long _serial;
         int _scrollDirection, _scrollFrame = -1;
         public Dictionary<string, object> Song { get; private set; }
+        public Action<string, object> Listener;   // the partner's moments (PartnerView.SelectEvent); must not throw
         public MusicSelectReactionRouter(int player) { _player = player; }
         public void Scroll(int direction) { _scrollDirection = direction; _scrollFrame = Time.frameCount; }
         public void Emit(string type, object data = null)
@@ -30,6 +31,7 @@ namespace PartnerLive2D.Unity
             _events.Enqueue(new Dictionary<string, object> { { "id", ++_serial }, { "event", type },
                 { "time", Time.realtimeSinceStartup }, { "frame", Time.frameCount }, { "player", _player }, { "data", data }, { "song", Song } });
             while (_events.Count > 64) _events.Dequeue();
+            if (Listener != null) Listener(type, data);
         }
         public void Suspend() { _first = true; _pending = false; }
         public void Tick(MusicSelectProcess p, IMusicSelectPartnerReactions view)

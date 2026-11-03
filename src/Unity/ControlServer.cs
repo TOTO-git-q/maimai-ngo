@@ -203,6 +203,10 @@ namespace PartnerLive2D.Unity
 
             switch (seg[1])
             {
+                case "performance":
+                    Need(method, "GET");
+                    return MainThread.Call(() => RuntimePerf.Snapshot(query["reset"] == "1"));
+
                 case "theme":
                     if (seg.Length != 2) throw new ApiError(404, "unknown theme route");
                     if (method == "GET") return MainThread.Call(() => ThemeOverride.Status());
@@ -251,6 +255,9 @@ namespace PartnerLive2D.Unity
                     if (seg.Length == 3 && seg[2] == "autoplay") { Need(method, "POST"); return MainThread.Call(() => TestHarness.Autoplay(body)); }
                     if (seg.Length == 3 && seg[2] == "touch") { Need(method, "POST"); return MainThread.Call(() => TestHarness.Touch(body)); }
                     if (seg.Length == 3 && seg[2] == "rank") { Need(method, "POST"); return MainThread.Call(() => TestHarness.ForceRank(body)); }
+                    if (seg.Length == 3 && seg[2] == "roompresent") { Need(method, "POST"); return MainThread.Call(() => TestHarness.RoomPresent()); }
+                    if (seg.Length == 3 && seg[2] == "record") { Need(method, "POST"); return MainThread.Call(() => ScreenRecorder.Command(body)); }
+                    if (seg.Length == 3 && seg[2] == "framerate") { Need(method, "POST"); return MainThread.Call(() => TestHarness.FrameRate(body)); }
                     if (seg.Length == 3 && seg[2] == "quicklogin") return TestHarness.QuickLogin();
                     if (seg.Length == 3 && seg[2] == "entry") return MainThread.Call(() => TestHarness.EntryState());
                     if (seg.Length == 3 && seg[2] == "music")
@@ -453,6 +460,8 @@ namespace PartnerLive2D.Unity
                 case "frame.png":
                     png = MainThread.Call(() => NeedView(idText).FramePng());
                     return null;
+                case "timeline":   // tests: the pictures the frame library showed (v2/render.py --timeline)
+                    return MainThread.Call(() => NeedView(idText).LibraryTimeline());
             }
             Need(method, "POST");
             return MainThread.Call<object>(() =>
@@ -474,6 +483,9 @@ namespace PartnerLive2D.Unity
                     case "expression": v.SetExpression(Json.GetString(body, "name")); break;
                     case "look": v.LookAt(Json.GetFloat(body, "x"), Json.GetFloat(body, "y"), Json.GetFloat(body, "seconds", 3f)); break;
                     case "close": v.Close(); return new Dictionary<string, object> { { "closed", true } };
+                    case "fill":   // test: the view's rectangle in one flat colour ("#RRGGBBAA"), "" = the partner again
+                        if (!v.Fill(Json.GetString(body, "color"))) throw new ApiError(400, "color must be #RRGGBB, #RRGGBBAA or empty");
+                        break;
                     default: throw new ApiError(404, "unknown view action '" + action + "'");
                 }
                 return v.Info();

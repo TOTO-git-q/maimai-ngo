@@ -35,6 +35,13 @@ namespace PartnerLive2D.Unity
 
         static void Postfix(Image __instance, VertexHelper toFill)
         {
+            long t0 = PlayStats.Now();
+            try { Tint(__instance, toFill); }
+            finally { PlayStats.Spent(PlayStats.Part.Tint, t0); }
+        }
+
+        static void Tint(Image __instance, VertexHelper toFill)
+        {
             if (_textures == null) return;
             var sprite = __instance.sprite;
             if (sprite == null) return;

@@ -51,6 +51,9 @@ namespace PartnerLive2D.Unity
 
             // settings.ini (optional): http = true|false, port = 8791
             var settings = ReadSettings(Path.Combine(_root, "settings.ini"));
+            string quality;
+            settings.TryGetValue("quality", out quality);
+            RuntimeQuality.Initialize(quality);
             MusicSelectSession.Initialize(_root);
             string themeFolder;
             settings.TryGetValue("theme", out themeFolder);
@@ -63,6 +66,9 @@ namespace PartnerLive2D.Unity
             TestHarness.InputLog = settings.TryGetValue("inputLog", out inputLog) && inputLog == "true";
             string frameLog;
             TestHarness.FrameLog = settings.TryGetValue("frameLog", out frameLog) && frameLog == "true";
+            string lateFrameLog;
+            PlayStats.VerboseFrames = settings.TryGetValue("lateFrameLog", out lateFrameLog) && lateFrameLog == "true";
+            PresentationDiagnostics.Initialize(settings);
             string cleanupGap; float gap;
             if (settings.TryGetValue("cleanupMinGap", out cleanupGap) && float.TryParse(cleanupGap, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out gap))
                 NgoCleanupTiming.MinGap = gap;
@@ -104,11 +110,15 @@ namespace PartnerLive2D.Unity
 
         public override void OnUpdate()
         {
+            long t0 = PlayStats.Now();
+            PlayStats.Poll();
+            RuntimePerf.Poll();
             MainThread.Drain();
             TestHarness.TrackGameWindow();
             TestHarness.PollInput();
             TestHarness.PollFrame();
-            PlayStats.Poll();
+            PlayStats.Spent(PlayStats.Part.Update, t0);
+            PresentationDiagnostics.Poll();
             if (!Ready || _overlayDone || Time.realtimeSinceStartup < 20f) return;
             _overlayDone = true;
             foreach (var c in _configs)
@@ -193,7 +203,7 @@ namespace PartnerLive2D.Unity
             Texture2D tex;
             if (ImageCache.TryGetValue(path, out tex) && tex != null) return tex;
             tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            tex.LoadImage(File.ReadAllBytes(path));
+            tex.LoadImage(File.ReadAllBytes(path), true); // GPU-only: this cache never reads pixels back
             tex.wrapMode = TextureWrapMode.Clamp;
             // e.g. "ngo_pair/icon.png", so UI dumps (/api/test/ui) can tell our pictures from the game's
             tex.name = Path.GetFileName(Path.GetDirectoryName(path)) + "/" + Path.GetFileName(path);

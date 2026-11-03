@@ -43,8 +43,10 @@ namespace PartnerLive2D.Unity
 
         static void Postfix(Image __instance)
         {
+            long t0 = PlayStats.Now();
             try { Apply(__instance); }
             catch (Exception e) { Mod.Error("ngo open cards: " + e.Message); }
+            finally { PlayStats.Spent(PlayStats.Part.Cards, t0); }
         }
 
         static void Apply(Image img)

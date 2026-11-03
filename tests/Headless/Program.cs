@@ -27,6 +27,16 @@ namespace PartnerLive2D.Headless
 
         static int Main(string[] args)
         {
+            if (args.Length > 0 && args[0] == "lowend")
+            {
+                try { LowEndChecks(); return 0; }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
+            if (args.Length == 2 && args[0] == "lowend-pack")
+            {
+                try { LowEndPackChecks(args[1]); return 0; }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
             if (args.Length > 0 && args[0] == "spritepack")
             {
                 try
@@ -35,6 +45,11 @@ namespace PartnerLive2D.Headless
                     CheckSpritePack(args[1]);
                     return 0;
                 }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
+            if (args.Length > 0 && args[0] == "spritelib")
+            {
+                try { SpriteLibraryRun(args); return 0; }
                 catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
             }
             if (args.Length > 0 && args[0] == "rigdump")

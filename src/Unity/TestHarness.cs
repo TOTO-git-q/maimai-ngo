@@ -98,6 +98,29 @@ namespace PartnerLive2D.Unity
             return new Dictionary<string, object> { { "area", area.ToString() } };
         }
 
+        // frame pacing for recordings (2026-11-02 night: with the laptop's display off the game waits for vertical blanks
+        // that come half as often and runs at 30 frames a second; vsync 0 + 60 keeps it at 60)
+        public static object FrameRate(object body)
+        {
+            var before = new Dictionary<string, object> { { "vsync", UnityEngine.QualitySettings.vSyncCount }, { "fps", UnityEngine.Application.targetFrameRate } };
+            if (Json.Get(body, "vsync") != null) UnityEngine.QualitySettings.vSyncCount = Json.GetInt(body, "vsync");
+            if (Json.Get(body, "fps") != null) UnityEngine.Application.targetFrameRate = Json.GetInt(body, "fps");
+            return new Dictionary<string, object> { { "before", before }, { "vsync", UnityEngine.QualitySettings.vSyncCount }, { "fps", UnityEngine.Application.targetFrameRate } };
+        }
+
+        // what the partner room does after a present (CollectionProcess.InputPartnerPresentConfirmSequence), without giving
+        // one: tests must not spend the owner's presents
+        public static object RoomPresent()
+        {
+            int rooms = 0;
+            foreach (var room in UnityEngine.Object.FindObjectsOfType<PartnerRoom>())
+            {
+                if (!room.isActiveAndEnabled) continue;
+                room.PlayPartnerEmotionEffectOnceTime(); room.PlayPartnerFunLoopOnceTime(); rooms++;
+            }
+            return new Dictionary<string, object> { { "rooms", rooms } };
+        }
+
         [HarmonyPatch]
         static class TouchInject
         {

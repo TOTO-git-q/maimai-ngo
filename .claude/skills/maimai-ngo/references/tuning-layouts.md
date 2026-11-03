@@ -19,6 +19,15 @@ Values are restored after a sheet run; nothing is saved unless you save.
   The NGO pair uses height 800, bottomY -200; the earlier 1300 / -850 (tuned for a tall Live2D sample) hid the lower
   bodies behind the song panel, and the sprite canvas has margins, so the same rect shows the pair ~12 % smaller
   than a full-bleed Live2D model.
+- The difficulty header (UI_CMN_TitleBase, band about +400..+520) only shows in the Difficulty phase, so a rect tuned
+  in the Music phase can put a head under it. Check tuning shots in BOTH phases. Two tools:
+  - `partner.under` (comma list of Main paths): each gets its own canvas one order below the screen canvas, so it
+    draws under the partner (listed order = draw order). The NGO pair lists `UI_CMN_TitleBase/Null_UI_CMN_TitleBase/
+    Base_Shadow, .../Base`: the pair overlaps the purple band while the MASTER text (`Title`) and the arrows stay on
+    top. This is what the owner chose: "same height, Ame covers part of the band".
+  - `partner.difficultyOffsetY` (-800..800, eased ~0.2 s) moves the pair in that phase instead. The NGO pair uses 0;
+    the owner rejected moving it.
+  Sibling order cannot do this: the header is Main's 17th child, after the song panel and buttons.
 - With no custom partner equipped (`selectPartner = equipped`) the stock navi is shown in the same rect: its width is
   capped at 520 units, it hangs from the rect's top and is dropped 135 units to clear the freedom-mode banner.
 - Candidate sheet: MCP `select_tune([{"label": "h800 y-200", "height": 800, "bottomY": -200}, ...])` ->

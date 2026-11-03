@@ -70,7 +70,10 @@ switch ($Cmd) {
         . (Join-Path $PSScriptRoot 'test-lib.ps1')
         $t = [IO.File]::ReadAllText($toml)
         $t = Set-TomlSection $t 'GameSystem.Sound' @('EnableExclusive = false', 'Enable8Channel = false')
-        $t = Set-TomlSection $t 'GameSystem.Window' @('Windowed = true', 'Borderless = false', 'Width = 540', 'Height = 960')
+        # DRIVE_WINDOW = 1080x1920 for full-size screenshots (default 540x960)
+        $win = @(540, 960)
+        if ($env:DRIVE_WINDOW -match '^(\d+)x(\d+)$') { $win = @([int]$Matches[1], [int]$Matches[2]) }
+        $t = Set-TomlSection $t 'GameSystem.Window' @('Windowed = true', 'Borderless = false', "Width = $($win[0])", "Height = $($win[1])")
         # AntiLag taps a system-wide Ctrl every ~10 s. The off-screen test game is made to count as focused (so test keys
         # reach it), so even ActivateWhileBackground = false keeps typing Ctrl into whatever the user is using:
         # switch AntiLag off entirely for test runs (the user's own AquaMai.toml is restored on stop)

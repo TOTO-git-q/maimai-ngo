@@ -1,7 +1,10 @@
 # Fit the game window to the controller screen (non-primary display) at its real pixel size. ASCII only.
 # Started by launcher.ps1 in its own process so per-monitor DPI awareness is set before any screen query.
-#   fit-window.ps1 -GamePid <pid>
-param([int]$GamePid)
+#   fit-window.ps1 -GamePid <pid> [-SettleChecks <n>]
+#   -SettleChecks n (2026-11-02, stutter trial): stop once the window has been right for n checks in a row (2 s each)
+#   instead of raising it every 2 s for the whole session
+param([int]$GamePid, [int]$SettleChecks = 0)
+$ok = 0
 Add-Type @'
 using System;
 using System.Runtime.InteropServices;
@@ -32,7 +35,10 @@ while ($true) {
             # only when it is off: a resize makes the game rebuild its swap chain, which shows as a hitch
             # HWND_TOPMOST, SWP_SHOWWINDOW | SWP_NOACTIVATE
             [void][Fit]::SetWindowPos($h, [IntPtr](-1), $b.X, $b.Y, $b.Width, $b.Height, 0x0040 -bor 0x0010)
+            $ok = 0
         } else {
+            $ok++
+            if ($SettleChecks -gt 0 -and $ok -gt $SettleChecks) { exit }
             # z-order only (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE): keeps the taskbar under the game
             [void][Fit]::SetWindowPos($h, [IntPtr](-1), 0, 0, 0, 0, 0x0002 -bor 0x0001 -bor 0x0010)
         }

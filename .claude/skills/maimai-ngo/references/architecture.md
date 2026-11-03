@@ -146,6 +146,7 @@ An unknown key makes the mod skip the whole partner (PartnerConfig.Set throws), 
 | `scale`, `offsetX`, `offsetY` | result screen + preview overlay: size in stock-partner heights (0.05-10), offset in heights (-5..5) |
 | `roomScale`, `roomOffsetX`, `roomOffsetY` | the same for the partner room |
 | `resultUnder` | comma list of result objects (name or path end) given an own canvas one order below the screen, so they draw under the partner |
+| `spriteBlend` | sprite pair: seconds the next drawing fades in over the held one before its turn (0-0.5, default 0.06; 0 = hard cuts). The clips are on threes (8 drawings/s), which reads as stutter next to the 60 fps UI |
 | `renderSize` | RT size (64-4096; 1536 for the sprite pair) |
 | `flipY`, `lookStrength` | flip; look-at strength (0 = off) |
 | `debugDump`, `debugOverlay` | write debug PNGs into the folder / show an overlay ~20 s after boot cycling states |

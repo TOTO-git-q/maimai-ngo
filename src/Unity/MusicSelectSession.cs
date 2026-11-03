@@ -120,6 +120,7 @@ namespace PartnerLive2D.Unity
             for (int i = 0; i < p.MonitorArray.Length; i++)
             {
                 var side = new Side { Monitor = p.MonitorArray[i], Player = i, Router = new MusicSelectReactionRouter(i) };
+                side.Router.Listener = (type, data) => { if (side.View != null) side.View.SelectEvent(type, data); };
                 s.Sides.Add(side); // register before any fallible setup
                 if (!p.IsEntry(i) || !side.Monitor.IsActive()) { side.Reason = "inactive player"; continue; }
                 side.Layout = new MusicSelectLayout(side.Monitor);
@@ -231,6 +232,7 @@ namespace PartnerLive2D.Unity
                         side.Router.Emit("selectionConfirmed", "NEXT accepted; not final start");
                     if (phase == "Menu" && side.View != null && side.View.gameObject.activeInHierarchy) side.View.SpritePlay("Confirm");
                     side.Phase = phase; side.LayoutFrame = -1; side.Router.Emit("phase", phase);
+                    if (side.View != null) side.View.SetSelectPhase(phase);   // difficulty header: the pair eases down under it
                 }
                 side.Reason = !Settings.Enabled ? "disabled" : NormalReason(p, side.Player, phase);
                 if (side.Reason != side.LoggedReason && p.IsEntry(side.Player))
@@ -292,7 +294,7 @@ namespace PartnerLive2D.Unity
                             if (cfg == null) throw new InvalidOperationException("no custom current partner or valid selectPartner fallback");
                             if (side.View != null && side.View.Config.Name != cfg.Name) { side.View.Close(); side.View = null; }
                             var owner = side;
-                            if (side.View == null) side.View = PartnerView.AttachMusicSelect(side.Layout.Main, cfg, side.Player, Settings, e => DropPartner(owner, partnerKey, e));
+                            if (side.View == null) { side.View = PartnerView.AttachMusicSelect(side.Layout.Main, cfg, side.Player, Settings, e => DropPartner(owner, partnerKey, e)); if (side.View != null) side.View.SetSelectPhase(side.Phase); }
                         }
                     }
                     catch (Exception e) { DropPartner(side, partnerKey, e); }
@@ -351,6 +353,14 @@ namespace PartnerLive2D.Unity
         {
             foreach (var s in Sessions.Values) foreach (var side in s.Sides)
                 if (side.Monitor == monitor) side.Router.Scroll(direction);
+        }
+        // the select timer of a monitor shows 10 (CommonTimer, MusicSelectCountdown): the partner hurries the player once
+        public static void Countdown(int monitor)
+        {
+            if (!Settings.Enabled) return;
+            foreach (var s in Sessions.Values)
+                foreach (var side in s.Sides)
+                    if (side.Player == monitor && side.View != null && side.View.gameObject.activeInHierarchy) side.View.SelectCountdown();
         }
         public static bool IsReleaseWait(MusicSelectProcess p) => MainSequence(p) == 4;
         public static void Decide(MusicSelectProcess p, bool wasReleaseWait)
@@ -589,6 +599,23 @@ namespace PartnerLive2D.Unity
         static void Postfix(MusicSelectMonitor __instance)
         {
             try { MusicSelectSession.Scroll(__instance, 1); } catch (Exception e) { MusicSelectSession.Fail(e); }
+        }
+    }
+    // The timer of each monitor (shared by every timed screen; only an open select page listens): the moment it shows 10.
+    [HarmonyPatch(typeof(CommonTimer), "SetTimerCount")]
+    static class MusicSelectCountdown
+    {
+        static readonly uint[] Shown = { 999, 999 };
+        static void Postfix(CommonTimer __instance, uint dispTime, bool isInfinity)
+        {
+            try
+            {
+                int m = __instance.MonitorIndex;
+                if (m < 0 || m >= Shown.Length) return;
+                uint before = Shown[m]; Shown[m] = isInfinity ? 999u : dispTime;
+                if (!isInfinity && dispTime == 10 && before != 10) MusicSelectSession.Countdown(m);
+            }
+            catch (Exception e) { Mod.Warn("select countdown: " + e.Message); }
         }
     }
 }

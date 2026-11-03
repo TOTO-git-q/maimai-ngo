@@ -19,6 +19,7 @@ CLEAN = re.compile(r"\[clean\] unload\+GC (\d+) ms, heap (\d+) MB")
 PLAY = re.compile(r"\[play\] music (-?\d+) diff (-?\d+): ([\d.]+) s, (\d+) frames \(([\d.]+) fps\), (\d+) over 25 ms, "
                   r"(\d+) over 50 ms, worst ([\d.]+) ms, load (\d+) ms, gc (\d+)")
 RETRY = re.compile(r"\[AddPlayCountWhenQuickRetry\] Player 0 MusicID (\d+) Difficulty (\d+)")
+STALL = re.compile(r"\[stall\] (\d+) ms at ([\d.]+) s into music (-?\d+) \((\d\d:\d\d:\d\d\.\d+)\)")
 
 
 def newest(pattern):
@@ -130,6 +131,51 @@ def sample_at(rows, when):
     return best[1] if key(best) <= 30 else None
 
 
+def read_procs(path):
+    """procs_*.csv from proc-sampler.ps1: (seconds of day, total CPU %, busiest processes) once a second"""
+    rows = []
+    if path and os.path.isfile(path):
+        with open(path, newline="") as f:
+            for r in csv.DictReader(f):
+                try:
+                    t = datetime.strptime(r["time"], "%H:%M:%S.%f")
+                    rows.append((t.hour * 3600 + t.minute * 60 + t.second + t.microsecond / 1e6, float(r["total_cpu_pct"]), r["top"]))
+                except (KeyError, ValueError):
+                    pass
+    return rows
+
+
+def stalls_of(events):
+    """[stall] lines (PlayStats: a frame over 100 ms in a song), each with the song length from the next [play] line of
+    that music, so a stall can be placed as mid-song or at the end"""
+    out = []
+    for i, (t, msg) in enumerate(events):
+        m = STALL.search(msg)
+        if not m:
+            continue
+        music, length = int(m.group(3)), None
+        for _, later in events[i + 1:]:
+            p = PLAY.search(later)
+            if p and int(p.group(1)) == music:
+                length = float(p.group(3)); break
+        out.append({"ms": int(m.group(1)), "at": float(m.group(2)), "music": music, "wall": m.group(4), "length": length})
+    return out
+
+
+def same_run(kind, first, log):
+    """playlogs\\<kind>_<game start>.csv of the run whose log starts at `first`"""
+    cands = []
+    for p in glob.glob(os.path.join(PLAYLOGS, kind + "_*.csv")):
+        try:
+            st = datetime.strptime(os.path.basename(p)[len(kind) + 1:len(kind) + 16], "%Y%m%d_%H%M%S")
+        except ValueError:
+            continue
+        gap = abs((st.hour * 3600 + st.minute * 60 + st.second) - (first.hour * 3600 + first.minute * 60 + first.second))
+        if gap <= 120 and abs((datetime.fromtimestamp(os.path.getmtime(log)).date() - st.date()).days) <= 1:
+            cands.append((gap, p))
+    return min(cands)[1] if cands else None
+
+
 def fmt(v, spec="{:.2f}", none="-"):
     return none if v is None else spec.format(v)
 
@@ -150,19 +196,10 @@ def main():
         sys.exit("no MelonLoader log found")
     events = read_log(log)
     mon = sys.argv[2] if len(sys.argv) > 2 else None
+    # the sampler files are named after the game's start, a second or two before the log's first line
     if mon is None and events:
-        # the monitor file is named after the game's start, a second or two before the log's first line
-        first = events[0][0]
-        cands = []
-        for p in glob.glob(os.path.join(PLAYLOGS, "monitor_*.csv")):
-            try:
-                st = datetime.strptime(os.path.basename(p)[8:23], "%Y%m%d_%H%M%S")
-            except ValueError:
-                continue
-            gap = abs((st.hour * 3600 + st.minute * 60 + st.second) - (first.hour * 3600 + first.minute * 60 + first.second))
-            if gap <= 120 and abs((datetime.fromtimestamp(os.path.getmtime(log)).date() - st.date()).days) <= 1:
-                cands.append((gap, p))
-        mon = min(cands)[1] if cands else None
+        mon = same_run("monitor", events[0][0], log)
+    procs_file = same_run("procs", events[0][0], log) if events else None
     rows = read_monitor(mon)
     tracks = tracks_of(events)
 
@@ -225,6 +262,23 @@ def main():
               f"平均 {sum(p['fps'] for p in plays) / len(plays):.1f} fps；歌曲中途触发 GC {sum(p['gc'] for p in plays)} 次")
     else:
         print("打歌中: 这局的模组版本还没有 [play] 记录（下次启动起才有）")
+
+    stalls = stalls_of(events)
+    procs = read_procs(procs_file)
+    print()
+    print(f"卡顿（单帧 >100 ms）: {len(stalls)} 次" + ("" if procs_file else "；没有进程采样（这局没开 proc-sampler）"))
+    for s in stalls:
+        where = ""
+        if s["length"]:
+            left = s["length"] - s["at"]
+            where = f"，全长 {s['length']:.0f} s，" + ("在结尾 %.1f s 内" % left if left <= 5 else "离结尾还有 %.0f s" % left)
+        print(f"  {s['wall']}  {s['ms']} ms  第 {s['at']:.1f} s  {title(s['music'])[:18]}{where}")
+        if procs:
+            t = datetime.strptime(s["wall"], "%H:%M:%S.%f"); sec = t.hour * 3600 + t.minute * 60 + t.second + t.microsecond / 1e6
+            # a sample covers the second before its own time stamp
+            near = [r for r in procs if sec <= r[0] <= sec + 1.6]
+            if near:
+                print(f"      那一秒全机 CPU {near[0][1]:.0f}%（全部核心算 100%），最忙的进程：{near[0][2]}")
 
 
 if __name__ == "__main__":

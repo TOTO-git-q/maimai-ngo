@@ -53,3 +53,5 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/ngo_install_new.ps1
 # song frames (select / track start / gameplay top) and the play-circle score gauge in one look: ngo_diff_frames.py.
 # Last, because it replaces the older plates EXTRA put in above (ngo_end_result, ngo_card_frames, ngo_pixelated).
 bash tools/ngo_frames_apply.sh
+# result rank flash masks (S shine, SSS+ plus glints): ngo_rank_masks.py
+bash tools/ngo_rank_masks_apply.sh

@@ -53,7 +53,7 @@ namespace PartnerLive2D.Unity
             for (int t = 0; t < _textures.Length; t++)
             {
                 var tex = new Texture2D(2, 2, TextureFormat.RGBA32, true);
-                tex.LoadImage(File.ReadAllBytes(avatar.TexturePaths[t]));
+                tex.LoadImage(File.ReadAllBytes(avatar.TexturePaths[t]), true); // immutable source atlas; release CPU copy
                 tex.wrapMode = TextureWrapMode.Clamp;
                 tex.filterMode = FilterMode.Trilinear;
                 tex.anisoLevel = 4;

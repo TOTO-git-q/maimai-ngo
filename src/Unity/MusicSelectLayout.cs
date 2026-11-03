@@ -250,6 +250,7 @@ namespace PartnerLive2D.Unity
             _label.sprite = _source.sprite; _label.color = _source.color;
             _label.enabled = !_difficultyPhase && _source.enabled && _source.gameObject.activeInHierarchy && !c.GroupsHidden["difficultyHeader"];
             if (_difficultyPhase) PositionDifficultyHeader();
+            ApplyUnder(c.PartnerUnder);
             _images.Apply(c.Images, this);
             MaintainTabLabels();
         }
@@ -389,6 +390,42 @@ namespace PartnerLive2D.Unity
             _visibility.Clear();
             if (_label != null) { _label.gameObject.SetActive(false); UnityEngine.Object.Destroy(_label.gameObject); }
             _label = null; Applied = false;
+            RemoveUnder();
+        }
+        // partner.under: the partner is Main's first child, so everything in Main draws over it. Each listed node gets
+        // its own canvas one order below the screen's canvas: it then draws before all of that canvas, partner included
+        // (the difficulty header's purple band, so the pair can overlap it while the MASTER text stays on top).
+        readonly List<Canvas> _under = new List<Canvas>();
+        string _underSpec;
+        void ApplyUnder(string spec)
+        {
+            if (spec == _underSpec) return;
+            RemoveUnder(); _underSpec = spec;
+            var screen = Main.GetComponentInParent<Canvas>();
+            if (screen == null) return;
+            var targets = new List<Transform>();
+            foreach (var raw in (spec ?? "").Split(','))
+            {
+                var path = raw.Trim();
+                if (path.Length == 0) continue;
+                var target = Main.Find(path);
+                if (target == null || target.GetComponent<Canvas>() != null) { Mod.Warn("select partner.under '" + path + "' not found or already a canvas"); continue; }
+                targets.Add(target);
+            }
+            // listed order = draw order (a shadow listed before its band stays under it)
+            for (int i = 0; i < targets.Count; i++)
+            {
+                var own = targets[i].gameObject.AddComponent<Canvas>();
+                own.overrideSorting = true;
+                own.sortingLayerID = screen.sortingLayerID;
+                own.sortingOrder = screen.sortingOrder - (targets.Count - i);
+                _under.Add(own);
+            }
+        }
+        void RemoveUnder()
+        {
+            foreach (var c in _under) if (c != null) UnityEngine.Object.DestroyImmediate(c);
+            _under.Clear(); _underSpec = null;
         }
         Baseline Capture(Transform target)
         {

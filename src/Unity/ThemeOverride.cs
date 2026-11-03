@@ -19,6 +19,11 @@ namespace PartnerLive2D.Unity
         }
         static readonly Dictionary<Transform, LayoutBinding> LayoutBindings = new Dictionary<Transform, LayoutBinding>();
         static List<ThemeOptions.LayoutRule> LayoutRules = new List<ThemeOptions.LayoutRule>();
+        static readonly List<Image> ImageScratch = new List<Image>();
+        static readonly List<RawImage> RawScratch = new List<RawImage>();
+        static readonly List<SpriteRenderer> RendererScratch = new List<SpriteRenderer>();
+        static readonly List<KeyValuePair<Transform, LayoutBinding>> LayoutScratch = new List<KeyValuePair<Transform, LayoutBinding>>();
+        static bool _reapplying;
         static string _folder;
         static bool _enabled, _internal;
         static HarmonyLib.Harmony _harmony;
@@ -114,6 +119,7 @@ namespace PartnerLive2D.Unity
             if (!_files.TryGetValue(name, out path) || BadFiles.Contains(name)) return null;
             Texture2D tex;
             if (Textures.TryGetValue(name, out tex)) return tex;
+            long started = RuntimePerf.Now();
             tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
             try
             {
@@ -124,6 +130,7 @@ namespace PartnerLive2D.Unity
                 Textures.Add(name, tex); return tex;
             }
             catch (Exception e) { Errors[name] = e.Message; BadFiles.Add(name); UnityEngine.Object.Destroy(tex); return null; }
+            finally { RuntimePerf.End(RuntimePerf.Part.ThemeLoad, started); }
         }
 
         static Texture ReplaceTexture(Texture original)
@@ -170,6 +177,12 @@ namespace PartnerLive2D.Unity
 
         static void ImagePrefix(Image __instance, ref Sprite value)
         {
+            long started = RuntimePerf.Now();
+            try { ImagePrefixInner(__instance, ref value); }
+            finally { RuntimePerf.End(RuntimePerf.Part.ThemeImage, started); }
+        }
+        static void ImagePrefixInner(Image __instance, ref Sprite value)
+        {
             if (!_enabled || _internal || __instance == null) return;
             try
             {
@@ -177,12 +190,18 @@ namespace PartnerLive2D.Unity
                 if (Images.TryGetValue(__instance, out old) && value == old.Replacement) return;
                 var replacement = ReplaceSprite(value);
                 if (replacement == null) { if (old != null) { old.Original = value; old.Replacement = null; } }
-                else { Images[__instance] = new SpriteBinding { Original = value, Replacement = replacement }; value = replacement; }
+                else { if (old == null) Images[__instance] = old = new SpriteBinding(); old.Original = value; old.Replacement = replacement; value = replacement; }
             }
             catch (Exception e) { Mod.Error("theme Image: " + e.Message); }
         }
 
         static void RawPrefix(RawImage __instance, ref Texture value)
+        {
+            long started = RuntimePerf.Now();
+            try { RawPrefixInner(__instance, ref value); }
+            finally { RuntimePerf.End(RuntimePerf.Part.ThemeRaw, started); }
+        }
+        static void RawPrefixInner(RawImage __instance, ref Texture value)
         {
             if (!_enabled || _internal || __instance == null) return;
             try
@@ -191,12 +210,18 @@ namespace PartnerLive2D.Unity
                 if (RawImages.TryGetValue(__instance, out old) && value == old.Replacement) return;
                 var replacement = ReplaceTexture(value);
                 if (replacement == null) { if (old != null) { old.Original = value; old.Replacement = null; } }
-                else { RawImages[__instance] = new TextureBinding { Original = value, Replacement = replacement }; value = replacement; }
+                else { if (old == null) RawImages[__instance] = old = new TextureBinding(); old.Original = value; old.Replacement = replacement; value = replacement; }
             }
             catch (Exception e) { Mod.Error("theme RawImage: " + e.Message); }
         }
 
         public static void Scan()
+        {
+            long started = RuntimePerf.Now();
+            try { ScanInner(); }
+            finally { RuntimePerf.End(RuntimePerf.Part.ThemeScan, started); }
+        }
+        static void ScanInner()
         {
             if (!_enabled) return;
             foreach (var image in Resources.FindObjectsOfTypeAll<Image>())
@@ -226,16 +251,29 @@ namespace PartnerLive2D.Unity
             if (Renderers.TryGetValue(r, out b) && value == b.Replacement) return;
             var replacement = ReplaceSprite(value);
             if (replacement == null) { if (b != null) { b.Original = value; b.Replacement = null; } }
-            else { Renderers[r] = new SpriteBinding { Original = value, Replacement = replacement }; r.sprite = replacement; }
+            else { if (b == null) Renderers[r] = b = new SpriteBinding(); b.Original = value; b.Replacement = replacement; r.sprite = replacement; }
         }
         public static void Reapply()
         {
-            if (!_enabled) return;
-            foreach (var i in new List<Image>(Images.Keys)) if (i != null) ApplyImage(i);
-            foreach (var i in new List<RawImage>(RawImages.Keys)) if (i != null) ApplyRaw(i);
-            foreach (var r in new List<SpriteRenderer>(Renderers.Keys)) if (r != null) ApplyRenderer(r);
-            foreach (var pair in new List<KeyValuePair<Transform, LayoutBinding>>(LayoutBindings))
-                if (pair.Key != null && pair.Key.gameObject.activeInHierarchy) ApplyLayout(pair.Key, pair.Value);
+            if (!_enabled || _reapplying) return;
+            long started = RuntimePerf.Now(); _reapplying = true;
+            try
+            {
+                ImageScratch.AddRange(Images.Keys); RawScratch.AddRange(RawImages.Keys);
+                RendererScratch.AddRange(Renderers.Keys);
+                foreach (var pair in LayoutBindings) LayoutScratch.Add(pair);
+                foreach (var i in ImageScratch) if (i != null) ApplyImage(i);
+                foreach (var i in RawScratch) if (i != null) ApplyRaw(i);
+                foreach (var r in RendererScratch) if (r != null) ApplyRenderer(r);
+                foreach (var pair in LayoutScratch)
+                    if (pair.Key != null && pair.Key.gameObject.activeInHierarchy) ApplyLayout(pair.Key, pair.Value);
+            }
+            finally
+            {
+                // Retain capacity, not scene objects; the two callback phases still see fresh bindings.
+                ImageScratch.Clear(); RawScratch.Clear(); RendererScratch.Clear(); LayoutScratch.Clear();
+                _reapplying = false; RuntimePerf.End(RuntimePerf.Part.ThemeReapply, started);
+            }
         }
         static void SetActivePostfix(GameObject __instance, bool value)
         {

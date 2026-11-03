@@ -40,6 +40,8 @@ namespace PartnerLive2D.Unity
         public float CropBottom;
         public MusicSelectSettings() { foreach (var key in Groups.Keys) GroupsHidden[key] = false; }
         public float BottomX, BottomY = -20, Height = 500;
+        public float DifficultyOffsetY;   // partner moved by this in the Difficulty phase, where the difficulty header drops in
+        public string PartnerUnder = "";  // comma list of Main paths drawn under the partner (own canvas below the screen's)
         public float MyStatusX = -200, MyStatusY = -40;
         public float LabelX = 300, LabelY = -30, LabelWidth = 130, LabelHeight = 36;
         public string TabLabelColor = "";   // "" = keep the game's own label colour (stock style)
@@ -110,7 +112,15 @@ namespace PartnerLive2D.Unity
             }
             if (d.ContainsKey("partner"))
             {
-                var v = Dict(d["partner"]); Keys(v, "bottomX", "bottomY", "height", "cropBottom");
+                var v = Dict(d["partner"]); Keys(v, "bottomX", "bottomY", "height", "cropBottom", "difficultyOffsetY", "under");
+                if (v.ContainsKey("under"))
+                {
+                    var under = v["under"] as string;
+                    if (under == null || under.Length > 1000) throw new FormatException("partner.under must be a comma list of Main paths");
+                    foreach (var path in under.Split(',')) if (path.Trim().Length != 0) ValidateNodePath(path.Trim(), false);
+                    next.PartnerUnder = under;
+                }
+                Read(v, "difficultyOffsetY", ref next.DifficultyOffsetY, -800, 800);
                 Read(v, "bottomX", ref next.BottomX, -600, 600);
                 Read(v, "bottomY", ref next.BottomY, -1400, 400);
                 Read(v, "height", ref next.Height, 100, 2400);
@@ -140,7 +150,7 @@ namespace PartnerLive2D.Unity
             foreach (var node in c.Nodes) Nodes[node.Key] = new MusicSelectNodeOptions(node.Value);
             foreach (var image in c.Images) Images[image.Key] = new MusicSelectImageOptions(image.Value);
             CropBottom = c.CropBottom;
-            BottomX = c.BottomX; BottomY = c.BottomY; Height = c.Height;
+            BottomX = c.BottomX; BottomY = c.BottomY; Height = c.Height; DifficultyOffsetY = c.DifficultyOffsetY; PartnerUnder = c.PartnerUnder;
             MyStatusX = c.MyStatusX; MyStatusY = c.MyStatusY;
             LabelX = c.LabelX; LabelY = c.LabelY; LabelWidth = c.LabelWidth; LabelHeight = c.LabelHeight;
             TabLabelColor = c.TabLabelColor; TabLabelOffsetY = c.TabLabelOffsetY; TabTitleOffsetY = c.TabTitleOffsetY;
@@ -161,7 +171,7 @@ namespace PartnerLive2D.Unity
                 { "enabled", Enabled }, { "selectPartner", SelectPartner }, { "phases", new[] { "Music" } },
                 { "tabLabelColor", TabLabelColor }, { "tabLabelOffsetY", TabLabelOffsetY }, { "tabTitleOffsetY", TabTitleOffsetY },
                 { "groups", groups }, { "nodes", nodes }, { "images", images }, { "debugTouchZones", DebugTouchZones }, { "categoryKeys", CategoryKeys },
-                { "partner", new Dictionary<string, object> { { "bottomX", BottomX }, { "bottomY", BottomY }, { "height", Height }, { "cropBottom", CropBottom } } },
+                { "partner", new Dictionary<string, object> { { "bottomX", BottomX }, { "bottomY", BottomY }, { "height", Height }, { "cropBottom", CropBottom }, { "difficultyOffsetY", DifficultyOffsetY }, { "under", PartnerUnder } } },
                 { "myStatusContent", new Dictionary<string, object> { { "offsetX", MyStatusX }, { "offsetY", MyStatusY } } },
                 { "difficultyLabel", new Dictionary<string, object> { { "x", LabelX }, { "y", LabelY }, { "width", LabelWidth }, { "height", LabelHeight } } }
             };

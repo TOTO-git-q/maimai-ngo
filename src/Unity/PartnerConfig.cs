@@ -16,6 +16,7 @@ namespace PartnerLive2D.Unity
         public string IniPath => Path.Combine(Folder, "partner.ini");
 
         public string SpritePath;
+        public string LibraryPath;               // music select and result screen from the frame library (library.json); empty = the sprite clips
         public string ModelPath;                 // absolute path of *.model3.json
         public int NaviCharaId = -1;             // navi chara id this model draws for
         public int PartnerId = -1;               // partner id whose icon/result image we supply (optional)
@@ -30,6 +31,7 @@ namespace PartnerLive2D.Unity
         public float Scale = 1f;          // relative to the original partner's height
         public float OffsetX, OffsetY;    // in units of the original partner's height
         public float RoomScale = 1f, RoomOffsetX, RoomOffsetY;   // the same for the collection's partner room
+        public float SpriteBlend = 0.06f; // sprite pairs: seconds the next drawing fades in before its turn (drawings are on threes); 0 = hard cuts
         public int RenderSize = 1024;     // longest side of the offscreen texture
         public bool FlipY;
         public float LookStrength = 1f;   // 0 disables look-at following touches
@@ -43,7 +45,7 @@ namespace PartnerLive2D.Unity
         public static readonly string[] States = { "Default", "Welcom", "FunStart", "FunStartLoop", "Sad01" };
 
         // keys whose change needs the model/renderer rebuilt rather than a layout refresh
-        public static bool NeedsRebuild(string key) => key == "model" || key == "renderSize" || key == "sprites";
+        public static bool NeedsRebuild(string key) => key == "model" || key == "renderSize" || key == "sprites" || key == "library";
 
         public static List<PartnerConfig> LoadAll(string root, Action<string> log)
         {
@@ -99,6 +101,7 @@ namespace PartnerLive2D.Unity
             {
                 case "model": ModelPath = Full(Folder, val); break;
                 case "sprites": try { SpritePath = Full(Folder, val); } catch (Exception) { SpritePath = val; } break;
+                case "library": try { LibraryPath = Full(Folder, val); } catch (Exception) { LibraryPath = val; } break;
                 case "naviCharaId": NaviCharaId = I(val); break;
                 case "partnerId": PartnerId = I(val); break;
                 case "icon": IconPath = Full(Folder, val); break;
@@ -111,6 +114,7 @@ namespace PartnerLive2D.Unity
                 case "roomScale": RoomScale = Clamp(F(val), 0.05f, 10f); break;
                 case "roomOffsetX": RoomOffsetX = Clamp(F(val), -5f, 5f); break;
                 case "roomOffsetY": RoomOffsetY = Clamp(F(val), -5f, 5f); break;
+                case "spriteBlend": SpriteBlend = Clamp(F(val), 0f, 0.5f); break;
                 case "renderSize": RenderSize = Math.Max(64, Math.Min(4096, I(val))); break;
                 case "flipY": FlipY = B(val); break;
                 case "lookStrength": LookStrength = Clamp(F(val), 0f, 3f); break;
@@ -161,8 +165,8 @@ namespace PartnerLive2D.Unity
                 { "naviCharaId", NaviCharaId }, { "partnerId", PartnerId },
                 { "scale", Scale }, { "offsetX", OffsetX }, { "offsetY", OffsetY },
                 { "roomScale", RoomScale }, { "roomOffsetX", RoomOffsetX }, { "roomOffsetY", RoomOffsetY },
-                { "renderSize", RenderSize }, { "flipY", FlipY }, { "lookStrength", LookStrength },
-                { "tap", TapGroup }, { "idle", IdleGroup }, { "resultUnder", ResultUnder },
+                { "spriteBlend", SpriteBlend }, { "renderSize", RenderSize }, { "flipY", FlipY }, { "lookStrength", LookStrength },
+                { "tap", TapGroup }, { "idle", IdleGroup }, { "resultUnder", ResultUnder }, { "library", LibraryPath },
                 { "motions", motions }, { "expressions", expressions }, { "values", values },
             };
         }

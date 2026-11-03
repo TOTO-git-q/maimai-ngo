@@ -24,6 +24,7 @@ namespace PartnerLive2D.Unity
         static readonly AccessTools.FieldRef<ResultMonitor, ResultTimelineManager> ResultTimeline = AccessTools.FieldRefAccess<ResultMonitor, ResultTimelineManager>("_timelineManager");
         static readonly AccessTools.FieldRef<PartnerRoom, Transform> RoomRoot = AccessTools.FieldRefAccess<PartnerRoom, Transform>("_naviCharaRoot");
         static readonly AccessTools.FieldRef<PartnerRoom, NavigationCharacter> RoomNavi = AccessTools.FieldRefAccess<PartnerRoom, NavigationCharacter>("_navigationCharacter");
+        static readonly AccessTools.FieldRef<MonitorBase, CanvasGroup> MonitorMain = AccessTools.FieldRefAccess<MonitorBase, CanvasGroup>("Main");
 
         static void Guard(string where, Action a)
         {
@@ -57,7 +58,7 @@ namespace PartnerLive2D.Unity
                     if (cfg != null)
                     {
                         string tier = null;
-                        if (!string.IsNullOrEmpty(cfg.SpritePath))
+                        if (!string.IsNullOrEmpty(cfg.SpritePath) || !string.IsNullOrEmpty(cfg.LibraryPath))
                         {
                             try
                             {
@@ -101,7 +102,25 @@ namespace PartnerLive2D.Unity
                 if (!Mod.Ready) return;
                 var cfg = Mod.ForNavi(__0);
                 if (cfg == null) return;
-                Guard("partner room", () => PartnerView.Attach(RoomRoot(__instance), RoomNavi(__instance), cfg, -1, null, "room"));
+                Guard("partner room", () =>
+                {
+                    var view = PartnerView.Attach(RoomRoot(__instance), RoomNavi(__instance), cfg, -1, null, "room");
+                    // touches on the pair: the sensors sit around the centre of the collection monitor's Main canvas
+                    var monitor = __instance.GetComponentInParent<CollectionMonitor>();
+                    var main = monitor != null ? MonitorMain(monitor) : null;
+                    if (view != null && main != null) view.SetTouchSpace(main.transform, monitor.MonitorIndex);
+                });
+            }
+        }
+
+        // a present was given in the partner room (CollectionProcess.InputPartnerPresentConfirmSequence)
+        [HarmonyPatch(typeof(PartnerRoom), "PlayPartnerEmotionEffectOnceTime")]
+        static class RoomPresent
+        {
+            static void Postfix(PartnerRoom __instance)
+            {
+                var view = PartnerView.Find(RoomNavi(__instance));
+                if (view != null) Guard("room present", view.RoomPresent);
             }
         }
 
