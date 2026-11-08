@@ -111,7 +111,7 @@ namespace PartnerLive2D.Unity
             while (t != null && !t.name.StartsWith("UI_LeaderCharaSlot", StringComparison.Ordinal)) t = t.parent;
             if (t == null) return;
             var sort = mask.GetComponent<NgoCardSort>() ?? mask.gameObject.AddComponent<NgoCardSort>();
-            sort.Lift = 1; sort.enabled = true;
+            sort.Lift = 1; sort.KeepMaskGraphic = true; sort.enabled = true;
         }
 
         // the NGO card frame (tools/ngo_partner_frame_fit.py) carries the "LV" and level digits on a tool strip under
@@ -130,10 +130,24 @@ namespace PartnerLive2D.Unity
     sealed class NgoCardSort : MonoBehaviour
     {
         public int Lift = 1;
+        // the leader's mask (owner 2026-11-07: "partner的队长怎么没来"): on the collection screen the portrait under the
+        // stencil Mask was clipped away entirely (the screen's other stencil masks; music select was fine). A rectangle
+        // clip (RectMask2D, no stencil) over the same mask rect keeps the portrait in its window on every screen.
+        public bool KeepMaskGraphic;
         Canvas _c;
 
         void LateUpdate()
         {
+            if (KeepMaskGraphic)
+            {
+                var m = GetComponent<Mask>();
+                if (m != null && m.enabled)
+                {
+                    m.enabled = false;
+                    var g = GetComponent<Graphic>(); if (g != null) g.enabled = false;
+                    if (GetComponent<RectMask2D>() == null) gameObject.AddComponent<RectMask2D>();
+                }
+            }
             var host = transform.parent != null ? transform.parent.GetComponentInParent<Canvas>() : null;
             if (host == null) return;
             if (_c == null) { _c = GetComponent<Canvas>(); if (_c == null) _c = gameObject.AddComponent<Canvas>(); }

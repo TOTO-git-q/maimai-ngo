@@ -359,6 +359,24 @@ namespace PartnerLive2D.Unity
 
         // the hierarchy `up` levels above the first active object named `of`, down to `depth`: sibling order is the draw
         // order inside one canvas, and nested canvases / renderers with their own sorting are marked
+        // every active canvas with what decides its draw order (which one covers which): render mode, camera and its
+        // depth, sorting layer (name and value), order, override; plus the renderers drawn by cameras (BG planes)
+        public static object CanvasDump()
+        {
+            var list = new List<object>();
+            foreach (var c in UnityEngine.Object.FindObjectsOfType<UnityEngine.Canvas>())
+            {
+                if (c == null || !c.isActiveAndEnabled) continue;
+                var path = c.name; var t = c.transform.parent;
+                for (int i = 0; i < 4 && t != null; i++, t = t.parent) path = t.name + "/" + path;
+                list.Add(new Dictionary<string, object> { { "path", path }, { "mode", c.renderMode.ToString() },
+                    { "camera", c.worldCamera != null ? c.worldCamera.name + " depth " + c.worldCamera.depth : "" },
+                    { "layer", c.sortingLayerName + " (" + UnityEngine.SortingLayer.GetLayerValueFromID(c.sortingLayerID) + ")" },
+                    { "order", c.sortingOrder }, { "override", c.overrideSorting }, { "root", c.isRootCanvas }, { "plane", c.planeDistance } });
+            }
+            return new Dictionary<string, object> { { "canvases", list } };
+        }
+
         public static object Tree(string of, int up, int depth)
         {
             UnityEngine.Transform start = null;
@@ -377,7 +395,15 @@ namespace PartnerLive2D.Unity
             var canvas = t.GetComponent<UnityEngine.Canvas>();
             if (canvas != null) d["canvas"] = (canvas.overrideSorting ? "override " : "") + canvas.sortingLayerName + " " + canvas.sortingOrder;
             var g = t.GetComponent<UnityEngine.UI.Graphic>();
-            if (g != null) d["graphic"] = g.GetType().Name + (g is UnityEngine.UI.Image && ((UnityEngine.UI.Image)g).sprite != null ? " " + ((UnityEngine.UI.Image)g).sprite.name : "");
+            if (g != null)
+            {
+                d["graphic"] = g.GetType().Name + (g is UnityEngine.UI.Image && ((UnityEngine.UI.Image)g).sprite != null ? " " + ((UnityEngine.UI.Image)g).sprite.name : "");
+                d["draw"] = (g.enabled ? "on" : "OFF") + " a " + g.color.a.ToString("0.00") + " inherited " + g.canvasRenderer.GetInheritedAlpha().ToString("0.00") + (g.canvasRenderer.cull ? " CULLED" : "");
+            }
+            var mask = t.GetComponent<UnityEngine.UI.Mask>();
+            if (mask != null) d["mask"] = (mask.enabled ? "on" : "off") + (mask.showMaskGraphic ? " shown" : " hidden");
+            var group = t.GetComponent<UnityEngine.CanvasGroup>();
+            if (group != null) d["group"] = "alpha " + group.alpha.ToString("0.00");
             var r = t.GetComponent<UnityEngine.Renderer>();
             if (r != null) d["renderer"] = r.GetType().Name + " " + r.sortingLayerName + " " + r.sortingOrder;
             var rt = t as UnityEngine.RectTransform;

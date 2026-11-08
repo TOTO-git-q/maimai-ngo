@@ -47,8 +47,13 @@ ADD_SKIP = ["LocalAssets/PartnerLive2D/hiyori/*",            # Live2D sample mod
                                                                           # so it would only show the stock fallback navi
             "LocalAssets/PartnerLive2D/ngo_pair/*",                       # the Ame & KAngel partner (502) is not shared:
             "Sinmai_Data/StreamingAssets/A500/partner/partner000502/*",   # sprites, model, icon, config and partner data
+            "Sinmai_Data/StreamingAssets/A500/music/*",                   # the owner's own custom-chart collection
+            "Sinmai_Data/StreamingAssets/A500/SoundData/*",               # (other people's charts and audio, ~680 MB)
+            "Sinmai_Data/StreamingAssets/A500/AssetBundleImages/*",       # is not part of the skin
+            "Sinmai_Data/StreamingAssets/A500/musicGenre/*",
             "*.bak", "*.before-*", "*.before*", "*-before", "*.off", "*.orig.png", "*.new", "*.ngo-new", "*.log", "*.tmp",
             "LocalAssets/PartnerLive2D/account_edit*",       # one-shot edit of the owner's account
+            "LocalAssets/PartnerLive2D/*.cache",             # per-machine runtime caches (font warmup scan of the song list)
             "*/_qa/*", "*/_sheet.png",                        # review sheets / QA captures
             "LocalAssets/PartnerLive2D/ngo_recolor/*",       # not read by the mod (kept in art/), pixels are in the patch
             "LocalAssets/PartnerLive2D/theme_*"]              # old runtime theme test
@@ -437,6 +442,7 @@ SETTINGS_RELEASE = [  # settings.ini lines changed for the release (they act on 
     (re.compile(r"(?m)^(charaLevel\s*=.*)$"), r"; \1   (off in the release: raises every character of the logged-in account)"),
     (re.compile(r"(?m)^(equipPartner\s*=.*)$"), r"; \1"),
     (re.compile(r"(?m)^frameLog\s*=.*\n?"), ""),
+    (re.compile(r"(?m)^(gamePhoto\s*=.*)$"), r"; \1   (owner's choice; the release keeps the stock commemorative photo)"),
 ]
 
 
@@ -500,7 +506,7 @@ def step_patch():
 
 
 # ------------------------------------------------------------------------------------------------ step: code
-CODE_TREES = ["src", "mcp", "tests", "docs", "tools", "deploy", ".claude/skills"]
+CODE_TREES = ["src", "mcp", "tests", "docs", "tools", "deploy", ".claude/skills", "plates_mod"]
 CODE_FILES = ["build.ps1", "PartnerLive2D.csproj", "deploy_select_layout_v1.ini"]
 CODE_SKIP = ["*/__pycache__/*", "*/obj/*", "*/bin/*", "tests/Scratch/*", "*.pyc", "*.dll", "*.exe",
              "tools/shots/*", "tools/tour_overview/*", "tools/dxrating*", "tools/*.drivebak", "tools/drive-state.json",

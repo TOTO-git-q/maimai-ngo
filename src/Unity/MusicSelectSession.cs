@@ -215,6 +215,19 @@ namespace PartnerLive2D.Unity
             side.Router?.Suspend();
             Mod.Warn(string.Format("music-select player {0}: partner '{1}' cannot be drawn here, select view stays on without it: {2}", side.Player + 1, partnerKey, e.Message));
         }
+        // Reactions only observe the selection; a song they cannot describe (owner 2026-11-07: a fan-made chart broke
+        // the genre sort this way) skips the partner's reaction for that song, never the select layout.
+        static string _reactionFailure;
+        static void TickReactions(Side side, MusicSelectProcess p, IMusicSelectPartnerReactions view)
+        {
+            try { side.Router.Tick(p, view); }
+            catch (Exception e)
+            {
+                side.Router.Suspend();
+                string key = e.GetType().Name + ": " + e.Message;
+                if (_reactionFailure != key) { _reactionFailure = key; Mod.Warn("music-select reactions skipped for this song, layout stays on: " + key); }
+            }
+        }
         public static void Update(MusicSelectProcess p)
         {
             Session s; if (!Sessions.TryGetValue(p, out s)) return;
@@ -249,7 +262,7 @@ namespace PartnerLive2D.Unity
                     {
                         if (!side.Placeholder || side.PlaceholderCategory != p.CurrentCategorySelect || side.PlaceholderIndex != p.CurrentMusicSelect || side.PlaceholderScoreType != (int)p.ScoreType)
                         {
-                            side.Router.Tick(p, null); side.Placeholder = true;
+                            TickReactions(side, p, null); side.Placeholder = true;
                             side.PlaceholderCategory = p.CurrentCategorySelect; side.PlaceholderIndex = p.CurrentMusicSelect; side.PlaceholderScoreType = (int)p.ScoreType;
                         }
                     }
@@ -309,7 +322,7 @@ namespace PartnerLive2D.Unity
                 else { side.Debug?.Dispose(); side.Debug = null; }
                 if (phase == "Music" && MainSequence(p) == 3 && !p.IsPreparationCompletes[side.Player]
                     && !p.PrepareFinish && !p.JoinActive && !p.RecruitActive && !p.IsConnectingMusic)
-                    side.Router.Tick(p, side.Reactions);
+                    TickReactions(side, p, side.Reactions);
                 else side.Router.Suspend();
             }
             if (s.PreviewRequestEvent)

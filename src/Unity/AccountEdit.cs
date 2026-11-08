@@ -70,7 +70,24 @@ namespace PartnerLive2D.Unity
             var d = user.Detail; string v;
             if (cfg.TryGetValue("name", out v) && v.Length > 0) d.UserName = v;
             if (cfg.TryGetValue("icon", out v)) { int id = int.Parse(v); Own(user.IconList, id); d.EquipIconID = id; }
-            if (cfg.TryGetValue("plate", out v)) { int id = int.Parse(v); Own(user.PlateList, id); d.EquipPlateID = id; }
+            // own_plates = id,id,...   adds nameplates to the owned list without equipping them
+            // favorite_plates = id,...  replaces the favourite nameplates (the game's favourite-random plate picks from them)
+            if (cfg.TryGetValue("own_plates", out v)) foreach (var s in v.Split(',')) if (s.Trim().Length > 0) Own(user.PlateList, int.Parse(s.Trim()));
+            if (cfg.TryGetValue("favorite_plates", out v))
+            {
+                Mod.Msg("account edit: favourite plates were [" + string.Join(",", user.FavoritePlateList.ConvertAll(x => x.ToString()).ToArray()) + "]");
+                user.FavoritePlateList.Clear();
+                foreach (var s in v.Split(',')) if (s.Trim().Length > 0) { int id = int.Parse(s.Trim()); Own(user.PlateList, id); if (!user.FavoritePlateList.Contains(id)) user.FavoritePlateList.Add(id); }
+            }
+            if (cfg.TryGetValue("plate", out v))
+            {
+                // 2 = random from all plates, 3 = random from the favourites: equip only, they are not items
+                int id = int.Parse(v);
+                if (!GameCommonSetting.IsRandom(id)) Own(user.PlateList, id);
+                // pick the shown plate now, as the login does; only on a change: this runs at every music select, and a
+                // random plate must stay the same for the whole credit
+                if (d.EquipPlateID != id) { d.EquipPlateID = id; user.SetCollectionID(CollectionGenreID.Plate, id); }
+            }
             if (cfg.TryGetValue("frame", out v)) { int id = int.Parse(v); Own(user.FrameList, id); d.EquipFrameID = id; }
             if (cfg.TryGetValue("chara", out v))
             {

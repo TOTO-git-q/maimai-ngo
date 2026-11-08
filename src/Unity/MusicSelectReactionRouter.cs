@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Manager;
 using Process;
@@ -44,8 +44,13 @@ namespace PartnerLive2D.Unity
             if (!placeholder && difficulty == 4 && !p.IsRemasterEnable(0)) difficulty = 3;
             if (!placeholder)
             {
-                if (data.ScoreData == null || difficulty < 0 || difficulty >= data.ScoreData.Count || data.ScoreData[difficulty] == null || !data.ScoreData[difficulty].isEnable)
-                    throw new InvalidOperationException("selected notes unavailable");
+                // Fan-made charts often have only some difficulties (e.g. Master alone), so the current difficulty may
+                // not exist on the selected song; the game itself copes (AquaMai FixMissingDifficultyCrash). Describe
+                // the nearest enabled chart instead of failing the whole select view (owner 2026-11-07).
+                var scores = data.ScoreData;
+                Func<int, bool> enabled = d => scores != null && d >= 0 && d < scores.Count && scores[d] != null && scores[d].isEnable;
+                if (!enabled(difficulty)) difficulty = NearestEnabled(enabled, difficulty, scores == null ? 0 : scores.Count);
+                if (difficulty < 0) throw new InvalidOperationException("selected song has no enabled notes");
             }
             string category = p.CategoryNameList[p.CurrentCategorySelect];
             bool songChanged = _songId != id || _scoreType != (int)p.ScoreType || _categoryIndex != p.CurrentCategorySelect || _index != p.CurrentMusicSelect;
@@ -83,6 +88,16 @@ namespace PartnerLive2D.Unity
                 _pending = false; Emit("songChanged"); if (view != null) view.SelectSongReaction();
             }
             ObserveInput(view);
+        }
+        // the enabled chart closest to d, preferring the lower one on a tie; -1 when the song has none
+        internal static int NearestEnabled(Func<int, bool> enabled, int d, int count)
+        {
+            for (int step = 1; step < count + Math.Abs(d) + 1; step++)
+            {
+                if (enabled(d - step)) return d - step;
+                if (enabled(d + step)) return d + step;
+            }
+            return -1;
         }
         public void ObserveInput(IMusicSelectPartnerReactions view)
         {

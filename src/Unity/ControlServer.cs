@@ -275,6 +275,7 @@ namespace PartnerLive2D.Unity
                         return MainThread.Call(() => TestHarness.Tree(query["of"], up, depth));
                     }
                     if (seg.Length == 3 && seg[2] == "renderers") return MainThread.Call(() => TestHarness.RendererDump());
+                    if (seg.Length == 3 && seg[2] == "canvases") return MainThread.Call(() => TestHarness.CanvasDump());
                     if (seg.Length == 3 && seg[2] == "selectperf") return TestHarness.SelectPerf.Dump(query["reset"] == "1");
                     if (seg.Length == 3 && seg[2] == "heapwalk") { Need(method, "POST"); return MainThread.Call(() => HeapWalk.Run(), 600000); }
                     throw new ApiError(404, "unknown test route");

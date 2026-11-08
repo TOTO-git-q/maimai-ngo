@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -77,6 +77,8 @@ namespace PartnerLive2D.Unity
             if (settings.TryGetValue("equipPartner", out equipPartner) && int.TryParse(equipPartner, out pid)) AccountTweaks.EquipPartner = pid;
             string freedomEntry;
             FreedomEntry.Enabled = settings.TryGetValue("freedomEntry", out freedomEntry) && freedomEntry == "true";
+            string gamePhoto;
+            NoGamePhoto.Enabled = settings.TryGetValue("gamePhoto", out gamePhoto) && gamePhoto == "off";
             string freedomInfinity;
             settings.TryGetValue("freedomInfinity", out freedomInfinity);
             FreedomInfinity.Enabled = freedomInfinity == "true" || freedomInfinity == "hidden";

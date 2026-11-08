@@ -275,13 +275,15 @@ public static class LaunchMode {
         $gpuLocked = $true
         Log 'GPU clock locked 1800-3090 MHz'
     } else { Log 'GPU clock lock not set up (gpu-lock\setup-gpu-lock.bat)' }
+    # test samplers, off by default since 2026-11-05 (owner): create an EMPTY monitor.flag next to this script to run them
+    $monitorOn = Test-Path -LiteralPath (Join-Path $Root 'monitor.flag') -PathType Leaf
     # memory / CPU / GPU samples for this run (playlogs\monitor_*.csv), read by tools\ngo_play_report.py
-    if (Test-Path (Join-Path $PSScriptRoot 'play-monitor.ps1')) {
+    if ($monitorOn -and (Test-Path (Join-Path $PSScriptRoot 'play-monitor.ps1'))) {
         Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass',
             '-File', (Join-Path $PSScriptRoot 'play-monitor.ps1'), '-GamePid', $game.Id | Out-Null
     }
     # every process's CPU once a second (playlogs\procs_*.csv): what else was busy when the mod logs a [stall]
-    if (Test-Path (Join-Path $PSScriptRoot 'proc-sampler.ps1')) {
+    if ($monitorOn -and (Test-Path (Join-Path $PSScriptRoot 'proc-sampler.ps1'))) {
         $procsOut = Join-Path $PSScriptRoot ('playlogs\procs_' + $game.StartTime.ToString('yyyyMMdd_HHmmss') + '.csv')
         Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass',
             '-File', (Join-Path $PSScriptRoot 'proc-sampler.ps1'), '-Out', $procsOut, '-GamePid', $game.Id | Out-Null
