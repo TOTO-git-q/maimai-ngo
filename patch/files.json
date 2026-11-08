@@ -219,8 +219,8 @@
   {
    "path": "LocalAssets/PartnerLive2D/select_layout.ini",
    "src": "files/LocalAssets/PartnerLive2D/select_layout.ini",
-   "sha256": "e13fdb0607b894e344f13220763bc636e922829105f309b2d32f5d95943d8352",
-   "size": 5326
+   "sha256": "c20c0a70c4639d409a4f526b443cb042bdf42368d6ecac2a253298db6ce7f618",
+   "size": 5504
   },
   {
    "path": "LocalAssets/PartnerLive2D/select_sprites/back_flat.png",
@@ -267,14 +267,14 @@
   {
    "path": "LocalAssets/PartnerLive2D/settings.ini",
    "src": "files/LocalAssets/PartnerLive2D/settings.ini",
-   "sha256": "7b465a7d9b43603fa3f091a9380bbf80b6f5fbf574179543d2c3fd5c7e235f09",
-   "size": 882
+   "sha256": "d22d7ee7627282bdce10e215a42577d9a82718893b6867f1843ea9e56e812808",
+   "size": 2037
   },
   {
    "path": "Mods/PartnerLive2D.dll",
    "src": "files/Mods/PartnerLive2D.dll",
-   "sha256": "893953e0f812f82274b624ea4eea243e9e61ce3b00f56af84c66768842e38a57",
-   "size": 315392,
+   "sha256": "c647051212b7e2787cff0c392db08a3ae897c337dc0d977d0d64c0724bec3226",
+   "size": 407040,
    "release_only": true
   },
   {

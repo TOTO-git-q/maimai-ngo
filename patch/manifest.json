@@ -1,8 +1,8 @@
 {
  "format": 1,
- "name": "maimai NGO skin 20261101",
+ "name": "maimai NGO skin 20261108",
  "game": "maimai DX SDEZ 1.70 (resources.assets SHA256 1b4b6a7c6ad8ef3b251253c5768828a438396c0933610b77002ace9aced3c63a)",
- "created": "2026-11-01T18:26:35",
+ "created": "2026-11-08T21:01:08",
  "targets": [
   {
    "file": "Sinmai_Data/StreamingAssets/A000/AssetBundleImages/chara/ui_chara_455101.ab",
@@ -64,7 +64,7 @@
    "objects": "targets/resources.assets.json",
    "exact": "exact/resources.assets.bin",
    "stock_sha256": "1b4b6a7c6ad8ef3b251253c5768828a438396c0933610b77002ace9aced3c63a",
-   "patched_sha256": "ee7d6caa527ab722d500d21e45f6c87c010a5a222a04b02c7c3ac07aeefabf07"
+   "patched_sha256": "9b279b81006883f0c3bcc99971d6d2b22a7ec65b29fef2742bb7f999f180b8fb"
   }
  ],
  "xml": "xml_patch.json",
