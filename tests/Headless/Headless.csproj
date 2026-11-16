@@ -17,9 +17,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="LowEndChecks.cs" />
+    <Compile Include="PairOptChecks.cs" />
     <Compile Include="SpritePairChecks.cs" />
     <Compile Include="SpritePairLoaderChecks.cs" />
     <Compile Include="SpriteLibraryChecks.cs" />
+    <Compile Include="FxChecks.cs" />
+    <Compile Include="RhythmChecks.cs" />
+    <Compile Include="RhythmLatency.cs" />
     <Compile Include="..\..\src\Unity\SpritePairLoader.cs" />
     <Compile Include="ThemeChecks.cs" />
     <Compile Include="..\..\src\Unity\ThemeOptions.cs" />

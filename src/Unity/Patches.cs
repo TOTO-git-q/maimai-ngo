@@ -124,6 +124,84 @@ namespace PartnerLive2D.Unity
             }
         }
 
+        // ---- screens that build their own navi character (pair_fx 2026-11-13). Each instantiates the navi prefab of a
+        // naviChara id; a custom partner has none, so the game falls back to stock navi 1 (AssetManager.GetNaviCharaPrefab).
+        // When a partner.ini claims the partner shown, the pair (frame library idle, no reactions) goes next to that
+        // figure, which PartnerView hides, sized from its footprint ("screen" context: result scale and lift, centred).
+        static readonly AccessTools.FieldRef<SimpleSettingMonitor, Transform> SettingRoot = AccessTools.FieldRefAccess<SimpleSettingMonitor, Transform>("_partnerObject");
+        static readonly AccessTools.FieldRef<SimpleSettingMonitor, NavigationCharacter> SettingNavi = AccessTools.FieldRefAccess<SimpleSettingMonitor, NavigationCharacter>("_partnerCharacter");
+        static readonly AccessTools.FieldRef<FriendBattleResultMonitor, Transform> BattleRoot = AccessTools.FieldRefAccess<FriendBattleResultMonitor, Transform>("_characterParent");
+        static readonly AccessTools.FieldRef<FriendBattleResultMonitor, NavigationCharacter> BattleNavi = AccessTools.FieldRefAccess<FriendBattleResultMonitor, NavigationCharacter>("_navigationCharacter");
+        static readonly AccessTools.FieldRef<ShopPartnerGetWindow, Transform> ShopRoot = AccessTools.FieldRefAccess<ShopPartnerGetWindow, Transform>("partnerRoot");
+        static readonly AccessTools.FieldRef<ShopPartnerGetWindow, NavigationCharacter> ShopNavi = AccessTools.FieldRefAccess<ShopPartnerGetWindow, NavigationCharacter>("navigationCharacter");
+        static readonly AccessTools.FieldRef<global::Monitor.LoginBonus.LoginBonusMonitor, GameObject> BonusCharacter = AccessTools.FieldRefAccess<global::Monitor.LoginBonus.LoginBonusMonitor, GameObject>("_Character");
+        static readonly AccessTools.FieldRef<global::Monitor.LoginBonus.LoginBonusMonitor, int> BonusItem = AccessTools.FieldRefAccess<global::Monitor.LoginBonus.LoginBonusMonitor, int>("_currentBonusItemRefID");
+
+        static void AttachScreen(string where, Transform root, NavigationCharacter navi, PartnerConfig cfg, int monitor)
+        {
+            if (cfg == null || root == null || navi == null) return;
+            var view = PartnerView.Attach(root, navi, cfg, monitor, null, "screen");
+            Mod.Msg(cfg.Name + ": " + where + (view != null ? ": pair shown instead of the stock figure" : ": pair unavailable, stock figure stays"));
+        }
+
+        // first play of the day: the equipped partner greets (SimpleSettingMonitor.Initialize builds it only then)
+        [HarmonyPatch(typeof(SimpleSettingMonitor), "Initialize")]
+        static class SettingPartner
+        {
+            static void Postfix(SimpleSettingMonitor __instance, bool __1)
+            {
+                if (!Mod.Ready || !__1) return;
+                Guard("first-play settings partner", () =>
+                {
+                    var navi = SettingNavi(__instance);
+                    if (navi == null) return;
+                    int id = Singleton<UserDataManager>.Instance.GetUserData(__instance.MonitorIndex).Detail.EquipPartnerID;
+                    AttachScreen("first-play settings", SettingRoot(__instance), navi, Mod.ForPartner(id), __instance.MonitorIndex);
+                });
+            }
+        }
+
+        // friend battle result: the equipped partner's navi chara (FriendBattleResultProcess passes partner.naviChara.id)
+        [HarmonyPatch(typeof(FriendBattleResultMonitor), "SetUserData")]
+        static class BattlePartner
+        {
+            static void Postfix(FriendBattleResultMonitor __instance, int __2)
+            {
+                if (!Mod.Ready) return;
+                Guard("friend battle partner", () => AttachScreen("friend battle result", BattleRoot(__instance), BattleNavi(__instance), Mod.ForNavi(__2), __instance.MonitorIndex));
+            }
+        }
+
+        // a partner received (shop, present, map treasure, regional reward): the RECEIVED partner, not the equipped one
+        [HarmonyPatch(typeof(ShopPartnerGetWindow), "Initalize")]
+        static class ShopPartner
+        {
+            static void Postfix(ShopPartnerGetWindow __instance, int __0, int __1, int __3)
+            {
+                if (!Mod.Ready) return;
+                Guard("partner get window", () => AttachScreen("partner get window", ShopRoot(__instance), ShopNavi(__instance), Mod.ForPartner(__1) ?? Mod.ForNavi(__0), __3));
+            }
+        }
+
+        // login bonus get window: the partner the bonus GIVES (only for a partner bonus), not the equipped one
+        [HarmonyPatch(typeof(global::Monitor.LoginBonus.LoginBonusMonitor), "InitializeGetWindow")]
+        static class BonusPartner
+        {
+            static void Postfix(global::Monitor.LoginBonus.LoginBonusMonitor __instance)
+            {
+                if (!Mod.Ready) return;
+                Guard("login bonus partner", () =>
+                {
+                    var data = __instance.GetPartnerData(BonusItem(__instance));
+                    if (data == null || data.BonusType != Manager.MaiStudio.RewardItemType.Partner) return;
+                    var character = BonusCharacter(__instance);
+                    var navi = character != null ? character.GetComponent<NavigationCharacter>() : null;
+                    if (navi == null) return;
+                    AttachScreen("login bonus", character.transform.parent, navi, Mod.ForPartner(data.PartnerId.id), __instance.MonitorIndex);
+                });
+            }
+        }
+
         [HarmonyPatch(typeof(AssetManager), "GetPartnerTexture2D", new[] { typeof(string) })]
         static class PartnerIcon
         {

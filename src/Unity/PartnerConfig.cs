@@ -21,6 +21,10 @@ namespace PartnerLive2D.Unity
         public int NaviCharaId = -1;             // navi chara id this model draws for
         public int PartnerId = -1;               // partner id whose icon/result image we supply (optional)
         public string IconPath, ResultImagePath; // absolute, may be null
+        public bool AutoEquipOnce;               // "autoEquip = once": equipped at an account's first login with this partner installed (AccountTweaks)
+        public bool Fx = true;                   // "fx = off": no emote layer even when the library has an fx table (pair_fx 2026-11-13)
+        public float Shadow;                     // "shadow = 0.55": the frame library's plum backing halo, its opacity (0 = off)
+        public bool Rhythm = true;               // "rhythm = off": ignore the library's tuning.rhythm (tempo, short forms, ...; pair_rhythm 2026-11-13)
 
         // NavigationAnime -> motion group; "" = keep idle
         public readonly Dictionary<string, string> Motions = new Dictionary<string, string>();
@@ -45,7 +49,7 @@ namespace PartnerLive2D.Unity
         public static readonly string[] States = { "Default", "Welcom", "FunStart", "FunStartLoop", "Sad01" };
 
         // keys whose change needs the model/renderer rebuilt rather than a layout refresh
-        public static bool NeedsRebuild(string key) => key == "model" || key == "renderSize" || key == "sprites" || key == "library";
+        public static bool NeedsRebuild(string key) => key == "model" || key == "renderSize" || key == "sprites" || key == "library" || key == "fx" || key == "shadow" || key == "rhythm";
 
         public static List<PartnerConfig> LoadAll(string root, Action<string> log)
         {
@@ -60,6 +64,14 @@ namespace PartnerLive2D.Unity
                     var c = Load(dir);
                     if (c.ModelPath == null || !File.Exists(c.ModelPath)) { log("skip " + dir + ": model not found"); continue; }
                     if (c.NaviCharaId < 0) { log("skip " + dir + ": naviCharaId missing"); continue; }
+                    // a shared pack may leave out the old sprite clips (sprites\): the frame library does not need them, and
+                    // without them its fallback is the Live2D model (one line here, nothing thrown later)
+                    if (!string.IsNullOrEmpty(c.LibraryPath) && (string.IsNullOrEmpty(c.SpritePath) || !File.Exists(c.SpritePath)))
+                    {
+                        if (!string.IsNullOrEmpty(c.SpritePath)) log(c.Name + ": sprites " + Path.GetFileName(c.SpritePath) + " not found; frame library only, Live2D model as its fallback");
+                        else log(c.Name + ": frame library only (no sprite clips), Live2D model as its fallback");
+                        c.SpritePath = null;
+                    }
                     list.Add(c);
                 }
                 catch (Exception e) { log("skip " + dir + ": " + e.Message); }
@@ -119,6 +131,10 @@ namespace PartnerLive2D.Unity
                 case "flipY": FlipY = B(val); break;
                 case "lookStrength": LookStrength = Clamp(F(val), 0f, 3f); break;
                 case "resultUnder": ResultUnder = val; break;
+                case "autoEquip": AutoEquipOnce = PartnerLive2D.Core.PartnerLogin.ParseAutoEquip(val); break;
+                case "fx": Fx = val == "on" ? true : val == "off" ? false : throw new FormatException("fx must be on or off"); break;
+                case "rhythm": Rhythm = val == "on" ? true : val == "off" ? false : throw new FormatException("rhythm must be on or off"); break;
+                case "shadow": { float s = F(val); if (!(s >= 0 && s <= 1)) throw new FormatException("shadow must be 0..1"); Shadow = s; } break;
                 case "debugDump": DebugDump = B(val); break;
                 case "debugOverlay": DebugOverlay = B(val); break;
                 default:
@@ -166,7 +182,7 @@ namespace PartnerLive2D.Unity
                 { "scale", Scale }, { "offsetX", OffsetX }, { "offsetY", OffsetY },
                 { "roomScale", RoomScale }, { "roomOffsetX", RoomOffsetX }, { "roomOffsetY", RoomOffsetY },
                 { "spriteBlend", SpriteBlend }, { "renderSize", RenderSize }, { "flipY", FlipY }, { "lookStrength", LookStrength },
-                { "tap", TapGroup }, { "idle", IdleGroup }, { "resultUnder", ResultUnder }, { "library", LibraryPath },
+                { "tap", TapGroup }, { "idle", IdleGroup }, { "resultUnder", ResultUnder }, { "library", LibraryPath }, { "autoEquip", AutoEquipOnce ? "once" : "off" }, { "fx", Fx ? "on" : "off" }, { "shadow", Shadow }, { "rhythm", Rhythm ? "on" : "off" },
                 { "motions", motions }, { "expressions", expressions }, { "values", values },
             };
         }

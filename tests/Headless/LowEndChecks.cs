@@ -59,6 +59,7 @@ namespace PartnerLive2D.Headless
             var lib = SpriteLibrary.Load(manifest);
             foreach (var ch in lib.Characters)
             {
+                if (ch.PackFormat != PackReader.Raw) { Console.WriteLine("lowend pack {0}: {1} pack, check it with: Headless.exe packcheck <sparse dir> <raw dir>", ch.Name, ch.PackFormat); continue; }
                 string path = Path.Combine(Path.GetDirectoryName(manifest), ch.Pack);
                 int size = ch.TextureWidth * ch.TextureHeight;
                 using (var expected = File.OpenRead(path))

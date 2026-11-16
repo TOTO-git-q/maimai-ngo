@@ -6,8 +6,10 @@ namespace PartnerLive2D.Core
 {
     // Two windows keep base pictures and the pack's separate in-between region hot at the same time.
     // Owned by the reader thread; no disk work or large buffer allocation occurs on Unity's thread.
-    public sealed class FrameBlockReader : IDisposable
+    public sealed class FrameBlockReader : IPackReader
     {
+        public double DecodeMsMax => 0;     // raw frames: nothing to decode
+        public double DecodeMsTotal => 0;
         readonly Stream _stream;
         readonly int _frameBytes, _blockFrames;
         readonly byte[][] _blocks;

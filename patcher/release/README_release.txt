@@ -15,6 +15,11 @@ maimai NEEDY GIRL OVERDOSE 换皮 - 安装包（组内私用，请勿外传）
      （要用 Live2D 模型搭档的话：去 Live2D 官网下载 Cubism SDK for Native，
       把 Core\dll\windows\x86_64\Live2DCubismCore.dll 放到 Sinmai.exe 旁边。）
 
+选曲页布局
+  默认布局里按钮、卡片、分类标签都在原版位置，触摸屏点哪里就是哪里。
+  只用实体按键的话，可以换成搭档更大、卡片下移的布局：关掉游戏，把
+  Package\LocalAssets\PartnerLive2D\select_layout_large.ini 复制一份，改名覆盖同目录的 select_layout.ini。
+
 卸载
   双击 uninstall.bat：从备份放回原版文件，删掉换皮新增的文件。
 

@@ -14,10 +14,13 @@ namespace PartnerLive2D.Core
         public const byte Idle = 0, Lead = 1, Body = 2, Tail = 3;
         // Bridge: a way from an idle frame to the official rest art (only taken on purpose, into a RestStart action);
         // RestStart: an action that starts on the official rest art (retime.py --rest)
-        public sealed class Take { public string Name, Action; public int First, Count, Key = -1, HoldEnd = -1; public bool BrokenBody, Bridge, RestStart; }
+        // pair_rhythm (2026-11-13, library.py rhythm_tables), inside the take, -1 = none: ShortA -> ShortB the brisk-tempo jump
+        // (a clean cut inside the body); LateRest the picture to enter at over a rest bridge (else picture 1)
+        public sealed class Take { public string Name, Action; public int First, Count, Key = -1, HoldEnd = -1, ShortA = -1, ShortB = -1, LateRest = -1, PoseAt = -1; public bool BrokenBody, Bridge, RestStart; }
         public sealed class Character
         {
             public string Name, Pack;
+            public string PackFormat = PackReader.Raw;   // "raw" BC7 frames back to back, or "sparse1" (tools/ngo_library_compact.py)
             public int Frames, TextureWidth, TextureHeight;
             // two in-betweens of a frame (1/3 and 2/3 of the way to the next one, drawn on the refreshes between pictures):
             // their place in the pack after the frames, -1 = none; PackFrames = frames + in-betweens
@@ -53,6 +56,8 @@ namespace PartnerLive2D.Core
             // per take: the idle frames with a way into its rest lead (ascending), where they enter, at what cost
             public int[] EntryStart, EntryFrom, EntryTo;
             public float[] EntryCost;
+            // pair_rhythm: per way in, where it lands when entering later (the last lead picture still within TauEntry); null = none
+            public int[] LateTo;
             public int Next(int f) { return f + 1 < Frames && TakeOf[f + 1] == TakeOf[f] ? f + 1 : -1; }
             public int FindEntry(int take, int frame)
             {
@@ -67,7 +72,30 @@ namespace PartnerLive2D.Core
             public readonly Dictionary<string, PairFeel.Effect[]> Feel = new Dictionary<string, PairFeel.Effect[]>();   // cue -> effects
         }
         public struct Pick { public int Action; public double Weight; }
-        public sealed class Moment { public string Name; public int Character; public Pick[] Picks; public double Chance, Delay, Cooldown, Wait; public int Priority; public bool Soft; }
+        // Skit > 0: one entry of a two-person skit (its weight; priority 0). The first entry listed is the lead; the other one
+        // starts Delay seconds after the lead's action has started (pair_fx 2026-11-13)
+        // After (pair_rhythm): 0 plain Delay from the event; AfterKey: AfterDelay after the other character's key picture (of the
+        // action she started for the same event; none started -> the plain Delay); AfterEvent: AfterDelay from the event.
+        // Used only while the library's rhythm.afterKey is on (off: the plain Delay, exactly as before)
+        public const int AfterNone = 0, AfterKey = 1, AfterEvent = 2;
+        public sealed class Moment { public string Name; public int Character; public Pick[] Picks; public double Chance, Delay, Cooldown, Wait, Skit, AfterDelay; public int Priority, After; public bool Soft; }
+        // library.json tuning.rhythm (pair_rhythm 2026-11-13); null = every part off. Tempo: brisk after Inputs inputs within
+        // Window s, relaxed again after Calm s without one
+        public sealed class RhythmTuning
+        {
+            // AfterPose ("afterAnchor": "pose"): after-key delays and echoes count from where the pose has registered (take
+            // poseAt) instead of the key picture (the default, as the design says)
+            // Midway ("midway", absent = false): arm a short form before ShortA when tempo turns brisk.
+            // BriskMax ("briskMax", absent or <= 0 = unlimited): cap moment picks by their shortest brisk take, in seconds.
+            public bool Tempo, Short, Midway, LateEntry, AfterKey, AfterPose; public int Inputs = 3; public double Window = 6, Calm = 5, EchoChance, EchoMin = 1, EchoMax = 1.6, BriskMax;
+        }
+        public RhythmTuning Rhythm;
+        public sealed class Skit { public string Name; public int Lead, Second; public double Weight; }
+        public readonly List<Skit> Skits = new List<Skit>();
+        // the emote layer's table (library.json "fx", tools/ngo_fx_install.py); null = no layer. Problems found while reading
+        // it (unknown names skipped, or the whole table dropped) are in FxWarnings for the caller to log once.
+        public FxTable Fx;
+        public readonly List<string> FxWarnings = new List<string>();
 
         public readonly Character[] Characters = new Character[2];   // 0 Ame (drawn first, behind), 1 K
         public readonly List<Action> Actions = new List<Action>();
@@ -138,6 +166,31 @@ namespace PartnerLive2D.Core
             if (first == null || first.Count != 2) throw new FormatException("firstRandom");
             lib.FirstRandomMin = (float)Number(first[0], "firstRandom"); lib.FirstRandomMax = (float)Number(first[1], "firstRandom");
             if (lib.MaxCuts < 0 || lib.MaxCuts > 4 || lib.BlendTicks < 1 || lib.BlendTicks > 10 || lib.RandomMax < lib.RandomMin) throw new FormatException("invalid tuning");
+            var rhythm = Json.Get(t, "rhythm");
+            if (rhythm != null)
+            {
+                // pair_rhythm: each part optional (absent = off)
+                var rt = new RhythmTuning { Short = Json.GetBool(rhythm, "short"), Midway = Json.GetBool(rhythm, "midway"), LateEntry = Json.GetBool(rhythm, "lateEntry"), AfterKey = Json.GetBool(rhythm, "afterKey") };
+                if (Json.Get(rhythm, "briskMax") != null) rt.BriskMax = Number(Json.Get(rhythm, "briskMax"), "briskMax");
+                string anchor = Json.GetString(rhythm, "afterAnchor");
+                if (anchor != null && anchor != "key" && anchor != "pose") throw new FormatException("afterAnchor must be key or pose");
+                rt.AfterPose = anchor == "pose";
+                var tempo = Json.Get(rhythm, "tempo");
+                if (tempo != null)
+                {
+                    rt.Tempo = true; rt.Inputs = Int(Json.Get(tempo, "inputs"), "tempo inputs");
+                    rt.Window = Number(Json.Get(tempo, "window"), "tempo window"); rt.Calm = Number(Json.Get(tempo, "calm"), "tempo calm");
+                    if (rt.Inputs < 1 || rt.Inputs > 16 || rt.Window <= 0 || rt.Calm <= 0) throw new FormatException("invalid tempo");
+                }
+                var echo = Json.Get(rhythm, "echo");
+                if (echo != null)
+                {
+                    rt.EchoChance = Number(Json.Get(echo, "chance"), "echo chance");
+                    rt.EchoMin = Number(Json.Get(echo, "min"), "echo min"); rt.EchoMax = Number(Json.Get(echo, "max"), "echo max");
+                    if (rt.EchoChance < 0 || rt.EchoChance > 1 || rt.EchoMin < 0 || rt.EchoMax < rt.EchoMin) throw new FormatException("invalid echo");
+                }
+                lib.Rhythm = rt;
+            }
 
             var chars = Json.GetList(root, "characters");
             if (chars == null || chars.Count != 2) throw new FormatException("expected two characters");
@@ -147,6 +200,8 @@ namespace PartnerLive2D.Core
                 int ci = CharacterIndex(c.Name);
                 if (ci < 0 || lib.Characters[ci] != null) throw new FormatException("invalid character");
                 c.Pack = SafeName(Json.GetString(node, "pack"), "pack");
+                c.PackFormat = Json.GetString(node, "packFormat") ?? PackReader.Raw;
+                if (!PackReader.Known(c.PackFormat)) throw new FormatException("unknown packFormat: " + c.PackFormat);
                 c.Frames = Int(Json.Get(node, "frames"), "frames");
                 var tex = Json.GetList(node, "texture"); var rect = Json.GetList(node, "rect");
                 if (tex == null || tex.Count != 2 || rect == null || rect.Count != 4) throw new FormatException("texture/rect");
@@ -174,6 +229,7 @@ namespace PartnerLive2D.Core
                 if (takes == null || takes.Count == 0) throw new FormatException("no takes");
                 c.Takes = new Take[takes.Count];
                 int at = 0;
+                var late = new List<KeyValuePair<int, List<object>>>();   // pair_rhythm: per take its later ways in, read after the graph
                 for (int k = 0; k < takes.Count; k++)
                 {
                     object tn = takes[k];
@@ -182,10 +238,50 @@ namespace PartnerLive2D.Core
                         Bridge = Json.GetBool(tn, "bridge"), RestStart = Json.GetBool(tn, "restStart") };
                     if (take.Action != null) { take.Key = Int(Json.Get(tn, "key"), "key"); take.HoldEnd = Int(Json.Get(tn, "holdEnd"), "holdEnd"); }
                     if (take.First != at || take.Count <= 0) throw new FormatException("takes must cover the frames in order");
+                    if (take.Action != null)
+                    {
+                        var sh = Json.GetList(tn, "short");
+                        if (sh != null)
+                        {
+                            if (sh.Count != 3) throw new FormatException("short: " + take.Name);
+                            take.ShortA = Int(sh[0], "short"); take.ShortB = Int(sh[1], "short");
+                            if (take.ShortA < 0 || take.ShortB < take.ShortA + 2 || take.ShortB >= take.Count) throw new FormatException("short: " + take.Name);
+                        }
+                        if (Json.Get(tn, "lateRest") != null)
+                        {
+                            take.LateRest = Int(Json.Get(tn, "lateRest"), "lateRest");
+                            if (take.LateRest < 1 || take.LateRest >= take.Count) throw new FormatException("lateRest: " + take.Name);
+                        }
+                        // where the pose has registered (80 % of the way to it; reports only)
+                        if (Json.Get(tn, "poseAt") is double) take.PoseAt = Math.Max(0, Math.Min(take.Count - 1, Int(Json.Get(tn, "poseAt"), "poseAt")));
+                        var lt = Json.GetList(tn, "late");
+                        if (lt != null) late.Add(new KeyValuePair<int, List<object>>(k, lt));
+                    }
                     at += take.Count; c.Takes[k] = take;
                 }
                 if (at != c.Frames) throw new FormatException("take frame total mismatch");
                 ReadGraph(c, readFile(SafeName(Json.GetString(node, "graph"), "graph")));
+                foreach (var take in c.Takes)
+                {
+                    // a short form or a late way in never lands on a broken picture or outside the lead (checked against the graph)
+                    if (take.ShortA >= 0 && (c.Bad[take.First + take.ShortA] || c.Bad[take.First + take.ShortB])) throw new FormatException("short on a broken picture: " + take.Name);
+                    if (take.LateRest >= 0 && (c.Bad[take.First + take.LateRest] || c.Phase[take.First + take.LateRest] != Lead)) throw new FormatException("lateRest: " + take.Name);
+                }
+                if (late.Count > 0)
+                {
+                    c.LateTo = (int[])c.EntryTo.Clone();
+                    foreach (var kv in late)
+                        foreach (object pn in kv.Value)
+                        {
+                            var pr = pn as List<object>;
+                            if (pr == null || pr.Count != 2) throw new FormatException("late");
+                            int from = Int(pr[0], "late"), to = Int(pr[1], "late");
+                            if (from < 0 || from >= c.Frames || to < 0 || to >= c.Frames) throw new FormatException("late");
+                            int e = c.FindEntry(kv.Key, from);
+                            if (e < 0 || c.TakeOf[to] != kv.Key || c.Bad[to] || c.Phase[to] != Lead) throw new FormatException("late: " + c.Takes[kv.Key].Name);
+                            c.LateTo[e] = to;
+                        }
+                }
                 c.PackFrames = c.Frames;
                 var between = Json.GetString(node, "between");
                 if (between != null)
@@ -262,14 +358,41 @@ namespace PartnerLive2D.Core
                 var m = new Moment { Name = Json.GetString(mn, "moment"), Character = CharacterIndex(Json.GetString(mn, "character")),
                     Chance = Number(Json.Get(mn, "chance"), "chance"), Delay = Number(Json.Get(mn, "delay"), "delay"),
                     Cooldown = Number(Json.Get(mn, "cooldown"), "cooldown"), Wait = Number(Json.Get(mn, "wait"), "wait"),
-                    Priority = Int(Json.Get(mn, "priority"), "priority"), Soft = Json.GetBool(mn, "soft") };
-                if (string.IsNullOrEmpty(m.Name) || m.Character < 0 || m.Chance < 0 || m.Delay < 0 || m.Cooldown < 0 || m.Wait < 0 || m.Priority < 1)
+                    Priority = Int(Json.Get(mn, "priority"), "priority"), Soft = Json.GetBool(mn, "soft"),
+                    Skit = Json.Get(mn, "skit") == null ? 0 : Number(Json.Get(mn, "skit"), "skit") };
+                string after = Json.GetString(mn, "after");
+                if (after != null)
+                {
+                    m.After = after == "key" ? AfterKey : after == "event" ? AfterEvent : throw new FormatException("invalid moment after: " + after);
+                    m.AfterDelay = Number(Json.Get(mn, "afterDelay"), "afterDelay");
+                    if (m.AfterDelay < 0) throw new FormatException("invalid afterDelay");
+                }
+                if (string.IsNullOrEmpty(m.Name) || m.Character < 0 || m.Chance < 0 || m.Delay < 0 || m.Cooldown < 0 || m.Wait < 0 || m.Skit < 0
+                    || (m.Skit > 0 ? m.Priority != 0 : m.Priority < 1))
                     throw new FormatException("invalid moment");
                 m.Picks = Picks(lib, Json.GetList(mn, "picks"), m.Character, m.Name);
                 lib.Moments.Add(m);
             }
+            // skits: exactly two entries per name, one per character; the first listed leads
+            for (int i = 0; i < lib.Moments.Count; i++)
+            {
+                var m = lib.Moments[i];
+                if (m.Skit <= 0 || lib.Skits.Exists(s => s.Name == m.Name)) continue;
+                int second = -1, count = 0;
+                for (int j = 0; j < lib.Moments.Count; j++)
+                    if (lib.Moments[j].Name == m.Name) { count++; if (j != i) second = j; }
+                if (count != 2 || lib.Moments[second].Skit <= 0 || lib.Moments[second].Character == m.Character) throw new FormatException("skit " + m.Name + ": needs one entry per character");
+                lib.Skits.Add(new Skit { Name = m.Name, Lead = i, Second = second, Weight = m.Skit });
+            }
             var hit = Json.GetList(root, "hitmap");
             if (hit != null) { lib.HitMap = new string[hit.Count]; for (int i = 0; i < hit.Count; i++) lib.HitMap[i] = hit[i] as string ?? ""; }
+            var fx = Json.Get(root, "fx");
+            if (fx != null)
+            {
+                // a broken emote table never costs the pair: the layer is left out, with one log line
+                try { lib.Fx = FxTable.Parse(fx, lib); lib.FxWarnings.AddRange(lib.Fx.Warnings); }
+                catch (Exception e) { lib.Fx = null; lib.FxWarnings.Add("fx table unusable, no emotes: " + e.Message); }
+            }
             return lib;
         }
 
@@ -356,11 +479,17 @@ namespace PartnerLive2D.Core
         sealed class Player
         {
             public int Cur, ActTake = -1, ActPriority, SinceJump, BlendFrom = -1, BlendLeft, Last1 = -1, Last2 = -1;
+            // pair_rhythm: when the action started and showed its key picture (-1 not yet); whether it plays its short form
+            public int ActStart = -1, KeyTick = -1; public bool ActShort, ActShortMidway;
             public string ActMoment;
             public Request Req;
             public Player Clone() { var p = (Player)MemberwiseClone(); if (Req != null) p.Req = Req.Clone(); return p; }
         }
-        struct Delayed { public int Due, Moment, Action; }
+        // Due -1: waits for character From's key picture (pair_rhythm after-key), then AfterTicks; From started nothing for
+        // the event (asked at Asked) -> Asked + Plain. Moment -1: an echo (a random move of Character, priority 0)
+        // Hold: an after-key entry keeps its character free - no random move of hers starts while it waits (else the late
+        // reaction has to interrupt the random move with a fade)
+        struct Delayed { public int Due, Moment, Action, Character, Asked, From, AfterTicks, Plain; public bool Hold; }
         // breadth-first search scratch, per character (never part of a state)
         sealed class Scratch { public int[] Seen, Prev, Layer, NextLayer; public float[] Cost; public int Stamp; }
 
@@ -371,7 +500,21 @@ namespace PartnerLive2D.Core
         int[] _momentLast;
         ulong _rng;
         int _nextRandom, _turn;
+        // skits (select page only): next due tick (-1 not planned yet), the last one played, the one whose lead is waiting
+        // to start (its second entry follows the lead's start), when each character was last busy
+        bool _skitsOn;
+        int _nextSkit = -1, _lastSkit = -1, _skitWaiting = -1;
+        int[] _busyAt = { 0, 0 };
+        // pair_rhythm tempo: the last input ticks (a ring, replaced on write so a clone shares it without copying), brisk now
+        int[] _inputs; int _inputAt, _lastInput = int.MinValue / 2;
+        bool _brisk;
         public int Tick { get; private set; }
+        public bool Brisk { get { return _brisk; } }
+        SpriteLibrary.RhythmTuning R { get { return _lib.Rhythm; } }
+        bool AfterOn { get { return _lib.Rhythm != null && _lib.Rhythm.AfterKey; } }
+        bool LateOn { get { return _lib.Rhythm != null && _lib.Rhythm.LateEntry; } }
+        public const double SkitIdle = 6, SkitMin = 35, SkitMax = 60;
+        public void EnableSkits(bool on) { _skitsOn = on && _lib.Skits.Count > 0; }
 
         public SpriteDirector(SpriteLibrary lib, int seed)
         {
@@ -401,6 +544,30 @@ namespace PartnerLive2D.Core
             _players = new[] { o._players[0].Clone(), o._players[1].Clone() };
             _pending = new List<Delayed>(o._pending);
             _momentLast = (int[])o._momentLast.Clone();
+            _skitsOn = o._skitsOn; _nextSkit = o._nextSkit; _lastSkit = o._lastSkit; _skitWaiting = o._skitWaiting;
+            _busyAt = new[] { o._busyAt[0], o._busyAt[1] };
+            _inputs = o._inputs; _inputAt = o._inputAt; _lastInput = o._lastInput; _brisk = o._brisk;
+        }
+
+        // ---- tempo (pair_rhythm): an input on the select page (button, touch, song / category / difficulty change)
+        public void Input()
+        {
+            var r = R;
+            if (r == null || !r.Tempo) return;
+            var ring = new int[r.Inputs];
+            for (int i = 0; i < ring.Length; i++) ring[i] = _inputs != null && i < _inputs.Length ? _inputs[i] : int.MinValue / 2;
+            ring[_inputAt % ring.Length] = Tick; _inputAt++; _inputs = ring; _lastInput = Tick;
+            UpdateTempo();
+        }
+        // brisk: Inputs inputs within the last Window seconds; it ends after Calm seconds without any input
+        void UpdateTempo()
+        {
+            var r = R;
+            if (r == null || !r.Tempo || _inputs == null) return;
+            if (_brisk) { if (Tick - _lastInput >= Seconds(r.Calm)) _brisk = false; return; }
+            int recent = 0;
+            foreach (int t in _inputs) if (Tick - t < Seconds(r.Window)) recent++;
+            if (recent >= r.Inputs) _brisk = true;
         }
         public SpriteDirector Clone() { return new SpriteDirector(this); }
 
@@ -414,10 +581,17 @@ namespace PartnerLive2D.Core
         // ---- state queries
         public int Frame(int c) { return _players[c].Cur; }
         public string ActionOf(int c) { var p = _players[c]; return p.ActTake < 0 ? null : _lib.Characters[c].Takes[p.ActTake].Name; }
+        // pair_rhythm (tests): the action's moment, its start and key ticks; the waiting request's moment, ask tick, wait ticks
+        public string MomentOf(int c) { return _players[c].ActTake < 0 ? null : _players[c].ActMoment; }
+        public int ActStartOf(int c) { return _players[c].ActStart; }
+        public int KeyTickOf(int c) { return _players[c].KeyTick; }
+        public string RequestOf(int c) { var r = _players[c].Req; return r == null ? null : r.Moment; }
+        public int RequestAsked(int c) { var r = _players[c].Req; return r == null ? -1 : r.Asked; }
+        public int RequestWait(int c) { var r = _players[c].Req; return r == null ? -1 : r.Wait; }
         // a moment counts as playing while it waits for its way in, and in its action until the key pose has been held
         public bool Playing(string moment)
         {
-            foreach (var d in _pending) if (_lib.Moments[d.Moment].Name == moment) return true;
+            foreach (var d in _pending) if (d.Moment >= 0 && _lib.Moments[d.Moment].Name == moment) return true;
             for (int c = 0; c < 2; c++)
             {
                 var p = _players[c];
@@ -449,19 +623,49 @@ namespace PartnerLive2D.Core
             var pool = fresh.Count > 0 ? fresh : good;
             return pool[(int)(NextDouble() * pool.Count) % pool.Count];
         }
+        int PickMomentAction(SpriteLibrary.Pick[] picks)
+        {
+            var rt = R;
+            if (!_brisk || rt == null || rt.BriskMax <= 0 || picks.Length <= 1) return PickAction(picks);
+            var shorter = new List<SpriteLibrary.Pick>();
+            foreach (var pick in picks)
+            {
+                var action = _lib.Actions[pick.Action]; var ch = _lib.Characters[action.Character];
+                double length = double.MaxValue;
+                foreach (int k in action.Takes)
+                {
+                    var take = ch.Takes[k];
+                    int skipped = rt.Short && take.ShortA >= 0 ? take.ShortB - take.ShortA : 0;
+                    length = Math.Min(length, (take.Count - skipped) / (double)SpriteLibrary.Fps);
+                }
+                if (length <= rt.BriskMax) shorter.Add(pick);
+            }
+            // Even a single remaining pick uses the original draw; an empty pool falls back without an extra roll.
+            return PickAction(shorter.Count > 0 ? shorter.ToArray() : picks);
+        }
         bool Ask(int c, int action, string moment, int priority, double wait, bool soft, List<string> log)
         {
             var p = _players[c];
             if (p.ActTake >= 0 && priority <= p.ActPriority) { Note(log, c, "busy, skips " + moment); return false; }
             if (p.Req != null && priority < p.Req.Priority) { Note(log, c, "already waiting for " + p.Req.Moment + ", skips " + moment); return false; }
             int take = PickTake(c, action);
-            p.Req = new Request { Take = take, Priority = priority, Asked = Tick, Wait = Math.Max(0, Seconds(wait)), Soft = soft, Moment = moment };
+            int waitTicks = Math.Max(0, Seconds(wait));
+            if (_brisk && priority > 0) waitTicks /= 2;    // pair_rhythm: in a brisk tempo the moment passes sooner
+            p.Req = new Request { Take = take, Priority = priority, Asked = Tick, Wait = waitTicks, Soft = soft, Moment = moment };
             Note(log, c, moment + " wants " + _lib.Characters[c].Takes[take].Name);
             return true;
         }
         // a select-page moment (enter, return, song, category, master, confirm, countdown, start, tap); who: -1 both, 0 Ame, 1 K
         public bool Moment(string name, int who, List<string> log = null)
         {
+            // "act.<action>": that action now, as a touch would ask for it (tests and the API's play route)
+            if (name.StartsWith("act.", StringComparison.Ordinal))
+            {
+                int a = _lib.ActionIndex(name.Substring(4));
+                return a >= 0 && Ask(_lib.Actions[a].Character, a, name, 2, 1.0, true, log);
+            }
+            // a skit by name starts at once (its usual schedule is in Step)
+            for (int k = 0; k < _lib.Skits.Count; k++) if (_lib.Skits[k].Name == name) return StartSkit(k, log);
             bool any = false;
             for (int m = 0; m < _lib.Moments.Count; m++)
             {
@@ -470,8 +674,16 @@ namespace PartnerLive2D.Core
                 if (Tick < _momentLast[m] + Seconds(mo.Cooldown)) continue;
                 if (mo.Chance < 1 && NextDouble() >= mo.Chance) continue;
                 _momentLast[m] = Tick;
-                int action = PickAction(mo.Picks), delay = Seconds(mo.Delay);
-                if (delay > 0) { _pending.Add(new Delayed { Due = Tick + delay, Moment = m, Action = action }); any = true; }
+                int action = PickMomentAction(mo.Picks), delay = Seconds(mo.Delay);
+                if (AfterOn && mo.After == SpriteLibrary.AfterKey)
+                {
+                    // pair_rhythm: after the other one's key picture (her entry for this event was asked just before)
+                    _pending.Add(new Delayed { Due = -1, Moment = m, Action = action, Character = mo.Character, Asked = Tick, From = 1 - mo.Character,
+                        AfterTicks = Seconds(mo.AfterDelay), Plain = delay, Hold = true });
+                    any = true; continue;
+                }
+                if (AfterOn && mo.After == SpriteLibrary.AfterEvent) delay = Seconds(mo.AfterDelay);
+                if (delay > 0) { _pending.Add(new Delayed { Due = Tick + delay, Moment = m, Action = action, Character = mo.Character }); any = true; }
                 else any |= Ask(mo.Character, action, mo.Name, mo.Priority, mo.Wait, mo.Soft, log);
             }
             return any;
@@ -480,16 +692,40 @@ namespace PartnerLive2D.Core
         // ---- one picture
         public void Step(Shot[] shots, List<string> log = null)
         {
+            UpdateTempo();
             for (int i = 0; i < _pending.Count; i++)
             {
                 var d = _pending[i];
+                if (d.Due < 0)
+                {
+                    // pair_rhythm after-key: due AfterTicks after From's key picture, once the action she started for the
+                    // same event shows it; she started none (skipped, dropped, busy) -> the plain delay from the event
+                    var o = _players[d.From];
+                    if (o.ActTake >= 0 && o.ActStart >= d.Asked) { if (o.KeyTick >= 0) d.Due = o.KeyTick + d.AfterTicks; }
+                    else if (o.Req == null || o.Req.Asked < d.Asked) d.Due = d.Asked + d.Plain;
+                    if (d.Due < 0 && Tick - d.Asked > Seconds(8)) d.Due = Tick;   // never hangs
+                    _pending[i] = d;
+                    if (d.Due < 0) continue;
+                }
                 if (d.Due > Tick) continue;
-                var mo = _lib.Moments[d.Moment];
-                Ask(mo.Character, d.Action, mo.Name, mo.Priority, mo.Wait, mo.Soft, log);
+                if (d.Moment < 0) Ask(d.Character, d.Action, "echo", 0, 1.0, false, log);
+                else { var mo = _lib.Moments[d.Moment]; Ask(mo.Character, d.Action, mo.Name, mo.Priority, mo.Wait, mo.Soft, log); }
                 _pending.RemoveAt(i--);
             }
             bool busy = _pending.Count > 0;
-            foreach (var p in _players) if (p.ActTake >= 0 || p.Req != null) busy = true;
+            for (int c = 0; c < 2; c++) if (_players[c].ActTake >= 0 || _players[c].Req != null) { busy = true; _busyAt[c] = Tick; }
+            if (_brisk) busy = true;      // pair_rhythm: no random move and no skit starts in a brisk tempo
+            if (_skitsOn)
+            {
+                // a skit when both have been idle 6 s, every 35-60 s, by weight, never the same twice in a row
+                if (_nextSkit < 0) _nextSkit = Tick + Seconds(SkitMin + NextDouble() * (SkitMax - SkitMin));
+                if (!busy && Tick >= _nextSkit && Tick - Math.Max(_busyAt[0], _busyAt[1]) >= Seconds(SkitIdle))
+                {
+                    int k = PickSkit();
+                    _nextSkit = Tick + Seconds(SkitMin + NextDouble() * (SkitMax - SkitMin));
+                    if (k >= 0 && StartSkit(k, log)) busy = true;
+                }
+            }
             if (busy) _nextRandom = Math.Max(_nextRandom, Tick + Seconds(4));         // a few calm seconds after anything
             else if (Tick >= _nextRandom)
             {
@@ -501,10 +737,40 @@ namespace PartnerLive2D.Core
             {
                 TickPlayer(c, log);
                 var p = _players[c];
+                if (p.ActTake >= 0 && p.KeyTick < 0)
+                {
+                    var at = _lib.Characters[c].Takes[p.ActTake];
+                    int anchor = R != null && R.AfterPose && at.PoseAt >= 0 ? at.PoseAt : at.Key;
+                    if (p.Cur - at.First >= anchor) p.KeyTick = Tick;
+                }
                 shots[c] = new Shot { Frame = p.Cur, Under = p.BlendLeft > 0 ? p.BlendFrom : -1,
                     Weight = p.BlendLeft > 0 ? 1f - p.BlendLeft / (float)(_lib.BlendTicks + 1) : 1f };
             }
             Tick++;
+        }
+
+        int PickSkit()
+        {
+            double total = 0;
+            for (int k = 0; k < _lib.Skits.Count; k++) if (k != _lastSkit || _lib.Skits.Count == 1) total += _lib.Skits[k].Weight;
+            double r = NextDouble() * total;
+            for (int k = 0; k < _lib.Skits.Count; k++)
+            {
+                if (k == _lastSkit && _lib.Skits.Count > 1) continue;
+                r -= _lib.Skits[k].Weight; if (r < 0) return k;
+            }
+            for (int k = _lib.Skits.Count - 1; k >= 0; k--) if (k != _lastSkit || _lib.Skits.Count == 1) return k;
+            return -1;
+        }
+        // the lead asks now (priority 0: anything else interrupts it); the second entry is queued when the lead's action
+        // really starts (Enter), and dropped if it never does
+        bool StartSkit(int k, List<string> log)
+        {
+            var s = _lib.Skits[k]; var lead = _lib.Moments[s.Lead];
+            _lastSkit = k;
+            if (!Ask(lead.Character, PickMomentAction(lead.Picks), lead.Name, 0, lead.Wait, lead.Soft, log)) { _skitWaiting = -1; return false; }
+            _skitWaiting = k;
+            return true;
         }
 
         void Note(List<string> log, int c, string what)
@@ -522,7 +788,35 @@ namespace PartnerLive2D.Core
             var p = _players[c]; var r = p.Req;
             p.ActTake = r.Take; p.ActPriority = r.Priority; p.ActMoment = r.Moment; p.Req = null;
             p.Last2 = p.Last1; p.Last1 = r.Take;
-            Note(log, c, string.Format("enters {0} after {1:0.00} s ({2})", _lib.Characters[c].Takes[r.Take].Name, (Tick - r.Asked) / (double)SpriteLibrary.Fps, how));
+            // pair_rhythm: the start (after-key timing), and the short form when the action starts in a brisk tempo
+            var rt = R; var tk = _lib.Characters[c].Takes[r.Take];
+            p.ActStart = Tick; p.KeyTick = -1;
+            p.ActShort = _brisk && rt != null && rt.Short && tk.ShortA >= 0;
+            p.ActShortMidway = false;
+            Note(log, c, string.Format("enters {0} after {1:0.00} s ({2}){3}", tk.Name, (Tick - r.Asked) / (double)SpriteLibrary.Fps, how, p.ActShort ? ", short form" : ""));
+            if (_skitWaiting >= 0)
+            {
+                var s = _lib.Skits[_skitWaiting]; var lead = _lib.Moments[s.Lead];
+                if (c == lead.Character)
+                {
+                    // the lead started: the other one follows after the skit's delay; anything else she started instead
+                    // (the lead request was dropped or replaced) ends the skit
+                    if (r.Moment == lead.Name)
+                    {
+                        var second = _lib.Moments[s.Second];
+                        int plain = Math.Max(1, Seconds(second.Delay)), action = PickMomentAction(second.Picks);
+                        if (AfterOn && second.After == SpriteLibrary.AfterKey)
+                            _pending.Add(new Delayed { Due = -1, Moment = s.Second, Action = action, Character = second.Character, Asked = Tick, From = c,
+                                AfterTicks = Seconds(second.AfterDelay), Plain = plain, Hold = true });
+                        else _pending.Add(new Delayed { Due = Tick + plain, Moment = s.Second, Action = action, Character = second.Character });
+                    }
+                    _skitWaiting = -1;
+                }
+            }
+            // echo (pair_rhythm): the other one answers a random small move with one of her own after its key picture
+            if (rt != null && rt.EchoChance > 0 && r.Moment == "random" && NextDouble() < rt.EchoChance)
+                _pending.Add(new Delayed { Due = -1, Moment = -1, Action = PickAction(_lib.Random[1 - c]), Character = 1 - c, Asked = Tick, From = c,
+                    AfterTicks = Seconds(rt.EchoMin + NextDouble() * (rt.EchoMax - rt.EchoMin)), Plain = Seconds(rt.EchoMax) + 2 * SpriteLibrary.Fps });
             Go(c, j, fade);
         }
         // straight into the requested take's rest lead, faded: the way in from here if there is one, else its first good lead frame
@@ -576,6 +870,14 @@ namespace PartnerLive2D.Core
         {
             var p = _players[c]; var ch = _lib.Characters[c]; int i = p.Cur;
             var r = p.Req;
+            if (r != null && r.Priority == 0 && _brisk)
+            {
+                // pair_rhythm: random moves, echoes and skit beats do not start in a brisk tempo
+                Note(log, c, "brisk tempo, drops " + r.Moment); p.Req = null; r = null;
+            }
+            if (r != null && r.Moment == "random")
+                foreach (var d in _pending)
+                    if (d.Hold && d.Character == c) { Note(log, c, "keeps free for " + _lib.Moments[d.Moment].Name + ", drops random"); p.Req = null; r = null; break; }
             if (r != null)
             {
                 int waited = Tick - r.Asked;
@@ -620,6 +922,17 @@ namespace PartnerLive2D.Core
         void ActionTick(int c, List<string> log)
         {
             var p = _players[c]; var ch = _lib.Characters[c]; int i = p.Cur, nat = ch.Next(i);
+            var rt = R; var take = ch.Takes[p.ActTake];
+            if (!p.ActShort && _brisk && rt != null && rt.Short && rt.Midway && take.ShortA >= 0 && i < take.First + take.ShortA)
+            {
+                p.ActShort = true; p.ActShortMidway = true;
+            }
+            if (p.ActShort)
+            {
+                // pair_rhythm short form: one clean cut inside the body (a and b match within Tau).
+                if (i == take.First + take.ShortA) { p.ActShort = false; Note(log, c, (p.ActShortMidway ? "short form (midway) " : "short form ") + take.ShortA + " -> " + take.ShortB); Go(c, take.First + take.ShortB, false); return; }
+                if (i > take.First + take.ShortA) p.ActShort = false;
+            }
             if (ch.Phase[i] == SpriteLibrary.Tail || nat < 0)
             {
                 int s = ch.ExitStart[i], e = ch.ExitStart[i + 1], hard = s;
@@ -708,8 +1021,14 @@ namespace PartnerLive2D.Core
                 if (bestBridge >= 0) for (int b = 0; b < ch.BridgeLen[bestBridge]; b++) path.Add(ch.BridgeAt[bestBridge] + b);
                 // the bridge ends on the rest art, which is also the action's first picture: in from its second
                 r.Entry = take.Count > 1 && !ch.Bad[take.First + 1] ? take.First + 1 : take.First; r.EntryFade = false; r.Bridged = true;
+                // pair_rhythm later way in: a still lead is entered at its last picture still within TauEntry of the rest art
+                if (LateOn && take.LateRest > 1) r.Entry = take.First + take.LateRest;
             }
-            else { r.Entry = ch.EntryTo[bestEntry]; r.EntryFade = ch.EntryCost[bestEntry] > _lib.TauEntry; r.Bridged = false; }
+            else
+            {
+                r.EntryFade = ch.EntryCost[bestEntry] > _lib.TauEntry; r.Bridged = false;
+                r.Entry = LateOn && ch.LateTo != null && !r.EntryFade ? ch.LateTo[bestEntry] : ch.EntryTo[bestEntry];
+            }
             r.Path = path.ToArray(); r.At = 0;
         }
         static void Visit(Scratch sc, int state, int from, int stamp, ref int count)
@@ -731,10 +1050,12 @@ namespace PartnerLive2D.Core
         SpriteDirector _tail;
         public readonly SpriteLibrary Library;
 
-        public SpriteTimeline(SpriteLibrary lib, int seed, bool notes = false)
+        // skits: the two-person skits run on their own schedule (the select page only)
+        public SpriteTimeline(SpriteLibrary lib, int seed, bool notes = false, bool skits = false)
         {
             Library = lib; _notes = notes;
             _tail = new SpriteDirector(lib, seed);
+            _tail.EnableSkits(skits);
             Fill();
         }
         void Fill()
@@ -770,5 +1091,18 @@ namespace PartnerLive2D.Core
             for (int k = 0; k < Keep && k < _queue.Count; k++) if (_queue[k].After.Playing(moment)) return true;
             return false;
         }
+        // pair_rhythm: a select-page input (the tempo), replayed from the same picture a moment would be; nothing at all when
+        // the library has no tempo
+        public void Input()
+        {
+            if (Library.Rhythm == null || !Library.Rhythm.Tempo) return;
+            int at = Math.Min(Keep, _queue.Count) - 1;
+            var d = _queue[at].After.Clone();
+            d.Input();
+            _queue[at].After = d;
+            _queue.RemoveRange(at + 1, _queue.Count - at - 1);
+            _tail = d; Fill();
+        }
+        public bool Brisk { get { return _queue[0].After.Brisk; } }
     }
 }

@@ -37,6 +37,36 @@ namespace PartnerLive2D.Headless
                 try { LowEndPackChecks(args[1]); return 0; }
                 catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
             }
+            if (args.Length > 0 && args[0] == "packcheck")
+            {
+                try
+                {
+                    if (args.Length != 3) throw new ArgumentException("Usage: Headless.exe packcheck <sparse library dir> <raw library dir>");
+                    PackCheck(args[1], args[2]);
+                    return 0;
+                }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
+            if (args.Length > 0 && args[0] == "pairopt")
+            {
+                try { PairOptChecks(); return 0; }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
+            if (args.Length > 0 && args[0] == "fx")
+            {
+                try { FxChecks(); return 0; }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
+            if (args.Length > 0 && args[0] == "rhythm")
+            {
+                try { RhythmChecks(); return 0; }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
+            if (args.Length > 0 && args[0] == "rhythmlat")
+            {
+                try { RhythmLatency(args); return 0; }
+                catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+            }
             if (args.Length > 0 && args[0] == "spritepack")
             {
                 try
@@ -81,6 +111,12 @@ namespace PartnerLive2D.Headless
             catch (Exception ex) { Console.WriteLine("  FAIL: " + ex); failures.Add("theme checks: " + ex.Message); }
             try { SpritePairChecks(); SpritePairLoaderChecks(); }
             catch (Exception ex) { Console.WriteLine("  FAIL: " + ex); failures.Add("sprite pair checks: " + ex.Message); }
+            try { PairOptChecks(); }
+            catch (Exception ex) { Console.WriteLine("  FAIL: " + ex); failures.Add("pair-opt checks: " + ex.Message); }
+            try { FxChecks(); }
+            catch (Exception ex) { Console.WriteLine("  FAIL: " + ex); failures.Add("fx checks: " + ex.Message); }
+            try { RhythmChecks(); }
+            catch (Exception ex) { Console.WriteLine("  FAIL: " + ex); failures.Add("rhythm checks: " + ex.Message); }
             try { MainThreadChecks(); }
             catch (Exception ex) { Console.WriteLine("  FAIL: " + ex); failures.Add("main-thread checks: " + ex.Message); }
             try { RigChecks(); }

@@ -17,7 +17,7 @@ Without a Package folder it looks next to itself and in its parent folders, then
 """
 import argparse, base64, ctypes, datetime, hashlib, io, json, math, os, shutil, sys, tempfile, time
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 BACKUP_DIR = "NGO_skin_backup"
 STATE = "state.json"
 UNITY_VERSION = "2018.4.7f1"
@@ -557,8 +557,8 @@ def cmd_install(pkg, patch, yes=False, rebase=False):
         if t.get("patched_sha256") and entries[t["file"]].get("written_sha256") == t["patched_sha256"]:
             say("   %s: byte-identical to the reference install" % t["file"])
     if not os.path.isfile(os.path.join(pkg, "Live2DCubismCore.dll")):
-        say("注意 / note: Live2DCubismCore.dll is not next to Sinmai.exe; the PartnerLive2D mod stays off without it "
-            "(see README: Cubism SDK for Native, Core/dll/windows/x86_64).")
+        say("提示 / note: 没有 Live2DCubismCore.dll 也没关系，换皮和 mod 照常工作；只有 Live2D 模型做的搭档才需要它。")
+        say("   Live2DCubismCore.dll is optional: the skin and the mod work without it; only Live2D-model partners need it.")
     say("安装完成 / Installed.")
     return 0
 

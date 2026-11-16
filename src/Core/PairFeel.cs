@@ -229,6 +229,7 @@ namespace PartnerLive2D.Core
         readonly PairFeel _feel;
         readonly int[] _take = { -1, -1 };
         readonly bool[] _key = new bool[2];
+        public PairFx Fx;   // the emote layer, told of the same start / key cues (pair_fx 2026-11-13); null = none
         public PairCues(SpriteLibrary lib, PairFeel feel) { _lib = lib; _feel = feel; }
         public void Shown(int c, int frame, List<string> log = null)
         {
@@ -236,10 +237,14 @@ namespace PartnerLive2D.Core
             if (k != _take[c])
             {
                 if (_take[c] >= 0 && ch.Takes[_take[c]].Action != null) Fire(c, ch.Takes[_take[c]].Action, "end", log);
-                if (take.Action != null) Fire(c, take.Action, "start", log);
+                if (take.Action != null) { Fire(c, take.Action, "start", log); if (Fx != null) Fx.ActionStart(c, _lib.ActionIndex(take.Action), take, frame - take.First); }
                 _take[c] = k; _key[c] = false;
             }
-            if (take.Action != null && !_key[c] && frame - take.First >= take.Key) { _key[c] = true; Fire(c, take.Action, "key", log); }
+            if (take.Action != null && !_key[c] && frame - take.First >= take.Key)
+            {
+                _key[c] = true; Fire(c, take.Action, "key", log);
+                if (Fx != null) Fx.ActionKey(c, _lib.ActionIndex(take.Action), take);
+            }
         }
         void Fire(int c, string action, string cue, List<string> log)
         {

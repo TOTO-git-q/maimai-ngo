@@ -139,7 +139,7 @@ namespace PartnerLive2D.Unity
             if (!Live2DAvailable)
                 fresh.RemoveAll(c =>
                 {
-                    if (!string.IsNullOrEmpty(c.SpritePath)) return false;
+                    if (!string.IsNullOrEmpty(c.SpritePath) || !string.IsNullOrEmpty(c.LibraryPath)) return false;
                     Warn(string.Format("partner '{0}' is a Live2D model and the Cubism core is missing: the game's own partner shows instead", c.Name));
                     return true;
                 });

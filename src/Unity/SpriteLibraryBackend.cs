@@ -68,8 +68,15 @@ namespace PartnerLive2D.Unity
         internal SpriteLibrary Library { get { return _lib; } }
         internal bool Ready { get { return _ready; } }
 
-        internal SpriteLibraryBackend(string path, int size)
+        // skits: the two-person skits (select page only); fx: the emote layer when library.json has a table (partner.ini
+        // fx = off: none); shadow: the plum backing halo's opacity (partner.ini shadow; 0 = off)
+        // rhythm: partner.ini rhythm = off drops the library's tuning.rhythm (tempo, short forms, later ways in, after-key,
+        // echo; pair_rhythm 2026-11-13), so the director plays exactly as before
+        readonly bool _skits, _fxWanted, _rhythm;
+        readonly float _shadow;
+        internal SpriteLibraryBackend(string path, int size, bool skits = false, bool fx = true, float shadow = 0, bool rhythm = true)
         {
+            _skits = skits; _fxWanted = fx; _shadow = Math.Max(0, Math.Min(1, shadow)); _rhythm = rhythm;
             if (!SystemInfo.SupportsTextureFormat(TextureFormat.BC7)) throw new NotSupportedException("BC7 unsupported");
             var shader = Shader.Find("Sprites/Default");   // as SpritePairBackend: premultiplies straight alpha, RT stays premultiplied
             if (shader == null || !shader.isSupported) throw new NotSupportedException("sprite compositing shader unavailable");
@@ -91,13 +98,14 @@ namespace PartnerLive2D.Unity
             try
             {
                 var lib = SpriteLibrary.Load(_path);
+                if (!_rhythm) lib.Rhythm = null;
                 string folder = Path.GetDirectoryName(_path);
                 for (int c = 0; c < 2; c++)
                 {
                     var ch = lib.Characters[c];
                     string pack = Path.Combine(folder, ch.Pack);
                     long frame = (long)ch.TextureWidth * ch.TextureHeight;
-                    if (new FileInfo(pack).Length != frame * ch.PackFrames) throw new InvalidDataException("pack size does not match the library: " + ch.Pack);
+                    PackReader.Validate(pack, ch.PackFormat, ch.TextureWidth, ch.TextureHeight, ch.PackFrames);   // raw: size, sparse1: header + offset table
                     _pools[c].Data = ch; _pools[c].PackPath = pack; _pools[c].FrameBytes = frame;
                     for (int b = 0; b < Buffers; b++)
                     {
@@ -105,7 +113,7 @@ namespace PartnerLive2D.Unity
                         lock (_gate) { if (_closed) return; _pools[c].Free.Push(buffer); }
                     }
                 }
-                var timeline = new SpriteTimeline(lib, Environment.TickCount, true);
+                var timeline = new SpriteTimeline(lib, Environment.TickCount, true, _skits);
                 lock (_gate) { if (_closed) return; _lib = lib; _timeline = timeline; }
             }
             catch (Exception e) { lock (_gate) if (!_closed) _error = e; }
@@ -147,19 +155,149 @@ namespace PartnerLive2D.Unity
             }
             _reader = new Thread(ReadLoop) { IsBackground = true, Name = "Partner library reader" };
             _reader.Start();
+            StartFx();
+            StartShadow();
             RuntimePerf.End(RuntimePerf.Part.LibraryStart, started);
+        }
+
+        // ---- the emote layer (pair_fx 2026-11-13): small pixel-art emotes drawn into the pair's picture above both
+        // characters, so they share its canvas, mask and "under" handling on every page. One mesh of 8 quads (4 per
+        // character), rewritten in place each frame; nothing drawn while none is alive.
+        PairFx _fx;
+        Mesh _fxMesh;
+        Material _fxMaterial;
+        readonly Vector3[] _fxVerts = new Vector3[PairFx.Slots * 4];
+        readonly Vector2[] _fxUv = new Vector2[PairFx.Slots * 4];
+        bool _fxDrawn;
+        readonly float[] _poseDx = new float[2], _poseDy = new float[2];
+        void StartFx()
+        {
+            foreach (var w in _lib.FxWarnings) if (Log != null) Log("fx: " + w);
+            if (!_fxWanted || _lib.Fx == null) return;
+            try
+            {
+                var table = _lib.Fx;
+                var atlas = Mod.LoadImage(Path.Combine(Path.GetDirectoryName(_path), table.Atlas));   // cached for the session
+                if (atlas == null) throw new FileNotFoundException("emote atlas missing", table.Atlas);
+                if (atlas.width != table.AtlasWidth || atlas.height != table.AtlasHeight) throw new FormatException("emote atlas is " + atlas.width + "x" + atlas.height + ", table says " + table.AtlasWidth + "x" + table.AtlasHeight);
+                atlas.filterMode = FilterMode.Bilinear; atlas.wrapMode = TextureWrapMode.Clamp;
+                _fxMaterial = new Material(_material.shader) { mainTexture = atlas };
+                _fxMaterial.SetColor("_RendererColor", Color.white); _fxMaterial.SetVector("_Flip", Vector4.one);
+                var colors = new Color[_fxVerts.Length]; var tris = new int[PairFx.Slots * 6];
+                for (int i = 0; i < colors.Length; i++) colors[i] = Color.white;
+                for (int q = 0; q < PairFx.Slots; q++)
+                {
+                    int v = q * 4, t = q * 6;
+                    tris[t] = v; tris[t + 1] = v + 1; tris[t + 2] = v + 2; tris[t + 3] = v; tris[t + 4] = v + 2; tris[t + 5] = v + 3;
+                }
+                _fxMesh = new Mesh(); _fxMesh.MarkDynamic();
+                _fxMesh.vertices = _fxVerts; _fxMesh.uv = _fxUv; _fxMesh.colors = colors; _fxMesh.triangles = tris;
+                _fxMesh.bounds = new Bounds(new Vector3(512, 512, 0), new Vector3(4096, 4096, 10));
+                _fx = new PairFx(table);
+                _cues.Fx = _fx;
+            }
+            catch (Exception e) { _fx = null; if (Log != null) Log("fx: emote layer off: " + e.Message); }
+        }
+        // a touch that hit one of them (pair canvas, y down): one sparkle at the finger
+        internal void FxTouch(int who, float x, float y) { if (_fx != null && who >= 0) _fx.Touch(who, x, y); }
+        void DrawFx()
+        {
+            var table = _fx.Table; bool any = false;
+            float aw = table.AtlasWidth, ah = table.AtlasHeight;
+            for (int i = 0; i < PairFx.Slots; i++)
+            {
+                PairFx.Draw d; int v = i * 4;
+                if (_fx.Get(i, _poseDx[0], _poseDy[0], _poseDx[1], _poseDy[1], out d) && d.Shown)
+                {
+                    any = true;
+                    var sp = table.Sprites[d.Sprite];
+                    float x0 = d.X - d.W / 2, x1 = d.X + d.W / 2, yTop = 1024 - (d.Y - d.H / 2), yBottom = 1024 - (d.Y + d.H / 2);
+                    float u0 = d.Frame * sp.W * table.Texel / aw, u1 = (d.Frame + 1) * sp.W * table.Texel / aw;
+                    float vTop = 1 - sp.Y * table.Texel / ah, vBottom = 1 - (sp.Y + sp.H) * table.Texel / ah;
+                    _fxVerts[v] = new Vector3(x0, yTop); _fxVerts[v + 1] = new Vector3(x1, yTop);
+                    _fxVerts[v + 2] = new Vector3(x1, yBottom); _fxVerts[v + 3] = new Vector3(x0, yBottom);
+                    _fxUv[v] = new Vector2(u0, vTop); _fxUv[v + 1] = new Vector2(u1, vTop);
+                    _fxUv[v + 2] = new Vector2(u1, vBottom); _fxUv[v + 3] = new Vector2(u0, vBottom);
+                }
+                else for (int k = 0; k < 4; k++) { _fxVerts[v + k] = Vector3.zero; _fxUv[v + k] = Vector2.zero; }
+            }
+            if (!any && !_fxDrawn) return;          // nothing alive, and the mesh already empty: no cost
+            _fxMesh.vertices = _fxVerts; _fxMesh.uv = _fxUv;
+            _fxDrawn = any;
+            if (any) _commands.DrawMesh(_fxMesh, Matrix4x4.identity, _fxMaterial, 0, 0);
+        }
+
+        // ---- the backing shadow (art director 2026-11-13, update 1): a soft plum halo under both characters so pale
+        // KAngel separates from the pink page. The shown picture (the top one during a fade) drawn again at 13 offsets
+        // (the centre, rings of 5 and 11 canvas px, all 6 px down): first Sprites/Default in black for the alpha (correct
+        // premultiplied coverage), then UI/Default with ColorMask RGB and a flat colour (texture colour pushed out by
+        // _TextureSampleAdd) for the plum - the same two built-in shaders Live2DRenderer composes with. Missing shader:
+        // no shadow, one log line.
+        static readonly Color Plum = new Color(74 / 255f, 28 / 255f, 110 / 255f);
+        const float ShadowDrop = 6, ShadowAdd = 64;
+        static readonly Vector2[] ShadowTaps = MakeTaps();
+        static Vector2[] MakeTaps()
+        {
+            var t = new Vector2[13]; t[0] = Vector2.zero;
+            for (int i = 0; i < 6; i++)
+            {
+                float a = i * Mathf.PI / 3, b = a + Mathf.PI / 6;
+                t[1 + i] = new Vector2(5 * Mathf.Cos(a), 5 * Mathf.Sin(a));
+                t[7 + i] = new Vector2(11 * Mathf.Cos(b), 11 * Mathf.Sin(b));
+            }
+            return t;
+        }
+        Material _shadowAlpha, _shadowColor;
+        float _tapInner, _tapOuter;
+        readonly int[] _topFrame = { -1, -1 };
+        void StartShadow()
+        {
+            if (_shadow <= 0) return;
+            var ui = Shader.Find("UI/Default");
+            if (ui == null || !ui.isSupported) { if (Log != null) Log("shadow: UI/Default shader not found, no backing shadow"); return; }
+            _shadowAlpha = new Material(_material.shader);
+            _shadowAlpha.SetColor("_RendererColor", Color.white); _shadowAlpha.SetVector("_Flip", Vector4.one);
+            _shadowColor = new Material(ui);
+            _shadowColor.SetFloat("_ColorMask", 14);   // RGB: the coverage stays what the black pass wrote
+            // per tap: about 7 taps cover a point on the silhouette edge, so 1 - (1-t)^4.5 (1-t/2)^3 reaches `shadow` there
+            _tapInner = Mathf.Clamp01(.13f * _shadow / .55f); _tapOuter = _tapInner / 2;
+        }
+        void Shadow(int r)
+        {
+            for (int pass = 0; pass < 2; pass++)
+                for (int c = 0; c < 2; c++)
+                {
+                    var p = _pools[c]; int slot, frame = _topFrame[c];
+                    if (frame < 0 || !p.Resident.TryGetValue(frame, out slot)) continue;
+                    for (int k = 0; k < ShadowTaps.Length; k++)
+                    {
+                        float t = k < 7 ? _tapInner : _tapOuter;
+                        _props.Clear();
+                        _props.SetTexture("_MainTex", p.Textures[slot]);
+                        if (pass == 0) _props.SetColor("_Color", new Color(0, 0, 0, t));
+                        else
+                        {
+                            _props.SetColor("_Color", new Color(Plum.r / ShadowAdd, Plum.g / ShadowAdd, Plum.b / ShadowAdd, t));
+                            _props.SetVector("_TextureSampleAdd", new Vector4(ShadowAdd, ShadowAdd, ShadowAdd, 0));   // (tex + 64) * plum / 64 ~ plum
+                        }
+                        var o = ShadowTaps[k];
+                        _commands.DrawMesh(p.Quad, Matrix4x4.Translate(new Vector3(o.x, -(o.y + ShadowDrop), 0)), pass == 0 ? _shadowAlpha : _shadowColor, 0, 0, _props);
+                    }
+                }
         }
 
         static long Key(int c, int f) { return ((long)c << 32) | (uint)f; }
 
         void ReadLoop()
         {
-            var streams = new FrameBlockReader[2];
+            var streams = new IPackReader[2];
             try
             {
-                for (int c = 0; c < 2; c++) streams[c] = new FrameBlockReader(
-                    new FileStream(_pools[c].PackPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.RandomAccess),
-                    checked((int)_pools[c].FrameBytes));
+                for (int c = 0; c < 2; c++)
+                {
+                    streams[c] = PackReader.Open(_pools[c].PackPath, _pools[c].Data.PackFormat, checked((int)_pools[c].FrameBytes));
+                    lock (_gate) _readCache[c] = streams[c].CacheBytes;
+                }
                 while (true)
                 {
                     Read job = default(Read);
@@ -181,6 +319,7 @@ namespace PartnerLive2D.Unity
                         _readCalls[job.Character] = s.Reads; _readBytes[job.Character] = s.Bytes;
                         _readHits[job.Character] = s.Hits; _readSeeks[job.Character] = s.Seeks;
                         _readMax[job.Character] = s.MaxReadMs;
+                        _decodeMax[job.Character] = s.DecodeMsMax; _decodeTotal[job.Character] = s.DecodeMsTotal;
                         if (_closed) return;
                         _done.Add(job);
                     }
@@ -223,6 +362,7 @@ namespace PartnerLive2D.Unity
             }
             Upload();
             _feel.Update(dt);
+            if (_fx != null) _fx.Update(dt);
             if (!_ready)
             {
                 if (Resident(0)) { _ready = true; _clock = 0; Touch(0); Record(); Cue(); }
@@ -308,7 +448,8 @@ namespace PartnerLive2D.Unity
         }
 
         readonly long[] _readCalls = new long[2], _readBytes = new long[2], _readHits = new long[2], _readSeeks = new long[2];
-        readonly double[] _readMax = new double[2];
+        readonly double[] _readMax = new double[2], _decodeMax = new double[2], _decodeTotal = new double[2];
+        readonly long[] _readCache = new long[2];
         double _uploadMaxMs, _uploadTotalMs;
         int _textureCreates, _staleReads;
         void Upload()
@@ -358,6 +499,7 @@ namespace PartnerLive2D.Unity
         void Deform(int c)
         {
             var p = _pools[c]; var ch = p.Data; var pose = _feel.Get(c);
+            _poseDx[c] = pose.Dx; _poseDy[c] = pose.Dy;   // the emotes follow her core float
             for (int k = 0; k < p.Base.Length; k++)
             {
                 float x, y;
@@ -429,9 +571,17 @@ namespace PartnerLive2D.Unity
             int r = _clock < Picture * .25f ? 0 : _clock < Picture * .5833f ? 1 : 2;
             float a = r / 3f;
             if (_ready)
-                for (int c = 0; c < 2; c++)   // Ame first, K over her; during a fade the old frame stays opaque under the new one
+            {
+                for (int c = 0; c < 2; c++)
                 {
                     Deform(c);
+                    if (_shadowColor != null) _topFrame[c] = TopFrame(c, r);
+                }
+                if (_shadowColor != null) Shadow(r);   // under both of them
+            }
+            if (_ready)
+                for (int c = 0; c < 2; c++)   // Ame first, K over her; during a fade the old frame stays opaque under the new one
+                {
                     var p = _pools[c]; var shot = _timeline.Shot(0, c);
                     bool more = r > 0 && _timeline.Count > 1;
                     var next = more ? _timeline.Shot(1, c) : shot;
@@ -466,12 +616,25 @@ namespace PartnerLive2D.Unity
                         }
                     }
                 }
+            if (_ready && _fx != null) DrawFx();   // above both of them
             Graphics.ExecuteCommandBuffer(_commands);
+        }
+        // the picture shown on top this refresh (the in-between when the take plays on), as RenderInner picks it
+        int TopFrame(int c, int r)
+        {
+            var p = _pools[c]; var shot = _timeline.Shot(0, c);
+            if (r > 0 && _timeline.Count > 1)
+            {
+                int b = Between(c, shot.Frame, _timeline.Shot(1, c).Frame);
+                if (b >= 0 && p.Resident.ContainsKey(b + r - 1)) return b + r - 1;
+            }
+            return shot.Frame;
         }
 
         // ---- the select page's moments
         readonly List<KeyValuePair<string, int>> _early = new List<KeyValuePair<string, int>>();
         internal bool CanPlay(string moment) { return _ready && _lib.HasMoment(moment); }
+        internal bool HasMoment(string moment) { return _lib != null && _lib.HasMoment(moment); }
         internal bool Moment(string moment, int who)
         {
             if (_timeline == null || !_started) { _early.Add(new KeyValuePair<string, int>(moment, who)); return true; }
@@ -480,6 +643,15 @@ namespace PartnerLive2D.Unity
             _momentMaxMs = Math.Max(_momentMaxMs, (float)((System.Diagnostics.Stopwatch.GetTimestamp() - started) * 1000.0 / System.Diagnostics.Stopwatch.Frequency));
             return fired;
         }
+        // pair_rhythm: an input on the select page (the tempo); dropped while the library loads
+        internal void Input()
+        {
+            if (_timeline == null || !_started) return;
+            long started = System.Diagnostics.Stopwatch.GetTimestamp();
+            _timeline.Input();
+            _momentMaxMs = Math.Max(_momentMaxMs, (float)((System.Diagnostics.Stopwatch.GetTimestamp() - started) * 1000.0 / System.Diagnostics.Stopwatch.Frequency));
+        }
+        internal bool Brisk { get { return _timeline != null && _started && _timeline.Brisk; } }
         internal bool Playing(string moment)
         {
             foreach (var m in _early) if (m.Key == moment) return true;
@@ -542,12 +714,18 @@ namespace PartnerLive2D.Unity
             d["renderTargetBytes"] = (long)_pair.width * _pair.height * 4;
             d["uploadMsMax"] = _uploadMaxMs; d["uploadMsTotal"] = _uploadTotalMs;
             d["textureCreates"] = _textureCreates; d["staleReadsDiscarded"] = _staleReads;
+            d["fx"] = _fx != null; d["fxAlive"] = _fx == null ? 0 : _fx.Alive(0) + _fx.Alive(1);
+            d["shadow"] = _shadowColor != null ? (double)_shadow : 0.0; d["skits"] = _skits && _lib != null && _lib.Skits.Count > 0;
+            d["rhythm"] = _lib != null && _lib.Rhythm != null; d["brisk"] = Brisk;
             lock (_gate)
             {
                 d["diskReads"] = _readCalls[0] + _readCalls[1]; d["diskBytes"] = _readBytes[0] + _readBytes[1];
                 d["diskCacheHits"] = _readHits[0] + _readHits[1]; d["diskSeeks"] = _readSeeks[0] + _readSeeks[1];
                 d["diskReadMsMax"] = Math.Max(_readMax[0], _readMax[1]);
-                d["readerCacheBytes"] = (_pools[0].FrameBytes + _pools[1].FrameBytes) * 8;
+                d["readerCacheBytes"] = _readCache[0] + _readCache[1];
+                d["decodeMsMax"] = Math.Max(_decodeMax[0], _decodeMax[1]);
+                d["decodeMsTotal"] = Math.Round(_decodeTotal[0] + _decodeTotal[1], 3);
+                d["packFormat"] = _pools[0].Data == null ? "?" : _pools[0].Data.PackFormat + "/" + _pools[1].Data.PackFormat;
                 d["readBufferBytes"] = (_pools[0].FrameBytes + _pools[1].FrameBytes) * Buffers;
                 d["queuedReads"] = _wanted.Count; d["readyUploads"] = _done.Count + _batch.Count;
             }
@@ -582,6 +760,11 @@ namespace PartnerLive2D.Unity
                 if (p.Quad != null) UnityEngine.Object.Destroy(p.Quad);
             }
             _commands.Release(); UnityEngine.Object.Destroy(_pair); UnityEngine.Object.Destroy(_material);
+            // the emote atlas stays in Mod's image cache (decoded once per session)
+            if (_fxMesh != null) UnityEngine.Object.Destroy(_fxMesh);
+            if (_fxMaterial != null) UnityEngine.Object.Destroy(_fxMaterial);
+            if (_shadowAlpha != null) UnityEngine.Object.Destroy(_shadowAlpha);
+            if (_shadowColor != null) UnityEngine.Object.Destroy(_shadowColor);
             RuntimePerf.End(RuntimePerf.Part.LibraryDispose, started);
         }
     }

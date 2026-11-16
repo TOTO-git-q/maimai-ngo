@@ -47,9 +47,14 @@ namespace PartnerLive2D.Unity
                 // Fan-made charts often have only some difficulties (e.g. Master alone), so the current difficulty may
                 // not exist on the selected song; the game itself copes (AquaMai FixMissingDifficultyCrash). Describe
                 // the nearest enabled chart instead of failing the whole select view (owner 2026-11-07).
+                // (the lambda captures a copy declared inside the rare branch: capturing `scores` itself made the compiler
+                // allocate the closure + delegate, 88 bytes, on every frame)
                 var scores = data.ScoreData;
-                Func<int, bool> enabled = d => scores != null && d >= 0 && d < scores.Count && scores[d] != null && scores[d].isEnable;
-                if (!enabled(difficulty)) difficulty = NearestEnabled(enabled, difficulty, scores == null ? 0 : scores.Count);
+                if (!(scores != null && difficulty >= 0 && difficulty < scores.Count && scores[difficulty] != null && scores[difficulty].isEnable))
+                {
+                    var s = scores;
+                    difficulty = NearestEnabled(d => s != null && d >= 0 && d < s.Count && s[d] != null && s[d].isEnable, difficulty, s == null ? 0 : s.Count);
+                }
                 if (difficulty < 0) throw new InvalidOperationException("selected song has no enabled notes");
             }
             string category = p.CategoryNameList[p.CurrentCategorySelect];
@@ -83,12 +88,16 @@ namespace PartnerLive2D.Unity
             }
             _songId = id; _scoreType = (int)p.ScoreType; _categoryIndex = p.CurrentCategorySelect;
             _sort = (int)p.CategorySortSetting; _category = category; _difficulty = difficulty; _index = p.CurrentMusicSelect;
+            _level = placeholder ? -1 : data.ScoreData[difficulty].level;
             if (_pending && Time.realtimeSinceStartup >= _settledAt)
             {
-                _pending = false; Emit("songChanged"); if (view != null) view.SelectSongReaction();
+                // data: the chart's level at the shown difficulty (14 for 14 and 14+; -1 unknown), boxed only on this event
+                _pending = false; Emit("songChanged", _level); if (view != null) view.SelectSongReaction();
             }
             ObserveInput(view);
         }
+        int _level = -1;
+
         // the enabled chart closest to d, preferring the lower one on a tie; -1 when the song has none
         internal static int NearestEnabled(Func<int, bool> enabled, int d, int count)
         {

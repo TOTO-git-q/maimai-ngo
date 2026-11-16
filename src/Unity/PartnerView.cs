@@ -123,12 +123,21 @@ namespace PartnerLive2D.Unity
 
         // music select: what happened on the page (MusicSelectReactionRouter events) as the library's moments
         bool _entered, _countdown;
+        float _lastInput = -1;
         int _lastDifficulty = -1;
         public void SelectEvent(string type, object data)
         {
             if (_library == null) return;
             try
             {
+                // pair_rhythm tempo: one player input = a button / touch / song / category / difficulty change; the events of
+                // one gesture (a press, the song it moves to, the finger on two sensors) come within 0.3 s and count once
+                if (type == "buttonDown" || type == "touchDown" || type == "songObserved" || type == "categoryChanged" || type == "difficultyChanged")
+                {
+                    float now = Time.realtimeSinceStartup;
+                    if (now - _lastInput > .3f) _library.Input();
+                    _lastInput = now;
+                }
                 switch (type)
                 {
                     case "initial":   // the router starts over after every visit to another phase: once per page
@@ -136,9 +145,16 @@ namespace PartnerLive2D.Unity
                         _entered = true;
                         _library.Moment(GameManager.MusicTrackNumber <= 1 ? "enter" : "return", -1);
                         break;
-                    case "categoryChanged": _library.Moment("category", -1); break;
-                    case "songChanged": _library.Moment("song", -1); break;
+                    case "categoryChanged": _library.Moment("category", -1); Stir(); break;
+                    // the cursor rested 0.2 s on a song; data = its level at the selected difficulty (the router's int, -1
+                    // unknown): 14 and up gets the "hard song" reaction instead of the usual one (pair_fx 2026-11-13)
+                    case "songChanged":
+                        int level = data is int ? (int)data : -1;
+                        _library.Moment(level >= 14 && _library.HasMoment("songHard") ? "songHard" : "song", -1);
+                        break;
+                    case "buttonDown": case "touchDown": case "songObserved": case "phase": Stir(); break;
                     case "difficultyChanged":
+                        Stir();
                         int d = data is int ? (int)data : -1;
                         if (d >= 3 && (_lastDifficulty < 0 || d > _lastDifficulty)) _library.Moment("master", -1);   // up to Master / Re:Master
                         if (d >= 0) _lastDifficulty = d;
@@ -146,6 +162,20 @@ namespace PartnerLive2D.Unity
                 }
             }
             catch (Exception e) { Mod.Warn(_cfg.Name + ": select event " + type + ": " + e.Message); }
+        }
+        // bored (pair_fx 2026-11-13): no button / touch on the select page for 25 s -> Ame yawns (60 %) or K taps the screen
+        // (40 %); any input starts the 25 s again; after a try the next one waits the moment's 40 s cooldown
+        const float BoredAfter = 25, BoredAgain = 40;
+        float _boredAt = -1;
+        void Stir() { _boredAt = Time.realtimeSinceStartup + BoredAfter; }
+        void Bored()
+        {
+            if (_library == null || Context != "musicSelect" || !_musicPhase) return;
+            float now = Time.realtimeSinceStartup;
+            if (_boredAt < 0) { _boredAt = now + BoredAfter; return; }
+            if (now < _boredAt) return;
+            _boredAt = now + BoredAgain;
+            if (_library.HasMoment("bored")) _library.Moment("bored", UnityEngine.Random.value < .6f ? 0 : 1);
         }
         // the select timer shows 10: once per page
         public void SelectCountdown()
@@ -198,7 +228,7 @@ namespace PartnerLive2D.Unity
             if (!SensorOnPair(name, out pair)) return;
             int who = _library.HitTest(pair.x, pair.y);
             if (Context == "room") _library.Log?.Invoke(string.Format("touch {0} at ({1:0}, {2:0}) on the pair: {3}", name, pair.x, pair.y, _library.CharacterName(who)));
-            if (who >= 0) TouchPair(who, pair.x);
+            if (who >= 0) { _library.FxTouch(who, pair.x, pair.y); TouchPair(who, pair.x); }
         }
         // partner room (2026-11-02 night, owner "搭档房间也换"): the sensors the game itself takes as touching the partner
         // (CollectionProcess.InputPartnerPresentSequence: B1-B8, C1, C2, E1), read every frame as the select page's router does
@@ -365,13 +395,13 @@ namespace PartnerLive2D.Unity
             if (_sprite != null) { _sprite.Dispose(); _sprite = null; }
             if (_library != null) { _library.Dispose(); _library = null; }
             // the select page, (2026-11-02) the result screen and the partner room play from the frame library
-            if ((Context == "musicSelect" || Context == "result" || Context == "room") && !_libraryFailed && !string.IsNullOrEmpty(_cfg.LibraryPath))
+            if ((Context == "musicSelect" || Context == "result" || Context == "room" || Context == "screen") && !_libraryFailed && !string.IsNullOrEmpty(_cfg.LibraryPath))
             {
                 try
                 {
                     if (!System.IO.File.Exists(_cfg.LibraryPath)) throw new System.IO.FileNotFoundException("library not found", _cfg.LibraryPath);
-                    _library = new SpriteLibraryBackend(_cfg.LibraryPath, RuntimeQuality.Policy.RenderSize(_cfg.RenderSize));
-                    var name = _cfg.Name; var where = Context == "result" ? " result: " : Context == "room" ? " room: " : " select: ";
+                    _library = new SpriteLibraryBackend(_cfg.LibraryPath, RuntimeQuality.Policy.RenderSize(_cfg.RenderSize), Context == "musicSelect", _cfg.Fx, _cfg.Shadow, _cfg.Rhythm);
+                    var name = _cfg.Name; var where = Context == "result" ? " result: " : Context == "room" ? " room: " : Context == "screen" ? " screen: " : " select: ";
                     _library.Log = line => Mod.Msg(name + where + line);
                     if (_renderer != null) { _renderer.Dispose(); _renderer = null; }
                     if (_avatar != null) { _avatar.Dispose(); _avatar = null; }
@@ -693,7 +723,7 @@ namespace PartnerLive2D.Unity
         {
             if (_library != null)
             {
-                try { _library.Tick(Time.unscaledDeltaTime); if (Context == "result") ResultCue(); else if (Context == "room") RoomTouches(); } catch (Exception e) { LibraryFailure(e); }
+                try { _library.Tick(Time.unscaledDeltaTime); if (Context == "result") ResultCue(); else if (Context == "room") RoomTouches(); else if (Context == "musicSelect") Bored(); } catch (Exception e) { LibraryFailure(e); }
                 return;
             }
             if (_sprite != null)
@@ -722,7 +752,8 @@ namespace PartnerLive2D.Unity
         // music select: extra vertical offset for the current phase (difficulty header), eased in and out
         float _phaseDrop;
         bool _difficultyPhase;
-        public void SetSelectPhase(string phase) { _difficultyPhase = phase == "Difficulty" || phase == "UtageDifficulty"; }
+        public void SetSelectPhase(string phase) { _difficultyPhase = phase == "Difficulty" || phase == "UtageDifficulty"; _musicPhase = phase == "Music"; Stir(); }
+        bool _musicPhase = true;   // bored counts only while the song list takes the input (the router reads input only there)
 
         void LateUpdate()
         {
@@ -827,7 +858,10 @@ namespace PartnerLive2D.Unity
             bool room = Context == "room";
             float height = _baseH * (room ? _cfg.RoomScale : _cfg.Scale);
             rt.sizeDelta = new Vector2(height * TargetAspect, height);
-            rt.localPosition = new Vector3(_baseCx + (room ? _cfg.RoomOffsetX : _cfg.OffsetX) * _baseH, _baseMinY + (room ? _cfg.RoomOffsetY : _cfg.OffsetY) * _baseH, 0f);
+            // "screen" (first-play settings, friend battle result, partner-get windows): the result screen's size and lift
+            // over the stock figure's footprint, centred on it (the result's sideways offset belongs to that layout)
+            float offsetX = room ? _cfg.RoomOffsetX : Context == "screen" ? 0f : _cfg.OffsetX;
+            rt.localPosition = new Vector3(_baseCx + offsetX * _baseH, _baseMinY + (room ? _cfg.RoomOffsetY : _cfg.OffsetY) * _baseH, 0f);
             rt.localScale = Vector3.one;
             _image.uvRect = _cfg.FlipY ? new Rect(0, 1, 1, -1) : new Rect(0, 0, 1, 1);
         }

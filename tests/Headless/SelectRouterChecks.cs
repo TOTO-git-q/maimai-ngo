@@ -33,7 +33,7 @@ namespace Process
             public float bpm = 120;
             public int GetID() => Id;
         }
-        public sealed class Score { public bool isEnable = true; public int musicLevelID = 0; }
+        public sealed class Score { public bool isEnable = true; public int musicLevelID = 0, level = 7; }
         public sealed class Data
         {
             public Music MusicData = new Music();
