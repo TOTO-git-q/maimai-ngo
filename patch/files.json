@@ -219,14 +219,8 @@
   {
    "path": "LocalAssets/PartnerLive2D/select_layout.ini",
    "src": "files/LocalAssets/PartnerLive2D/select_layout.ini",
-   "sha256": "1b44c8c2479799b9ede78fe525b620fe9e0f98f25cd7cbfa843106db98064e22",
-   "size": 5597
-  },
-  {
-   "path": "LocalAssets/PartnerLive2D/select_layout_large.ini",
-   "src": "files/LocalAssets/PartnerLive2D/select_layout_large.ini",
-   "sha256": "35b07493aa4775b4901d527ea06e34b9c97a42440e20fa842432028c7cf02a04",
-   "size": 5734
+   "sha256": "c20c0a70c4639d409a4f526b443cb042bdf42368d6ecac2a253298db6ce7f618",
+   "size": 5504
   },
   {
    "path": "LocalAssets/PartnerLive2D/select_sprites/back_flat.png",
